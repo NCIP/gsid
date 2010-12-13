@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapping PUBLIC "-//EXOLAB/Castor Mapping DTD Version 1.0//EN" "http://castor.org/mapping.dtd">
+<mapping>
+	<class name="org.cagrid.identifiers.namingauthority.domain.IdentifierData">
+ 		<map-to xml="IdentifierData"
+        	ns-uri="http://na.cagrid.org/1.0/NamingAuthority"
+         	ns-prefix="na" />
+		<field name="data" collection="map">
+			<bind-xml name="KeyNameData">
+				<class name="org.exolab.castor.mapping.MapItem">
+					<map-to xml="KeyData"
+                        ns-uri="http://na.cagrid.org/1.0/NamingAuthority"
+                        ns-prefix="na" />
+                    <field name="key" type="java.lang.String">
+						<bind-xml name="KeyName" node="element"/>
+					</field>
+					<field name="value" type="org.cagrid.identifiers.namingauthority.domain.KeyData">
+						<bind-xml name="KeyData"/>
+					</field>
+				</class>
+			</bind-xml>
+		</field>
+	</class>
+		
+	<class name="org.cagrid.identifiers.namingauthority.domain.KeyData">
+		<map-to xml="KeyData"
+            ns-uri="http://na.cagrid.org/1.0/NamingAuthority"
+            ns-prefix="na" />
+        <field name="values" collection="arraylist" type="java.lang.String">
+			<bind-xml name="value"/>
+		</field>
+		<field name="policyIdentifier" type="java.lang.String" 
+			handler="org.cagrid.identifiers.namingauthority.serialization.URIFieldHandler" >
+			<bind-xml name="PolicyIdentifier" />
+		</field>
+	</class>
+	
+	<class name="org.cagrid.identifiers.namingauthority.domain.KeyValues">
+		<map-to xml="Values"
+            ns-uri="http://na.cagrid.org/1.0/NamingAuthority"
+            ns-prefix="na" />
+        <field name="values" collection="arraylist" type="java.lang.String">
+			<bind-xml name="value"/>
+		</field>
+	</class>
+
+	<class name="org.cagrid.identifiers.namingauthority.domain.NamingAuthorityConfig">
+		<map-to xml="Configuration"
+			ns-uri="http://na.cagrid.org/1.0/NamingAuthority"
+         	ns-prefix="na" />
+		<field name="naGridSvcURI" type="java.lang.String"
+			handler="org.cagrid.identifiers.namingauthority.serialization.URIFieldHandler" >
+			<bind-xml name="naGridSvcURI"/>
+		</field>
+		<field name="naPrefixURI" type="java.lang.String"
+			handler="org.cagrid.identifiers.namingauthority.serialization.URIFieldHandler" >
+			<bind-xml name="naPrefixURI"/>
+		</field>
+		<field name="naBaseURI" type="java.lang.String"
+			handler="org.cagrid.identifiers.namingauthority.serialization.URIFieldHandler" >
+			<bind-xml name="naBaseURI"/>
+		</field>
+	</class>
+</mapping>

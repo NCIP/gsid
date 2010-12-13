@@ -1,0 +1,62 @@
+<!-- ======================================================================= -->
+<!-- Identifiers Naming Authority test build file                            -->
+<!-- ======================================================================= -->
+<project name="identifiers_namingauthority_tests_harness" basedir=".">
+	<property name="junit.results.dir" value="${test.logs.dir}/junit" />
+
+
+	<!-- call the test target for each project and aggregates the log resutls  -->
+	<target name="test" depends="defineClasspaths,createTestDatabase">
+		<mkdir dir="${junit.results.dir}" />		
+		<copy tofile="${test.classes.dir}/">
+			<fileset dir="${test.src.dir}" casesensitive="yes">
+				<include name="log4j.properties" />							
+			</fileset>
+		</copy>
+		<junit dir="${basedir}" printsummary="yes" showoutput="true" fork="true" errorproperty="test.failed" failureproperty="test.failed" forkmode="once">
+			<sysproperty key="build.dir" value="${classes.dir}" />
+			<sysproperty key="log4j.configuration" value="file:///${test.src.dir}/log4j.properties"/>
+			<jvmarg value="-Dbuild.dir=${classes.dir}" />
+			<jvmarg value="-Xmx512m" />
+			<classpath refid="test.classpath" />
+			<classpath>
+				<pathelement path="${test.classes.dir}" />
+			</classpath>
+			<formatter type="xml" />
+			<formatter type="plain" />
+			<batchtest fork="yes" todir="${junit.results.dir}">
+				<fileset dir="${test.src.dir}">
+					<include name="**/*TestCase.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<fail message="Tests failed! Check test reports." if="test.failed" />
+	</target>
+
+	<!-- ============================================================== -->
+	<!-- Creates conf files from examples                               -->
+	<!-- ============================================================== -->
+	<target name="create_config_files" description="Creates conf files from examples.   Set property force.config.replace to true to force replacement.">
+
+		<echo message="${test.dir}/resources" />
+
+		<copy todir="${test.dir}/resources" overwrite="${force.config.replace}">
+			<fileset dir="${test.dir}/resources">
+				<include name="**/*.example" />
+			</fileset>
+			<mapper type="glob" from="*.example" to="*" />
+		</copy>
+	</target>
+
+	<target name="createTestDatabase" depends="defineClasspaths,create_config_files" description="Creates the testing database.">
+		<property file="${test.dir}/resources/na.test.properties" />
+		<property name="root.db.username" value="${cagrid.na.db.username}" />
+		<property name="root.db.password" value="${cagrid.na.db.password}" />
+		<property name="root.db.url" value="jdbc:mysql://localhost:3306/?autoReconnect=true" />
+		<sql driver="${cagrid.na.db.driver}" url="${root.db.url}" userid="${root.db.username}" password="${root.db.password}">
+			<classpath refid="test.classpath" />
+			DROP DATABASE IF EXISTS ${cagrid.na.db.name};
+			CREATE DATABASE ${cagrid.na.db.name};
+		</sql>
+	</target>
+</project>

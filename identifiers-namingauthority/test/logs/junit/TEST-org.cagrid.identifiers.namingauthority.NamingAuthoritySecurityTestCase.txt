@@ -1,0 +1,91 @@
+Testsuite: org.cagrid.identifiers.namingauthority.NamingAuthoritySecurityTestCase
+Tests run: 12, Failures: 0, Errors: 0, Time elapsed: 2.018 sec
+------------- Standard Output ---------------
+AbandonedObjectPool is used (org.apache.commons.dbcp.AbandonedObjectPool@15093f1)
+   LogAbandoned: true
+   RemoveAbandoned: true
+   RemoveAbandonedTimeout: 300
+2010-12-03 11:08:05,809 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 0
+2010-12-03 11:08:06,265 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,266 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,266 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,301 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 0
+2010-12-03 11:08:06,315 [WARN ] dao.IdentifierMetadataDao [main,getSiteData:86] getSiteData The local identifier is http://purlz.cagrid.org:8080/localhost/0
+2010-12-03 11:08:06,327 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,328 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,328 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,331 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 0
+2010-12-03 11:08:06,337 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,337 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,337 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,360 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 1a4615dd-6c74-4d68-9fff-2b3f785a5168
+2010-12-03 11:08:06,365 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,365 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,365 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,368 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 0
+2010-12-03 11:08:06,371 [WARN ] dao.IdentifierMetadataDao [main,deleteKeys:470] User [] deleting some keys for identifier [http://purlz.cagrid.org:8080/localhost/0]
+2010-12-03 11:08:06,374 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,374 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,374 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,378 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is dc9f280c-fdad-4a81-99e2-3e55654b5a90
+2010-12-03 11:08:06,379 [WARN ] dao.IdentifierMetadataDao [main,deleteKeys:470] User [] deleting some keys for identifier [http://purlz.cagrid.org:8080/localhost/dc9f280c-fdad-4a81-99e2-3e55654b5a90]
+2010-12-03 11:08:06,384 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,384 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,384 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,388 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 7135b6be-9da6-4e3f-8fde-8849a36a1559
+2010-12-03 11:08:06,389 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 7135b6be-9da6-4e3f-8fde-8849a36a1559
+2010-12-03 11:08:06,390 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 7135b6be-9da6-4e3f-8fde-8849a36a1559
+2010-12-03 11:08:06,394 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,395 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,395 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,400 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is f3b2d99f-e67e-49f2-930e-24e55f5f8f68
+2010-12-03 11:08:06,402 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 2102e7e2-ec64-4c25-979f-cbb140192b54
+2010-12-03 11:08:06,403 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is f3b2d99f-e67e-49f2-930e-24e55f5f8f68
+2010-12-03 11:08:06,405 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 2102e7e2-ec64-4c25-979f-cbb140192b54
+2010-12-03 11:08:06,406 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is f3b2d99f-e67e-49f2-930e-24e55f5f8f68
+2010-12-03 11:08:06,407 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 2102e7e2-ec64-4c25-979f-cbb140192b54
+2010-12-03 11:08:06,413 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,413 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,413 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,418 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is e9bfb9e8-6714-4196-9ff3-8e36c5e3d1c6
+2010-12-03 11:08:06,419 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 5906522a-ee32-4821-b3fc-fc4a74b107bb
+2010-12-03 11:08:06,420 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is e9bfb9e8-6714-4196-9ff3-8e36c5e3d1c6
+2010-12-03 11:08:06,421 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 5906522a-ee32-4821-b3fc-fc4a74b107bb
+2010-12-03 11:08:06,422 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is e9bfb9e8-6714-4196-9ff3-8e36c5e3d1c6
+2010-12-03 11:08:06,423 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 5906522a-ee32-4821-b3fc-fc4a74b107bb
+2010-12-03 11:08:06,428 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,428 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,428 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,430 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 0
+2010-12-03 11:08:06,435 [ERROR] dao.IdentifierMetadataDao [main,replaceKeyValues:603] User [] is not authorized to replace key [org.cagrid.identifiers.namingauthority.util.ADMIN_USERS]. Not an ADMIN_USER.
+2010-12-03 11:08:06,438 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,438 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,439 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,442 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 7e3b2790-05f6-4608-8743-f7eff54ce6e5
+2010-12-03 11:08:06,443 [ERROR] dao.IdentifierMetadataDao [main,replaceKeyValues:635] User [] is not authorized to replace key [CODE]. Not a WRITE_USER.
+2010-12-03 11:08:06,449 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,449 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,449 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,453 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 3e2b646f-a7fe-4b34-9730-0418ad8e87a3
+2010-12-03 11:08:06,454 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 7db9c9c3-809c-43cf-ad9a-02ab03063d60
+2010-12-03 11:08:06,456 [ERROR] dao.IdentifierMetadataDao [main,replaceKeyValues:635] User [] is not authorized to replace key [CODE]. Not a WRITE_USER.
+2010-12-03 11:08:06,459 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'simpleJdbcTemplate'
+2010-12-03 11:08:06,459 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'jdbcTemplate'
+2010-12-03 11:08:06,460 [WARN ] namingauthority.NamingAuthoritySecurityTestCase [main,populateProtectedVariables:268] No bean with name 'transactionStatus'
+2010-12-03 11:08:06,463 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 3da91149-7f44-40fa-8636-0fb1ab6da9ac
+2010-12-03 11:08:06,464 [WARN ] dao.IdentifierMetadataDao [main,loadLocalIdentifier:56] The local identifier is 68cbec38-3af8-4525-91d3-2a76b6c8ec3f
+2010-12-03 11:08:06,465 [ERROR] dao.IdentifierMetadataDao [main,replaceKeyValues:617] User [] is not authorized to replace key [CODE]. Not a WRITE_USER.
+------------- ---------------- ---------------
+
+Testcase: testResolveSystemIdentifier took 1.808 sec
+Testcase: testCreateKeys1 took 0.008 sec
+Testcase: testCreateKeys2 took 0.028 sec
+Testcase: testDeleteKeys took 0.009 sec
+Testcase: testDeleteKeys2 took 0.009 sec
+Testcase: testResolveIdentifier1 took 0.01 sec
+Testcase: testResolveIdentifier2 took 0.018 sec
+Testcase: testResolveIdentifier3 took 0.014 sec
+Testcase: testReplaceKeys1 took 0.01 sec
+Testcase: testReplaceKeys2 took 0.01 sec
+Testcase: testReplaceKeys3 took 0.009 sec
+Testcase: testReplaceKeys4 took 0.009 sec

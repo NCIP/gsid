@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Deploy Naming Authority as a web app" basedir=".">
+
+	<property name="build.webcontent.dir" value="${build.dir}/WebContent" />
+	<property name="warfile" value="${build.dir}/namingauthority.war"/>
+  	<property environment="env"/>
+
+	<target name="setTomcat" if="env.CATALINA_HOME">
+		<property name="tomcat.dir" value="${env.CATALINA_HOME}"/>
+	</target>
+
+	<target name="checkTomcat" depends="setTomcat">
+		<fail message="CATALINA_HOME is not set" unless="tomcat.dir"/>
+	</target>
+
+	<target name="setDeployProperties" depends="checkTomcat">
+		<property name="webapp.deploy.dir" value="${tomcat.dir}/webapps" />
+      <property name="webapp.deploy.lib.dir" value="${webapp.deploy.dir}/WEB-INF/lib" />
+	</target>
+
+	<target name="create">
+		<mkdir dir="${build.webcontent.dir}" />
+		
+		<copy todir="${build.webcontent.dir}">
+		    <fileset dir="WebContent"/>
+		</copy>
+
+		<copy todir="${build.webcontent.dir}" overwrite="true">
+			<fileset dir="schema">
+				<include name="*.xsd"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.webcontent.dir}/WEB-INF/lib" overwrite="true">
+         <fileset dir="${ext.lib.dir}">
+            <include name="*.jar"/>
+         </fileset>
+      </copy>
+		<war destfile="${warfile}" webxml="${build.webcontent.dir}/WEB-INF/web.xml" update="true">
+			<classes dir="${build.dir}/classes"/>
+			<fileset dir="${build.webcontent.dir}">
+				<exclude name="WEB-INF/web.xml"/>
+			</fileset>
+		</war>
+	</target>
+
+	<target name="copy" depends="checkTomcat">
+		<echo message="Deploying web app under Tomcat at ${webapp.deploy.dir}" />
+		<copy todir="${webapp.deploy.dir}" overwrite="true">
+			<fileset dir="${build.dir}/">
+				<include name="*.war"/>
+			</fileset>
+		</copy>
+	</target>
+   
+	<target name="deployWebApp" depends="setDeployProperties,create,copy" />
+</project>

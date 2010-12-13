@@ -1,0 +1,317 @@
+Buildfile: build.xml
+
+setGlobus:
+
+checkGlobus:
+     [echo] Globus: E:\runningSoftware\globus\ws-core-4.0.3
+
+defineClasspaths:
+
+create_config_files:
+     [echo] E:\myJava\namingAuthorityGS4-11-11\identifiers-namingauthority\test/resources
+
+createTestDatabase:
+      [sql] Executing commands
+      [sql] 2 of 2 SQL statements executed successfully
+
+test:
+    [junit] Running org.cagrid.identifiers.namingauthority.NamingAuthoritySecurityTestCase
+    [junit] Dec 1, 2010 11:03:51 AM org.springframework.test.AbstractSingleSpringContextTests loadContextLocations
+    [junit] INFO: Loading context for locations: file:WebContent/WEB-INF/applicationContext-na.xml,classpath*:test-applicationContext-properties.xml
+    [junit] Dec 1, 2010 11:03:51 AM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+    [junit] INFO: Loading XML bean definitions from URL [file:WebContent/WEB-INF/applicationContext-na.xml]
+    [junit] Dec 1, 2010 11:03:51 AM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+    [junit] INFO: Loading XML bean definitions from URL [file:/E:/myJava/namingAuthorityGS4-11-11/identifiers-namingauthority/test/resources/test-applicationContext-properties.xml]
+    [junit] Dec 1, 2010 11:03:51 AM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+    [junit] INFO: Refreshing org.springframework.context.support.GenericApplicationContext@b2fd8f: display name [org.springframework.context.support.GenericApplicationContext@b2fd8f]; startup date [Wed Dec 01 11:03:51 EST 2010]; root of context hierarchy
+    [junit] Dec 1, 2010 11:03:51 AM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+    [junit] INFO: Bean factory for application context [org.springframework.context.support.GenericApplicationContext@b2fd8f]: org.springframework.beans.factory.support.DefaultListableBeanFactory@16fe0f4
+    [junit] Dec 1, 2010 11:03:51 AM org.springframework.core.io.support.PropertiesLoaderSupport loadProperties
+    [junit] INFO: Loading properties file from URL [file:/E:/myJava/namingAuthorityGS4-11-11/identifiers-namingauthority/test/resources/na.test.properties]
+    [junit] Dec 1, 2010 11:03:51 AM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+    [junit] INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@16fe0f4: defining beans [dataSourceTemplate,dataSource,databaseValidator,sessionFactory,transactionManager,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,hibernateTemplate,daoTemplate,identifierDao,NamingAuthority,castorXmlContext,marshaller,httpProcessor,propertyConfigurer]; root of factory hierarchy
+    [junit] AbandonedObjectPool is used (org.apache.commons.dbcp.AbandonedObjectPool@497934)
+    [junit]    LogAbandoned: true
+    [junit]    RemoveAbandoned: true
+    [junit]    RemoveAbandonedTimeout: 300
+    [junit] Dec 1, 2010 11:03:51 AM org.springframework.jdbc.support.DatabaseStartupValidator afterPropertiesSet
+    [junit] INFO: Database startup detected after 0.0 seconds
+    [junit] Dec 1, 2010 11:03:51 AM org.hibernate.cfg.annotations.Version <clinit>
+    [junit] INFO: Hibernate Annotations 3.3.1.GA
+    [junit] Dec 1, 2010 11:03:51 AM org.hibernate.cfg.Environment <clinit>
+    [junit] INFO: Hibernate 3.2.0
+    [junit] Dec 1, 2010 11:03:51 AM org.hibernate.cfg.Environment <clinit>
+    [junit] INFO: hibernate.properties not found
+    [junit] Dec 1, 2010 11:03:51 AM org.hibernate.cfg.Environment buildBytecodeProvider
+    [junit] INFO: Bytecode provider name : cglib
+    [junit] Dec 1, 2010 11:03:51 AM org.hibernate.cfg.Environment <clinit>
+    [junit] INFO: using JDK 1.4 java.sql.Timestamp handling
+    [junit] Dec 1, 2010 11:03:51 AM org.hibernate.cfg.AnnotationBinder bindClass
+    [junit] INFO: Binding entity from annotated class: org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKey
+    [junit] Dec 1, 2010 11:03:51 AM org.hibernate.cfg.annotations.EntityBinder bindTable
+    [junit] INFO: Bind entity org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKey on table identifier_keys
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.AnnotationBinder bindClass
+    [junit] INFO: Binding entity from annotated class: org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.annotations.EntityBinder bindTable
+    [junit] INFO: Bind entity org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata on table identifiers
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.annotations.CollectionBinder bindOneToManySecondPass
+    [junit] INFO: Mapping collection: org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata.values -> identifier_keys
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.AnnotationConfiguration secondPassCompile
+    [junit] INFO: Hibernate Validator not found: ignoring
+    [junit] Dec 1, 2010 11:03:52 AM org.springframework.orm.hibernate3.LocalSessionFactoryBean buildSessionFactory
+    [junit] INFO: Building new Hibernate SessionFactory
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.connection.ConnectionProviderFactory newConnectionProvider
+    [junit] INFO: Initializing connection provider: org.springframework.orm.hibernate3.LocalDataSourceConnectionProvider
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: RDBMS: MySQL, version: 5.0.45-community-nt
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: JDBC driver: MySQL-AB JDBC Driver, version: mysql-connector-java-3.0.16-ga ( $Date: 2004/09/30 07:35:03 $, $Revision: 1.27.2.44 $ )
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.dialect.Dialect <init>
+    [junit] INFO: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.transaction.TransactionFactoryFactory buildTransactionFactory
+    [junit] INFO: Transaction strategy: org.springframework.orm.hibernate3.SpringTransactionFactory
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.transaction.TransactionManagerLookupFactory getTransactionManagerLookup
+    [junit] INFO: No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Automatic flush during beforeCompletion(): disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Automatic session close at end of transaction: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: JDBC batch size: 15
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: JDBC batch updates for versioned data: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Scrollable result sets: enabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: JDBC3 getGeneratedKeys(): enabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Connection release mode: auto
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Maximum outer join fetch depth: 2
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Default batch fetch size: 1
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Generate SQL with comments: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Order SQL updates by primary key: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory createQueryTranslatorFactory
+    [junit] INFO: Query translator: org.hibernate.hql.ast.ASTQueryTranslatorFactory
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.hql.ast.ASTQueryTranslatorFactory <init>
+    [junit] INFO: Using ASTQueryTranslatorFactory
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Query language substitutions: {}
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: JPA-QL strict compliance: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Second-level cache: enabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Query cache: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory createCacheProvider
+    [junit] INFO: Cache provider: org.hibernate.cache.NoCacheProvider
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Optimize cache for minimal puts: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Structured second-level cache entries: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Statistics: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Deleted entity synthetic identifier rollback: disabled
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.cfg.SettingsFactory buildSettings
+    [junit] INFO: Default entity-mode: pojo
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.impl.SessionFactoryImpl <init>
+    [junit] INFO: building session factory
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.impl.SessionFactoryObjectFactory addInstance
+    [junit] INFO: Not binding factory to JNDI, no JNDI name configured
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.SchemaUpdate execute
+    [junit] INFO: Running hbm2ddl schema update
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.SchemaUpdate execute
+    [junit] INFO: fetching database metadata
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.SchemaUpdate execute
+    [junit] INFO: updating schema
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.DatabaseMetadata getTableMetadata
+    [junit] INFO: table not found: identifier_key_values
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.DatabaseMetadata getTableMetadata
+    [junit] INFO: table not found: identifier_keys
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.DatabaseMetadata getTableMetadata
+    [junit] INFO: table not found: identifiers
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.DatabaseMetadata getTableMetadata
+    [junit] INFO: table not found: identifier_key_values
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.DatabaseMetadata getTableMetadata
+    [junit] INFO: table not found: identifier_keys
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.DatabaseMetadata getTableMetadata
+    [junit] INFO: table not found: identifiers
+    [junit] Dec 1, 2010 11:03:52 AM org.hibernate.tool.hbm2ddl.SchemaUpdate execute
+    [junit] INFO: schema update complete
+    [junit] Dec 1, 2010 11:03:52 AM org.springframework.orm.hibernate3.HibernateTransactionManager afterPropertiesSet
+    [junit] INFO: Using DataSource [org.apache.commons.dbcp.BasicDataSource@bf5555] of Hibernate SessionFactory for HibernateTransactionManager
+    [junit] Dec 1, 2010 11:03:52 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:52 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:52 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:52 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:52 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:52 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao deleteKeys
+    [junit] WARNING: User [] deleting some keys for identifier [http://purlz.cagrid.org:8080/localhost/0]
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao deleteKeys
+    [junit] WARNING: User [] deleting some keys for identifier [http://purlz.cagrid.org:8080/localhost/bf8b64cc-435d-4007-a110-8bb13553e228]
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao replaceKeyValues
+    [junit] SEVERE: User [] is not authorized to replace key [org.cagrid.identifiers.namingauthority.util.ADMIN_USERS]. Not an ADMIN_USER.
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao replaceKeyValues
+    [junit] SEVERE: User [] is not authorized to replace key [CODE]. Not a WRITE_USER.
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao replaceKeyValues
+    [junit] SEVERE: User [] is not authorized to replace key [CODE]. Not a WRITE_USER.
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao replaceKeyValues
+    [junit] SEVERE: User [] is not authorized to replace key [CODE]. Not a WRITE_USER.
+    [junit] Tests run: 12, Failures: 0, Errors: 0, Time elapsed: 1.993 sec
+    [junit] Running org.cagrid.identifiers.namingauthority.NamingAuthorityTestCase
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao deleteKeys
+    [junit] WARNING: User [] deleting some keys for identifier [http://purlz.cagrid.org:8080/localhost/4f9f39e3-4368-4b27-a796-6f53b0f407de]
+    [junit] Dec 1, 2010 11:03:53 AM org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao deleteKeys
+    [junit] WARNING: User [] deleting some keys for identifier [http://purlz.cagrid.org:8080/localhost/4f9f39e3-4368-4b27-a796-6f53b0f407de]
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] testCreateIdentifierKeysNoData: http://purlz.cagrid.org:8080/localhost/5c3181f2-a323-4acd-b48f-b00c96ac4988
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] Tests run: 10, Failures: 0, Errors: 0, Time elapsed: 0.115 sec
+    [junit] Running org.cagrid.identifiers.namingauthority.hibernate.HibernateMappingTestCase
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'simpleJdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'jdbcTemplate'
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.test.AbstractDependencyInjectionSpringContextTests populateProtectedVariables
+    [junit] WARNING: No bean with name 'transactionStatus'
+    [junit] select: org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata
+    [junit] returned 1 records for org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata
+    [junit] select: org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKey
+    [junit] returned 2 records for org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKey
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.036 sec
+    [junit] Running org.cagrid.identifiers.namingauthority.util.IdentifierUtilTestCase
+    [junit] Tests run: 4, Failures: 0, Errors: 0, Time elapsed: 0.01 sec
+    [junit] Dec 1, 2010 11:03:53 AM org.springframework.context.support.AbstractApplicationContext doClose
+    [junit] INFO: Closing org.springframework.context.support.GenericApplicationContext@b2fd8f: display name [org.springframework.context.support.GenericApplicationContext@b2fd8f]; startup date [Wed Dec 01 11:03:51 EST 2010]; root of context hierarchy
+
+BUILD SUCCESSFUL
+Total time: 3 seconds

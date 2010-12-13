@@ -1,0 +1,16 @@
+Testsuite: org.cagrid.identifiers.namingauthority.NamingAuthorityTestCase
+Tests run: 10, Failures: 0, Errors: 0, Time elapsed: 0.13 sec
+------------- Standard Output ---------------
+testCreateIdentifierKeysNoData: http://purlz.cagrid.org:8080/localhost/92c2531e-b080-4db1-922b-8ce452c5ad76
+------------- ---------------- ---------------
+
+Testcase: testDeleteKeys took 0.024 sec
+Testcase: testInvalidIdentifier took 0.004 sec
+Testcase: testMissingKeyName took 0.003 sec
+Testcase: testNullIdentifierValues took 0.014 sec
+Testcase: testCreateIdentifierKeysNoData took 0.008 sec
+Testcase: testMultipleIdentifierValues took 0.011 sec
+Testcase: testGetKeys took 0.011 sec
+Testcase: testGetKeyValues took 0.01 sec
+Testcase: testCreateKeys took 0.017 sec
+Testcase: testReplaceKeys took 0.012 sec
