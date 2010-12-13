@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="IdentifiersNAService" targetNamespace="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:binding="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/bindings" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-  <wsdl:import namespace="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/bindings" location="IdentifiersNAService_bindings.wsdl"/>
-  <wsdl:service name="IdentifiersNAService">
-    <wsdl:port name="IdentifiersNAServicePortTypePort" binding="binding:IdentifiersNAServicePortTypeSOAPBinding">
-      <soap:address location="http://localhost:8080/wsrf/services/"/>
-    </wsdl:port>
-  </wsdl:service>
-</wsdl:definitions>
