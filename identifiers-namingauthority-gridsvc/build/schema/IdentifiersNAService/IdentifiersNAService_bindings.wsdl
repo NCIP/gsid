@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="IdentifiersNAService" targetNamespace="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/bindings" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:porttype="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:import namespace="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService" location="IdentifiersNAService.wsdl"/>
+  <wsdl:binding name="IdentifiersNAServicePortTypeSOAPBinding" type="porttype:IdentifiersNAServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="createIdentifier">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/CreateIdentifierRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="resolveIdentifier">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/ResolveIdentifierRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteKeys">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/DeleteKeysRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createKeys">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/CreateKeysRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="replaceKeyValues">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/ReplaceKeyValuesRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getKeyNames">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GetKeyNamesRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getKeyData">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GetKeyDataRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="registerGSID">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/RegisterGSIDRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addSite">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/AddSiteRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateIdentifiers">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GenerateIdentifiersRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getParentHierarchy">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GetParentHierarchyRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getChildHierarchy">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GetChildHierarchyRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="registerSite">
+      <soap:operation soapAction="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/RegisterSiteRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidIdentifierFault">
+        <soap:fault name="InvalidIdentifierFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthorityConfigurationFault">
+        <soap:fault name="NamingAuthorityConfigurationFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NamingAuthoritySecurityFault">
+        <soap:fault name="NamingAuthoritySecurityFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidIdentifierValuesFault">
+        <soap:fault name="InvalidIdentifierValuesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMultipleResourceProperties">
+      <soap:operation soapAction="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/GetMultipleResourceProperties"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidResourcePropertyQNameFault">
+        <soap:fault name="InvalidResourcePropertyQNameFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ResourceUnknownFault">
+        <soap:fault name="ResourceUnknownFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetResourceProperty">
+      <soap:operation soapAction="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/GetResourceProperty"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InvalidResourcePropertyQNameFault">
+        <soap:fault name="InvalidResourcePropertyQNameFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ResourceUnknownFault">
+        <soap:fault name="ResourceUnknownFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="QueryResourceProperties">
+      <soap:operation soapAction="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/QueryResourceProperties"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="UnknownQueryExpressionDialectFault">
+        <soap:fault name="UnknownQueryExpressionDialectFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidResourcePropertyQNameFault">
+        <soap:fault name="InvalidResourcePropertyQNameFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidQueryExpressionFault">
+        <soap:fault name="InvalidQueryExpressionFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="QueryEvaluationErrorFault">
+        <soap:fault name="QueryEvaluationErrorFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ResourceUnknownFault">
+        <soap:fault name="ResourceUnknownFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getServiceSecurityMetadata">
+      <soap:operation soapAction="http://security.introduce.cagrid.nci.nih.gov/ServiceSecurity/GetServiceSecurityMetadataRequest"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>
