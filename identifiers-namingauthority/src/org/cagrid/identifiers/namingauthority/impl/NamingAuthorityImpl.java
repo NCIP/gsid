@@ -237,7 +237,7 @@ public class NamingAuthorityImpl implements MaintainerNamingAuthority
 	private URI generateIdentifier()
 	{
 		URI identifier = identifierGenerator.generate(getConfiguration());
-		while (this.identifierDao.checkIfIdentifierExists(identifier.toString()))
+		while (this.identifierDao.checkIfIdentifierExists(identifier))
 		{
 			identifier = identifierGenerator.generate(getConfiguration());
 		}

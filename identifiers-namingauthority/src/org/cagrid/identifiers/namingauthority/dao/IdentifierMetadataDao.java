@@ -52,7 +52,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 		catch (InvalidIdentifierException e)
 		{
-			LOG.warn("No system identifier defined");
+			LOG.debug("No system identifier defined");
 			createSystemIdentifier();
 		}
 	}
@@ -60,7 +60,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public IdentifierMetadata loadLocalIdentifier(final URI localIdentifier) throws InvalidIdentifierException,
 			NamingAuthorityConfigurationException
 	{
-		LOG.warn("The local identifier is " + localIdentifier);
+		LOG.debug("The local identifier is " + localIdentifier);
 		List<IdentifierMetadata> results = getHibernateTemplate().find(
 				"SELECT md FROM " + domainClass().getName() + " md WHERE md.localIdentifier = ?",
 				new Object[] { localIdentifier });
@@ -93,7 +93,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public List<IdentifierMetadata> getSiteData(URI localIdentifier) throws InvalidIdentifierException,
 			NamingAuthorityConfigurationException
 	{
-		LOG.warn("getSiteData The local identifier is " + localIdentifier);
+		LOG.debug("getSiteData The local identifier is " + localIdentifier);
 		List<IdentifierMetadata> results = getHibernateTemplate()
 				.find("SELECT md FROM "
 						+ domainClass().getName()
@@ -150,7 +150,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public IdentifierData resolveIdentifier(SecurityInfo secInfo, java.net.URI identifier)
 			throws InvalidIdentifierException, NamingAuthoritySecurityException, NamingAuthorityConfigurationException
 	{
-		LOG.warn("The value of localIdentifier is " + identifier);
+		LOG.debug("The value of localIdentifier is " + identifier);
 		try
 		{
 			IdentifierData completeData = getIdentifierData(secInfo, identifier, null);
@@ -279,18 +279,18 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			Access keyAccess = getKeyReadAccess(secInfo, ivk.getPolicyIdentifier());
 			if (keyAccess == Access.GRANTED)
 			{
-				LOG.warn("SECURITY: User [" + secInfo.getUser() + "] can access key [" + ivk.getKey() + "]");
+				LOG.debug("SECURITY: User [" + secInfo.getUser() + "] can access key [" + ivk.getKey() + "]");
 				newValues.put(ivk.getKey(), IdentifierUtil.convert(ivk));
 
 			}
 			else if (keyAccess == Access.DENIED)
 			{
-				LOG.warn("SECURITY: User [" + secInfo.getUser() + "] can't access key [" + ivk.getKey() + "]");
+				LOG.debug("SECURITY: User [" + secInfo.getUser() + "] can't access key [" + ivk.getKey() + "]");
 
 			}
 			else if (keyAccess == Access.NOSECURITY)
 			{
-				LOG.warn("SECURITY: No key security for [" + ivk.getKey() + "]. Checking identifier security...");
+				LOG.debug("SECURITY: No key security for [" + ivk.getKey() + "]. Checking identifier security...");
 
 				// Apply identifier level security
 
@@ -302,13 +302,13 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 				if (identifierReadAccess == Access.DENIED)
 				{
-					LOG.warn("SECURITY: User [" + secInfo.getUser() + "] is NOT authorized to read key ["
+					LOG.debug("SECURITY: User [" + secInfo.getUser() + "] is NOT authorized to read key ["
 							+ ivk.getKey() + "] by identifier");
 
 				}
 				else
 				{
-					LOG.warn("SECURITY: User [" + secInfo.getUser() + "] is authorized to read [" + ivk.getKey()
+					LOG.debug("SECURITY: User [" + secInfo.getUser() + "] is authorized to read [" + ivk.getKey()
 							+ "] by identifier");
 					newValues.put(ivk.getKey(), IdentifierUtil.convert(ivk));
 				}
@@ -343,7 +343,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public void createIdentifier(SecurityInfo secInfo, URI localIdentifier, IdentifierData ivalues)
 			throws InvalidIdentifierException, NamingAuthorityConfigurationException, NamingAuthoritySecurityException
 	{
-		LOG.warn("The value of localIdentifier is " + localIdentifier);
+		LOG.debug("The value of localIdentifier is " + localIdentifier);
 		secInfo = validateSecurityInfo(secInfo);
 
 		createIdentifierSecurityChecks(secInfo);
@@ -489,7 +489,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			throw new InvalidIdentifierValuesException("Identifier [" + identifier + "] has no keys");
 		}
 
-		LOG.warn("User [" + secInfo.getUser() + "] deleting some keys for identifier [" + identifier.toString() + "]");
+		LOG.debug("User [" + secInfo.getUser() + "] deleting some keys for identifier [" + identifier.toString() + "]");
 
 		List<IdentifierValueKey> keysToDelete = new ArrayList<IdentifierValueKey>();
 		ArrayList<String> keyNames = new ArrayList<String>(Arrays.asList(keyList));
@@ -543,7 +543,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			}
 			// End of security checks
 
-			LOG.warn("Removing key [" + ivk.getKey() + "]");
+			LOG.debug("Removing key [" + ivk.getKey() + "]");
 			keysToDelete.add(ivk);
 		}
 
@@ -891,7 +891,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 									}
 									else
 									{
-										LOG.warn("values is null");
+										LOG.debug("values is null");
 									}
 								}
 								catch (Exception e)
@@ -908,21 +908,21 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 						}
 						else
 						{
-							LOG.warn("values are null");
+							LOG.debug("values are null");
 						}
 					}
 				}
 				else
 				{
-					LOG.warn("getKeys is null");
+					LOG.debug("getKeys is null");
 				}
 			}
 			else
 			{
-				LOG.warn("currentkeydata is null");
+				LOG.debug("currentkeydata is null");
 			}
 		}
-		LOG.warn("the tree is " + rootNode.toString(true));
+		LOG.debug("the tree is " + rootNode.toString(true));
 		return rootNode;
 	}
 
@@ -950,28 +950,28 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 						// one.
 						if (key != null)
 						{
-							LOG.warn("the key is " + key);
+							LOG.debug("the key is " + key);
 							Tree tempNode = new Tree(key);
 							currentNode.addChild(tempNode);
 							parents.add(tempNode);
 						}
 						else
 						{
-							LOG.warn("values are null");
+							LOG.debug("values are null");
 						}
 					}
 				}
 				else
 				{
-					LOG.warn("current children size is zero");
+					LOG.debug("current children size is zero");
 				}
 			}
 			else
 			{
-				LOG.warn("current child is null");
+				LOG.debug("current child is null");
 			}
 		}
-		LOG.warn("the tree is " + rootNode.toString(true));
+		LOG.debug("the tree is " + rootNode.toString(true));
 		return rootNode;
 	}
 
@@ -987,7 +987,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 						+ domainClass().getName()
 						+ " as md INNER JOIN md.values as value INNER JOIN value.values as val WHERE value.key='parent' and val=?",
 						new Object[] { identifier });
-		LOG.warn("The results Size is " + results.size());
+		LOG.debug("The results Size is " + results.size());
 		return results;
 	}
 
@@ -1002,7 +1002,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 						+ " as md INNER JOIN md.values as value INNER JOIN value.values as val WHERE value.key='TYPE' and val='SITE'");
 		if (results != null)
 		{
-			LOG.warn("The results Size is " + results.size());
+			LOG.debug("The results Size is " + results.size());
 		}
 		List<IdentifierData> resultData = new ArrayList<IdentifierData>();
 		if (results != null)
@@ -1068,12 +1068,12 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return temp;
 	}
 
-	public boolean checkIfIdentifierExists(String identifier)
-	{
+	public boolean checkIfIdentifierExists(URI identifier)
+	{		
 		List<IdentifierMetadata> results = getHibernateTemplate().find(
 				"SELECT md FROM " + domainClass().getName() + " md WHERE md.localIdentifier = ?",
-				new Object[] { identifier });
-		return results == null ? false : true;
+				new Object[] { identifier });		
+		return results == null ||results.size()==0 ? false : true;
 	}
 
 	public void checkSecurity(SecurityInfo secInfo, boolean checkOnlyLogin, boolean checkHasSite)
@@ -1133,37 +1133,38 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			}
 			if (keys.get(i).contains("parent"))
 			{
-				LOG.warn("the values are " + valueArr);
+				LOG.debug("the values are " + valueArr);
 				for (String valueAr1 : valueArr)
 				{
 
 					// org.apache.axis.types.URI axisUri = getAxisURI(valueAr1,
 					// builder);
-					LOG.warn("value Ar1 " + valueAr1);
+					LOG.debug("value Ar1 " + valueAr1);
 					try
 					{
 						URI valueAr1URI = new URI(valueAr1);
+						valueAr1URI=IdentifierUtil.build(prefix, valueAr1URI);					
 						IdentifierData data = resolveIdentifier(secInfo, valueAr1URI);
 
 					}
 					catch (URISyntaxException e)
 					{
-						LOG.warn("URI casting from String execption " + valueAr1);
+						LOG.debug("URI casting from String execption " + valueAr1);
 						throw new InvalidIdentifierException();
 					}
 					catch (NamingAuthorityConfigurationException e)
 					{
-						LOG.warn("NamingAuthorityConfigurationException occured during resolving Identifier");
+						LOG.debug("NamingAuthorityConfigurationException occured during resolving Identifier");
 						throw new InvalidIdentifierException();
 					}
 					catch (InvalidIdentifierException e)
 					{
-						LOG.warn("InvalidIdentifierException occured during resolving Identifier");
+						LOG.debug("InvalidIdentifierException occured during resolving Identifier");
 						throw new InvalidIdentifierException();
 					}
 					catch (NamingAuthoritySecurityException e)
 					{
-						LOG.warn("NamingAuthoritySecurityException occured during resolving Identifier");
+						LOG.debug("NamingAuthoritySecurityException occured during resolving Identifier");
 						throw new NamingAuthoritySecurityException();
 					}
 
@@ -1178,52 +1179,55 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			URI policyReference = null;
 			KeyData kd = new KeyData(policyReference, valueArray[i]);
 			ivs.put(keyArray[i], kd);
-		}
-
-		// LOG.info("the Identifier is "+identifier);
-		LOG.warn("Prepping data finished");
+		}		
 		URI identifierURI = null;
 		if (identifier == null)
-		{
-			LOG.warn("creating new Indentifier");
-			identifier = (new IdentifierGeneratorImpl()).generate(null).toString();
-			LOG.warn("creating new Indentifier finished");
+		{			
+			identifier = (new IdentifierGeneratorImpl()).generate(null).toString();			
 		}
 		else
-		{
-			LOG.warn("creating new Indentifier");
-			while (checkIfIdentifierExists(identifier.toString()))
+		{			
+			try
 			{
-				identifier = (new IdentifierGeneratorImpl()).generate(null).toString();
+				while (checkIfIdentifierExists(new URI(identifier)))
+				{
+					identifier = (new IdentifierGeneratorImpl()).generate(null).toString();
+				}
 			}
-			LOG.warn("creating new Indentifier finished");
+			catch (URISyntaxException e)
+			{
+				// TODO Auto-generated catch block
+				LOG.warn("URI Syntax exception occured");
+				throw new InvalidIdentifierException("URI is Invalid");
+			}			
 		}
+		
 		try
 		{
-			identifierURI = new URI(identifier);
+			identifierURI = new URI(identifier);			
 		}
 		catch (URISyntaxException e)
 		{
-			LOG.warn("URI sytanx exception occured by identifier " + identifier);
+			LOG.debug("URI sytanx exception occured by identifier " + identifier);
 		}
 		try
 		{
-			createIdentifier(secInfo, identifierURI, ivs);
+			createIdentifier(secInfo, identifierURI, ivs);			
 			temp = identifierURI.toString();
 		}
 		catch (NamingAuthorityConfigurationException e)
 		{
-			LOG.warn("Naming authority configuration exception occured");
+			LOG.debug("Naming authority configuration exception occured");
 			throw new NamingAuthorityConfigurationException();
 		}
 		catch (InvalidIdentifierException e)
 		{
-			LOG.warn("Invalid Identifier Exception occured");
+			LOG.debug("Invalid Identifier Exception occured");
 			throw new InvalidIdentifierException();
 		}
 		catch (NamingAuthoritySecurityException e)
 		{
-			LOG.warn("Naming Authority Security Exception occured");
+			LOG.debug("Naming Authority Security Exception occured");
 			throw new NamingAuthoritySecurityException();
 		}
 		return temp;
@@ -1245,7 +1249,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		if (values == null || values.size() == 0)
 		{
 			// no security
-			LOG.warn("SECURITY: No PUBLIC_CREATION");
+			LOG.debug("SECURITY: No PUBLIC_CREATION");
 			return;
 		}
 
@@ -1515,7 +1519,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	private synchronized void replaceSystemValues(SecurityInfo secInfo, IdentifierMetadata resolvedValues)
 	{
 		systemValues = resolvedValues;
-		LOG.warn("System identifier updated by [" + secInfo.getUser() + "]");
+		LOG.debug("System identifier updated by [" + secInfo.getUser() + "]");
 	}
 
 	private synchronized void createSystemIdentifier()
