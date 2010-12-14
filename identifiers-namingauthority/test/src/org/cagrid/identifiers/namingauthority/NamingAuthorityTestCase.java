@@ -1,18 +1,12 @@
 package org.cagrid.identifiers.namingauthority;
 
-import java.net.URI;
-import java.util.ArrayList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao;
 import org.cagrid.identifiers.namingauthority.domain.IdentifierData;
-import org.cagrid.identifiers.namingauthority.domain.IdentifierValues;
 import org.cagrid.identifiers.namingauthority.domain.KeyData;
-import org.cagrid.identifiers.namingauthority.domain.KeyValues;
 import org.cagrid.identifiers.namingauthority.impl.SecurityInfoImpl;
 import org.cagrid.identifiers.namingauthority.test.NamingAuthorityTestCaseBase;
-import org.cagrid.identifiers.namingauthority.util.Keys;
+import org.junit.Test;
 
 
 public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase {
@@ -29,21 +23,73 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase {
         globalValues.put("CODE", new KeyData(null, new String[]{"007"}));
     }
     
+    @Test
     public void testRegisterGSID()
     {
 //    	System.out.println("testing the RegisterGSID");
-    	LOG.debug("testing testRegisterGSID method");
+    	LOG.warn("testing testRegisterGSID method");
+    	
+    	//check no register access.
     	SecurityInfo secInfo=new SecurityInfoImpl("Unknown");
     	try
 		{
 			this.NamingAuthority.registerGSID(secInfo, null, null);
-			fail("test register GSID");
+			fail("test registerGSID");
 		}
 		catch (Exception e)
 		{
-			LOG.debug("passed annonymous register");
+			LOG.warn("passed registerGSID for anonymous.");
 		}
 		
+		secInfo=new SecurityInfoImpl("Srikalyan");
+		
+		try
+		{
+			this.NamingAuthority.registerSite(secInfo, "a", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443", "SB");
+			LOG.warn("passed registerSite for user Srikalyan");
+		}
+		catch (Exception e)
+		{
+			fail("test registeSite for user Srikalyan");			
+		}
+		
+		try
+		{
+			this.NamingAuthority.registerGSID(secInfo, null, null);
+			LOG.warn("passed registerGSID for Srikalyan.");
+		}
+		catch(Exception e)
+		{
+			fail("test registerGSID for Srikalyan.");
+		}
+		
+    }
+    
+    @Test
+    public void testRegisterSite()
+    {
+    	SecurityInfo secInfo=new SecurityInfoImpl("User1");
+		
+		try
+		{
+			this.NamingAuthority.registerSite(secInfo, "a", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443", "SB");
+			LOG.warn("passed registerSite for user User1");
+		}
+		catch (Exception e)
+		{
+			fail("test registeSite for user User1");			
+		}
+		
+		try
+		{
+			this.NamingAuthority.registerSite(secInfo, "a1", "a1", "1.01", "srikalyan1", "srikalyan1@semanticbits.com", "4431", "SB");
+			fail("test registeSite for user User1");			
+		}
+		catch (Exception e)
+		{
+			LOG.warn("passed registerSite for user User1");			
+		}
+	
     }
 
 

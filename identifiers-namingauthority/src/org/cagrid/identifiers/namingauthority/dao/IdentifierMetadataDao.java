@@ -1062,24 +1062,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			URI tempGURI = results.get(0).getLocalIdentifier();
 			if (tempGURI != null)
 			{
-				try
-				{
-					URI tempLURI = IdentifierUtil.getLocalName(prefix, tempGURI);
-					if (tempLURI != null)
-					{
-						temp = tempLURI.toString();
-					}
-				}
-				catch (InvalidIdentifierException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				catch (NamingAuthorityConfigurationException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				temp = tempGURI.toString();
 			}
 		}
 		return temp;
@@ -1150,13 +1133,13 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			}
 			if (keys.get(i).contains("parent"))
 			{
-				LOG.debug("the values are " + valueArr);
+				LOG.warn("the values are " + valueArr);
 				for (String valueAr1 : valueArr)
 				{
 
 					// org.apache.axis.types.URI axisUri = getAxisURI(valueAr1,
 					// builder);
-					LOG.debug("value Ar1 " + valueAr1);
+					LOG.warn("value Ar1 " + valueAr1);
 					try
 					{
 						URI valueAr1URI = new URI(valueAr1);
@@ -1165,22 +1148,22 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 					}
 					catch (URISyntaxException e)
 					{
-						LOG.debug("URI casting from String execption " + valueAr1);
+						LOG.warn("URI casting from String execption " + valueAr1);
 						throw new InvalidIdentifierException();
 					}
 					catch (NamingAuthorityConfigurationException e)
 					{
-						LOG.debug("NamingAuthorityConfigurationException occured during resolving Identifier");
+						LOG.warn("NamingAuthorityConfigurationException occured during resolving Identifier");
 						throw new InvalidIdentifierException();
 					}
 					catch (InvalidIdentifierException e)
 					{
-						LOG.debug("InvalidIdentifierException occured during resolving Identifier");
+						LOG.warn("InvalidIdentifierException occured during resolving Identifier");
 						throw new InvalidIdentifierException();
 					}
 					catch (NamingAuthoritySecurityException e)
 					{
-						LOG.debug("NamingAuthoritySecurityException occured during resolving Identifier");
+						LOG.warn("NamingAuthoritySecurityException occured during resolving Identifier");
 						throw new NamingAuthoritySecurityException();
 					}
 
@@ -1188,6 +1171,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			}
 			valueArray[i] = valueArr;
 		}
+
 		org.cagrid.identifiers.namingauthority.domain.IdentifierData ivs = new org.cagrid.identifiers.namingauthority.domain.IdentifierData();
 		for (int i = 0; i < keyArray.length; i++)
 		{
@@ -1197,23 +1181,30 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 
 		// LOG.info("the Identifier is "+identifier);
-
+		LOG.warn("Prepping data finished");
 		URI identifierURI = null;
 		if (identifier == null)
 		{
+			LOG.warn("creating new Indentifier");
 			identifier = (new IdentifierGeneratorImpl()).generate(null).toString();
+			LOG.warn("creating new Indentifier finished");
 		}
-		try
+		else
 		{
-			identifierURI = new URI(identifier);
+			LOG.warn("creating new Indentifier");
 			while (checkIfIdentifierExists(identifier.toString()))
 			{
 				identifier = (new IdentifierGeneratorImpl()).generate(null).toString();
 			}
+			LOG.warn("creating new Indentifier finished");
+		}
+		try
+		{
+			identifierURI = new URI(identifier);
 		}
 		catch (URISyntaxException e)
 		{
-			LOG.debug("URI sytanx exception occured by identifier " + identifier);
+			LOG.warn("URI sytanx exception occured by identifier " + identifier);
 		}
 		try
 		{
@@ -1222,17 +1213,17 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 		catch (NamingAuthorityConfigurationException e)
 		{
-			LOG.info("Naming authority configuration exception occured");
+			LOG.warn("Naming authority configuration exception occured");
 			throw new NamingAuthorityConfigurationException();
 		}
 		catch (InvalidIdentifierException e)
 		{
-			e.printStackTrace();
+			LOG.warn("Invalid Identifier Exception occured");
 			throw new InvalidIdentifierException();
 		}
 		catch (NamingAuthoritySecurityException e)
 		{
-			e.printStackTrace();
+			LOG.warn("Naming Authority Security Exception occured");
 			throw new NamingAuthoritySecurityException();
 		}
 		return temp;

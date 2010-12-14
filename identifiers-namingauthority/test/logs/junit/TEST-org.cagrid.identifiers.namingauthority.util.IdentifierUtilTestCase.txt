@@ -1,7 +1,0 @@
-Testsuite: org.cagrid.identifiers.namingauthority.util.IdentifierUtilTestCase
-Tests run: 4, Failures: 0, Errors: 0, Time elapsed: 0.009 sec
-
-Testcase: testInvalidPrefixes took 0 sec
-Testcase: testInvalidIdentifiers took 0 sec
-Testcase: testBuild took 0 sec
-Testcase: testLocalName took 0 sec
