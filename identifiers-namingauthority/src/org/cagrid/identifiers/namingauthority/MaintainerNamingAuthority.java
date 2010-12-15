@@ -46,6 +46,9 @@ public interface MaintainerNamingAuthority extends NamingAuthority
 	public void addSite(SecurityInfo secInfo, String identifier) throws NamingAuthorityConfigurationException,
 			InvalidIdentifierValuesException, InvalidIdentifierException, NamingAuthoritySecurityException;
 
+	public boolean validateIdentifier(SecurityInfo secInfo,String identifier) throws InvalidIdentifierException,
+	NamingAuthoritySecurityException, NamingAuthorityConfigurationException;
+	
 	public Tree getParentHierarchy(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
 			NamingAuthoritySecurityException, NamingAuthorityConfigurationException;
 

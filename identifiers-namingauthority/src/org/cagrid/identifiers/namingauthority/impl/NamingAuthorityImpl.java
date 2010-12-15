@@ -197,6 +197,12 @@ public class NamingAuthorityImpl implements MaintainerNamingAuthority
 	{
 		this.identifierDao.addSite(secInfo, identifier);
 	}
+	
+	public boolean validateIdentifier(SecurityInfo secInfo,String identifier) throws InvalidIdentifierException,
+	NamingAuthoritySecurityException, NamingAuthorityConfigurationException
+	{
+		return this.identifierDao.validateIdentifier(secInfo, identifier);
+	}
 
 	public Tree getParentHierarchy(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
 			NamingAuthoritySecurityException, NamingAuthorityConfigurationException
