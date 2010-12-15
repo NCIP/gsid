@@ -27,7 +27,7 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase {
     public void testRegisterGSID()
     {
 //    	System.out.println("testing the RegisterGSID");
-    	LOG.warn("testing testRegisterGSID method");
+    	LOG.info("testing testRegisterGSID method");
     	
     	//check no register access.
     	SecurityInfo secInfo=new SecurityInfoImpl("Unknown");
@@ -38,7 +38,7 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase {
 		}
 		catch (Exception e)
 		{
-			LOG.warn("passed registerGSID for "+secInfo.getUser()+". MSG:\" "+e.getMessage());
+			LOG.info("passed registerGSID for "+secInfo.getUser()+". MSG:\" "+e.getMessage()+"\"");
 		}
 		
 		secInfo=new SecurityInfoImpl("User1");
@@ -46,7 +46,7 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase {
 		try
 		{
 			this.NamingAuthority.registerSite(secInfo, "a", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443", "SB");
-			LOG.warn("passed registerSite inorder to test registerGSID for user "+secInfo.getUser());
+			LOG.info("passed registerSite inorder to test registerGSID for user "+secInfo.getUser());
 		}
 		catch (Exception e)
 		{
@@ -56,7 +56,7 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase {
 		try
 		{
 			identifier=this.NamingAuthority.registerGSID(secInfo, null, null);
-			LOG.warn("passed registerGSID without parent and Identifier for "+secInfo.getUser()+".");
+			LOG.info("passed registerGSID without parent and Identifier for "+secInfo.getUser()+".");
 		}
 		catch(Exception e)
 		{
@@ -66,21 +66,31 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase {
 		try
 		{
 			this.NamingAuthority.registerGSID(secInfo, null, new String[]{identifier});
-			LOG.warn("passed test registerGSID with parentIdentifiers not null for "+secInfo.getUser()+".");
+			LOG.info("passed test registerGSID with parentIdentifiers not null for "+secInfo.getUser()+".");
 		}
 		catch(Exception e)
 		{
-			fail("test2 registerGSID with parentIdentifiers not null for "+secInfo.getUser()+". MSG: \""+e.getMessage()+"\"");
+			fail("test registerGSID with parentIdentifiers not null for "+secInfo.getUser()+". MSG: \""+e.getMessage()+"\"");
 		}
 		identifier="5784d1dd-9373-433e-8086-fd479fbd564e";		
 		try
 		{
-			this.NamingAuthority.registerGSID(secInfo, identifier,null);
-			LOG.warn("passed test registerGSID with suggestedIdentifier not null for "+secInfo.getUser()+".");
+			identifier=this.NamingAuthority.registerGSID(secInfo, identifier,null);			
+			LOG.info("passed test registerGSID with suggestedIdentifier not null for "+secInfo.getUser()+". id: "+identifier);
 		}
 		catch(Exception e)
 		{
-			fail("test2 registerGSID with suggestedIdentifier not null for "+secInfo.getUser()+". MSG: \""+e.getMessage()+"\"");
+			fail("test registerGSID with suggestedIdentifier not null for "+secInfo.getUser()+". MSG: \""+e.getMessage()+"\"");
+		}
+		
+		try
+		{
+			identifier=this.NamingAuthority.registerGSID(secInfo, identifier,null);			
+			LOG.info("passed test registerGSID with suggestedIdentifier not null for "+secInfo.getUser()+". id: "+identifier);
+		}
+		catch(Exception e)
+		{
+			fail("test registerGSID with suggestedIdentifier not null for "+secInfo.getUser()+". MSG: \""+e.getMessage()+"\"");
 		}
 		
     }
@@ -93,51 +103,108 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase {
 		try
 		{
 			this.NamingAuthority.registerSite(secInfo, "a", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443", "SB");
-			LOG.warn("passed registerSite for user User1");
+			LOG.info("passed registerSite for "+secInfo.getUser()+".");
 		}
 		catch (Exception e)
 		{
-			fail("test registeSite for user User1. MSG: \""+e.getMessage()+"\"");			
+			fail("test registeSite for "+secInfo.getUser()+". MSG: \""+e.getMessage()+"\"");			
 		}
 		
 		try
 		{
 			this.NamingAuthority.registerSite(secInfo, "a1", "a1", "1.01", "srikalyan1", "srikalyan1@semanticbits.com", "4431", "SB");
-			fail("test registeSite for user User1");			
+			fail("test registeSite for user "+secInfo.getUser()+".");			
 		}
 		catch (Exception e)
 		{
-			LOG.warn("passed registerSite for user User1 for registiering again. MSG: \""+e.getMessage()+"\"");			
+			LOG.info("passed registerSite for "+secInfo.getUser()+" for registiering again. MSG: \""+e.getMessage()+"\"");			
 		}
 	
     }
     
-//    @Test
-//    public void testAddSite()
-//    {
-//    	SecurityInfo secInfo=new SecurityInfoImpl("User1");
-//		
-//		try
-//		{
-//			this.NamingAuthority.registerSite(secInfo, "a", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443", "SB");
-//			LOG.warn("passed registerSite for "+secInfo.getUser()+"");
-//		}
-//		catch (Exception e)
-//		{
-//			fail("test registeSite for "+secInfo.getUser()+"\n"+e.getMessage());			
-//		}
-//		
-//		try
-//		{
-//			this.NamingAuthority.registerSite(secInfo, "a1", "a1", "1.01", "srikalyan1", "srikalyan1@semanticbits.com", "4431", "SB");
-//			fail("test registeSite for "+secInfo.getUser()+"");			
-//		}
-//		catch (Exception e)
-//		{
-//			LOG.warn("passed registerSite for "+secInfo.getUser()+" for registiering again\n"+e.getMessage());			
-//		}
-//	
-//    }
+    @Test
+    public void testAddSite()
+    {
+    	SecurityInfo secInfo=new SecurityInfoImpl("Unknown");
+    	try
+		{
+			this.NamingAuthority.addSite(secInfo, null);
+			fail("test addSite with null identifier and unregistered user for "+secInfo.getUser()+".");			
+		}
+		catch(Exception e)
+		{
+			LOG.info("passed addSite with null identifier and unregistered user for "+secInfo.getUser()+". MSG: "+e.getMessage()+"\"");
+		}
+    	
+    	secInfo=new SecurityInfoImpl("User2");     	
+    	
+		try
+		{
+			this.NamingAuthority.registerSite(secInfo, "a", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443", "SB");
+			LOG.info("passed registerSite for "+secInfo.getUser()+" inorder to test addSite.");
+		}
+		catch (Exception e)
+		{
+			fail("test registeSite for "+secInfo.getUser()+". MSG: \""+e.getMessage()+"\"");			
+		}	
+		
+		String identifier=null;		
+		try
+		{
+			this.NamingAuthority.addSite(secInfo, identifier);
+			fail("test addSite with null identifier and registered user for "+secInfo.getUser()+".");			
+		}
+		catch(Exception e)
+		{
+			LOG.info("passed addSite with null identifier and registered user for "+secInfo.getUser()+". MSG: \""+e.getMessage()+"\"");
+		}
+    	
+		
+		try
+		{
+			identifier=this.NamingAuthority.registerGSID(secInfo, null, null);
+			LOG.info("passed registerGSID for "+secInfo.getUser()+" to test addSite.");
+		}
+		catch(Exception e)
+		{
+			fail("test registerGSID for "+secInfo.getUser()+" to test addSite. MSG: \""+e.getMessage()+"\"");
+		}
+		
+		
+		secInfo=new SecurityInfoImpl("User3");
+		
+		try
+		{
+			this.NamingAuthority.registerSite(secInfo, "a", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443", "SB");
+			LOG.info("passed registerSite for "+secInfo.getUser()+" inorder to test addSite.");
+		}
+		catch (Exception e)
+		{
+			fail("test registeSite for "+secInfo.getUser()+" inorder to test addSite. MSG: \""+e.getMessage()+"\"");			
+		}
+		
+		try
+		{
+			this.NamingAuthority.addSite(secInfo, identifier);
+			LOG.info("passed addSite with valid identifier for "+secInfo.getUser()+".");
+		}
+		catch(Exception e)
+		{
+			fail("test addSite for "+secInfo.getUser()+". MSG: "+e.getMessage()+"\"");
+		}	
+		
+		identifier="5784d1dd-9373-433e-8086-fd479fbd564e";
+		try
+		{
+			this.NamingAuthority.addSite(secInfo, identifier);
+			fail("test addSite with invalid identifier for "+secInfo.getUser()+" ");			
+		}
+		catch(Exception e)
+		{
+			LOG.info("passed addSite with invalid identifier for "+secInfo.getUser()+"");
+		}
+	
+    }
     
 
 

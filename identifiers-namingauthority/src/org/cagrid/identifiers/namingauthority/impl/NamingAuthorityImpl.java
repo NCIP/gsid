@@ -17,6 +17,7 @@ import org.cagrid.identifiers.namingauthority.domain.IdentifierValues;
 import org.cagrid.identifiers.namingauthority.domain.KeyData;
 import org.cagrid.identifiers.namingauthority.domain.KeyValues;
 import org.cagrid.identifiers.namingauthority.domain.NamingAuthorityConfig;
+import org.cagrid.identifiers.namingauthority.util.Constant;
 import org.cagrid.identifiers.namingauthority.util.IdentifierUtil;
 import org.cagrid.identifiers.namingauthority.util.Keys;
 import org.cagrid.identifiers.namingauthority.util.SecurityUtil;
@@ -112,10 +113,10 @@ public class NamingAuthorityImpl implements MaintainerNamingAuthority
 			throws NamingAuthorityConfigurationException, InvalidIdentifierValuesException, InvalidIdentifierException,
 			NamingAuthoritySecurityException
 	{
-		this.identifierDao.checkSecurity(secInfo, true, true);
+		this.identifierDao.checkSecurity(secInfo,false, true);
 		if (numberOfIdentifier < 0 || numberOfIdentifier > 100)
 		{
-			return null;
+			throw new InvalidIdentifierValuesException(Constant.INVALID_NUMBER_FOR_BATCH);
 		}
 		List<String> temp = new ArrayList<String>(numberOfIdentifier);
 		String[] temp1 = new String[numberOfIdentifier];

@@ -24,6 +24,7 @@ import org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata;
 import org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKey;
 import org.cagrid.identifiers.namingauthority.impl.IdentifierGeneratorImpl;
 import org.cagrid.identifiers.namingauthority.impl.SecurityInfoImpl;
+import org.cagrid.identifiers.namingauthority.util.Constant;
 import org.cagrid.identifiers.namingauthority.util.IdentifierUtil;
 import org.cagrid.identifiers.namingauthority.util.Keys;
 import org.cagrid.identifiers.namingauthority.util.SecurityUtil;
@@ -471,7 +472,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public void deleteKeys(SecurityInfo secInfo, URI identifier, String[] keyList) throws InvalidIdentifierException,
 			NamingAuthoritySecurityException, InvalidIdentifierValuesException, NamingAuthorityConfigurationException
 	{
-
+		
 		if (keyList == null || keyList.length == 0)
 		{
 			throw new InvalidIdentifierValuesException("No keys were provided");
@@ -606,7 +607,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 		if (newValues == null || newValues.getKeys() == null || newValues.getKeys().length == 0)
 		{
-			throw new InvalidIdentifierValuesException("No KeyValues were provided");
+			throw new InvalidIdentifierValuesException(Constant.NO_KEY_VALUES);
 		}
 
 		secInfo = validateSecurityInfo(secInfo);
@@ -821,6 +822,24 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			InvalidIdentifierValuesException, InvalidIdentifierException, NamingAuthoritySecurityException
 	{
 		checkSecurity(secInfo, true, true);
+		if(identifier==null || identifier.length()==0)
+		{
+			throw new InvalidIdentifierException("Identifier cannot be null.");
+		}
+		URI identifierURI=null;
+		try
+		{
+			identifierURI = new URI(identifier);
+		}
+		catch (URISyntaxException e)
+		{
+			throw new InvalidIdentifierException("Unable to parse identifier.");
+		}		
+		IdentifierMetadata imd=loadLocalIdentifier(identifierURI);
+		if(imd==null)
+		{
+			throw new InvalidIdentifierException("Identifier does not exists.");
+		}
 		String userName = secInfo.getUser();
 		String publisherIdentifier = getIdentifierFromUser(userName);
 
@@ -1056,7 +1075,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 				.find("SELECT md FROM "
 						+ domainClass().getName()
 						+ " as md INNER JOIN md.values as value INNER JOIN value.values as val WHERE value.key='userName' and val=?",
-						new Object[] { userName });
+						new Object[] { userName.trim() });
 		if (results != null && results.size() == 1)
 		{
 			URI tempGURI = results.get(0).getLocalIdentifier();
