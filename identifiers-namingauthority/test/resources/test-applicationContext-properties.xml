@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
-  xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
-	<description>This document is loaded in the context of tests, in addition to the main document.</description>
+	<description>This document is loaded in the context of tests, in
+		addition to the main document.</description>
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -13,6 +15,28 @@
 				<value>classpath*:na.test.properties</value>
 			</list>
 		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url">
+			<value>${cagrid.na.db.url}</value>
+		</property>
+		<property name="driverClassName">
+			<value>${cagrid.na.db.driver}</value>
+		</property>
+		<property name="username">
+			<value>${cagrid.na.db.username}</value>
+		</property>
+		<property name="password">
+			<value>${cagrid.na.db.password}</value>
+		</property>
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg><ref bean="dataSource"/></constructor-arg>
+	</bean>
+	<bean id="simpleJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+		<constructor-arg><ref bean="dataSource"/></constructor-arg>
 	</bean>
 
 </beans>

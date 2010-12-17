@@ -155,16 +155,22 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		if (identifier == null)
 		{
 			throw new InvalidIdentifierException("Identifier cannot be null.");
-		}		
+		}
 		try
 		{			
-			if(!identifier.toString().startsWith(prefix.toString()))
+			if (!identifier.toString().startsWith(prefix.toString()))
 			{
-				identifier=IdentifierUtil.build(prefix, identifier);				
+				try{
+				identifier = IdentifierUtil.build(prefix, identifier);
+				}catch(Exception e)
+				{
+					
+				}
 			}
+			LOG.warn("the identifier is "+identifier.toString());
 			IdentifierData completeData = getIdentifierData(secInfo, identifier, null);
-
 			List<IdentifierMetadata> siteData = getSiteData(identifier);
+			LOG.warn("site data size is "+siteData.size());
 			if (siteData != null && siteData.size() > 0)
 			{
 
@@ -196,9 +202,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 							}
 							catch (Exception e)
 							{
-								// TODO Auto-generated catch block
+								LOG.warn("");
 								throw new InvalidIdentifierException();
-
 							}
 						}
 						else if (!key.equalsIgnoreCase("GSID") || !key.equalsIgnoreCase("TYPE"))
@@ -752,16 +757,16 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			throws NamingAuthorityConfigurationException, InvalidIdentifierValuesException, InvalidIdentifierException,
 			NamingAuthoritySecurityException
 	{
-		checkSecurity(secInfo, false, true);	
+		checkSecurity(secInfo, false, true);
 		String userName = secInfo.getUser();
 		String publisherIdentifier = getIdentifierFromUser(userName);
 		String temp = null;
 		List<String> keys = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
-		if(suggestedIdentifier!=null && suggestedIdentifier.length()>0)
+		if (suggestedIdentifier != null && suggestedIdentifier.length() > 0)
 		{
-			validateIdentifierPattern(suggestedIdentifier);			
-		}		
+			validateIdentifierPattern(suggestedIdentifier);
+		}
 		if (!checkIfParentsEmpty(parentIdentifiers))
 		{
 			for (String parent : parentIdentifiers)
@@ -772,15 +777,16 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			for (int i = 0; i < parentIdentifiers.length; i++)
 			{
 				value = parentIdentifiers[i];
-//				try
-//				{
-//					validateIdentifierPattern(value);
-//				}
-//				catch(InvalidIdentifierException e)
-//				{
-//					LOG.warn("invalid value for parent identifier \n"+value+"\n"+parentIdentifiers.length);
-//					throw new InvalidIdentifierException("Parent identifier cannot be null.");
-//				}
+				// try
+				// {
+				// validateIdentifierPattern(value);
+				// }
+				// catch(InvalidIdentifierException e)
+				// {
+				// LOG.warn("invalid value for parent identifier \n"+value+"\n"+parentIdentifiers.length);
+				// throw new
+				// InvalidIdentifierException("Parent identifier cannot be null.");
+				// }
 				// out.println(key+" "+value);
 				total_value += value;
 				if (i < parentIdentifiers.length - 1)
@@ -877,8 +883,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		String temp = createIdentifier(secInfo, null, keys, values);
 	}
 
-	public boolean validateIdentifier(SecurityInfo secInfo,String identifier) throws InvalidIdentifierException,
-	NamingAuthoritySecurityException, NamingAuthorityConfigurationException
+	public boolean validateIdentifier(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
+			NamingAuthoritySecurityException, NamingAuthorityConfigurationException
 	{
 		if (identifier == null)
 		{
@@ -887,14 +893,14 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		validateIdentifierPattern(identifier);
 		try
 		{
-			URI temp=new URI(identifier);
+			URI temp = new URI(identifier);
 			try
 			{
-			IdentifierMetadata metaData=loadLocalIdentifier(temp);
-			if(metaData!=null)
-				return false;
+				IdentifierMetadata metaData = loadLocalIdentifier(temp);
+				if (metaData != null)
+					return false;
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				return true;
 			}
@@ -903,18 +909,18 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		{
 			throw new InvalidIdentifierException("Identifier cannot parsed.");
 		}
-		
+
 		return true;
 	}
-	
+
 	public Tree getParentHierarchy(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
 			NamingAuthoritySecurityException, NamingAuthorityConfigurationException
 	{
-		if (identifier == null || identifier.length()==0)
+		if (identifier == null || identifier.length() == 0)
 		{
 			throw new InvalidIdentifierException("Identifier cannot be null");
 		}
-		validateIdentifierPattern(identifier);		
+		validateIdentifierPattern(identifier);
 		List<Tree> parents = new ArrayList<Tree>();
 
 		Tree currentNode = new Tree(identifier);
@@ -1005,7 +1011,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public Tree getChildHierarchy(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
 			NamingAuthoritySecurityException, InvalidIdentifierValuesException, NamingAuthorityConfigurationException
 	{
-		if (identifier == null || identifier.length()==0)
+		if (identifier == null || identifier.length() == 0)
 		{
 			throw new InvalidIdentifierException("Identifier cannot be null");
 		}
@@ -1646,21 +1652,21 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			throw new NamingAuthorityConfigurationException("Referred security identifier is bad [" + identifier + "]");
 		}
 	}
-	
+
 	private void validateIdentifierPattern(String identifier) throws InvalidIdentifierException
 	{
-		
-		if(identifier==null || identifier.length()==0)
+
+		if (identifier == null || identifier.length() == 0)
 		{
 			return;
 		}
 		try
 		{
-			UUID temp=UUID.fromString(identifier);
+			UUID temp = UUID.fromString(identifier);
 		}
-		catch(IllegalArgumentException e)
+		catch (IllegalArgumentException e)
 		{
-			LOG.warn("Invalid Identifier "+identifier);
+			LOG.warn("Invalid Identifier " + identifier);
 			throw new InvalidIdentifierException("identifier is not valid");
 		}
 	}
