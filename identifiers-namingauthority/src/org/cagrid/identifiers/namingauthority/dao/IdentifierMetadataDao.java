@@ -95,7 +95,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public List<IdentifierMetadata> getSiteData(URI localIdentifier) throws InvalidIdentifierException,
 			NamingAuthorityConfigurationException
 	{
-		LOG.debug("getSiteData The local identifier is " + localIdentifier);
+		LOG.debug("The local identifier is " + localIdentifier);
 		List<IdentifierMetadata> results = getHibernateTemplate()
 				.find("SELECT md FROM "
 						+ domainClass().getName()
@@ -163,17 +163,16 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 				try{
 				identifier = IdentifierUtil.build(prefix, identifier);
 				}catch(Exception e)
-				{
-					
+				{					
 				}
 			}
 			LOG.warn("the identifier is "+identifier.toString());
 			IdentifierData completeData = getIdentifierData(secInfo, identifier, null);
+			identifier=IdentifierUtil.getLocalName(prefix, identifier);
 			List<IdentifierMetadata> siteData = getSiteData(identifier);
 			LOG.warn("site data size is "+siteData.size());
 			if (siteData != null && siteData.size() > 0)
 			{
-
 				int counter = 0;
 				for (IdentifierMetadata metaData : siteData)
 				{
@@ -193,8 +192,10 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 								{
 									for (String key1 : siteIdentifier.getKeys())
 									{
+										LOG.debug("the key1 is "+key1);
 										if (!key1.equalsIgnoreCase("TYPE"))
 										{
+											LOG.debug("the key1 is "+key1);
 											completeData.put(counter + ":" + key1, siteIdentifier.getValues(key1));
 										}
 									}
@@ -206,8 +207,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 								throw new InvalidIdentifierException();
 							}
 						}
-						else if (!key.equalsIgnoreCase("GSID") || !key.equalsIgnoreCase("TYPE"))
+						else if (!key.equalsIgnoreCase("GSID") && !key.equalsIgnoreCase("TYPE"))
 						{
+							LOG.debug("the key is "+key);
 							completeData.put(counter + ":" + key, currentData.getValues(key));
 						}
 					}

@@ -3,13 +3,21 @@
 <project name="dependencies" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 	<property file="project.properties" />
 
-	<property name="ivy.generated.artifacts.pattern" value="${ivy.generated.artifacts.dir}/lib/[artifact]-[revision].[ext]" />
-
-	<property name="ivy-shared-targets.file" location="${basedir}/../../antfiles/ivy/ivy-shared-targets.xml" />
+	<property name="ivy.generated.artifacts.pattern" value="${basedir}/lib/[artifact]-[revision].[ext]" />
+	<!--
+	<property name="ivy-shared-targets.file" location="${basedir}/ivy-shared-targets.xml" />
 	<import file="${ivy-shared-targets.file}" />
-
-	<target name="do.resolve-dependencies" depends="pre.resolve-dependencies">
-		<ivy:retrieve conf="impl" pattern="${ivy.resolved.artifacts.pattern}" sync="true" />
-		<ivy:retrieve conf="impl-test" pattern="${ivy.resolved.artifacts.dir}/dependencies/test/[type]s/[originalname](.[ext])" sync="true" type="*" />
+-->
+	<target name="install.ivy">
+		<path id="ivy.lib.path">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
+	</target>
+	<target name="do.resolve" depends="install.ivy">
+		<ivy:retrieve conf="impl" pattern="${ivy.generated.artifacts.pattern}" sync="true" />
+		<ivy:retrieve conf="impl-test" pattern="${ivy.generated.artifacts.pattern}" sync="true" type="*" />
 	</target>
 </project>

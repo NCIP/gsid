@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+	<settings defaultResolver="gsid-ivy-resolver" validate="false" />
+	<!-- TODO: I had to set checkUpToDate="false" so target grids would resolve 
+		properly... The cache was correct, but it was not copying artifacts to projects 
+		if the previous date was newer than the new date It should retrieve the necessary 
+		version regardless of the date... not sure why it does that. -->
+	 <caches default="user-local-gsid">
+		<cache name="user-local-gsid" basedir="${user.home}/.ivy2/gsid" />
+	</caches> 
+
+	<macrodef name="gsid-fs-resolver">
+		<attribute name="repo.dir" />
+		<filesystem name="fs" local="true">
+			<ivy pattern="@{repo.dir}/[organisation]/[module]/ivy-[revision].xml" />
+			<artifact
+				pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact
+				pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact].[ext]" />
+		</filesystem>
+	</macrodef>
+	<macrodef name="gsid-fs-url-resolver">
+		<attribute name="repo.dir" />
+		<url name="fs" local="true">
+			<ivy pattern="@{repo.dir}/[organisation]/[module]/ivy-[revision].xml" />
+			<artifact
+				pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact
+				pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact].[ext]" />
+		</url>
+	</macrodef>
+	<resolvers>
+		<chain name="gsid-ivy-resolver" returnFirst="true" dual="true">
+			<!-- First, try developer's local integration repository -->
+			<gsid-fs-resolver repo.dir="${lib.dir}" name="gsid-local" />
+
+			<!-- Then, use the external repository -->
+			  <gsid-fs-resolver repo.dir="${user.home}/.ivy2/gsid"	name="gsid-external" /> 
+
+			<!-- And finally, the CBIIT BDA / commonlibrary repository -->
+			<url name="nci-ivy-repo">
+				<ivy pattern="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/[organisation]/[module]/[revision]/ivy.xml" />
+				<artifact pattern="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/[organisation]/[module]/[revision]/[module]-[revision].[ext]" />
+				<artifact pattern="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			</url>
+			
+				<!--  useful at least for javax.transaction.jta -->
+			<ibiblio name="maven2-codehaus-mule" m2compatible="true" root="http://dist.codehaus.org/mule/dependencies/maven2" changingPattern=".*SNAPSHOT"/>
+			<ibiblio name="maven2-codehaus" m2compatible="true"	root="http://repository.codehaus.org" changingPattern=".*SNAPSHOT"/>
+			<ibiblio name="maven2-http" m2compatible="true" root="http://maven2.mirrors.skynet.be/pub/maven2" changingPattern=".*SNAPSHOT"/>			
+			<ibiblio name="mvn.repo" root="http://mirrors.ibiblio.org/pub/mirrors/maven2" m2compatible="true" changingPattern=".*SNAPSHOT"/>		
+		</chain>
+	</resolvers>
+</ivysettings>
