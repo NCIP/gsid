@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Type;
 
 
@@ -24,10 +25,12 @@ public class IdentifierMetadata {
 
     @Id
     @GeneratedValue
+    @Index(name="index_identifiers_id")
     private Long id;
 
     @Column(nullable = false, unique = true)
     @Type(type = "org.cagrid.identifiers.namingauthority.hibernate.URIUserType")
+    @Index(name="index_identifiers_localIdentifier")
     private URI localIdentifier;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

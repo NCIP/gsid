@@ -16,6 +16,7 @@ import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Type;
 
 
@@ -26,6 +27,7 @@ public class IdentifierValueKey {
 
     @Id
     @GeneratedValue
+    @Index(name="index_identifier_keys_id")
     private Long id;
 
     @Column(nullable = false, name = "value_key", length = 1024)
