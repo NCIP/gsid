@@ -1285,7 +1285,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			}
 			catch (URISyntaxException e)
 			{
-				// TODO Auto-generated catch block
+				
 				LOG.warn("URI Syntax exception occured");
 				throw new InvalidIdentifierException("URI is Invalid");
 			}

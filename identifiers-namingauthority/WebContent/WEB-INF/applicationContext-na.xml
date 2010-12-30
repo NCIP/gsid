@@ -6,7 +6,7 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
   <bean id="dataSourceTemplate" abstract="true" class="org.apache.commons.dbcp.BasicDataSource"
-    destroy-method="close" p:driverClassName="${cagrid.na.db.driver}" p:maxActive="10" p:maxIdle="2"
+    destroy-method="close" p:driverClassName="${cagrid.na.db.driver}" p:maxActive="70" p:maxIdle="50" p:maxOpenPreparedStatements="60" p:initialSize="40"
     p:maxWait="180000" p:removeAbandoned="true" p:removeAbandonedTimeout="300" p:logAbandoned="true"
     p:testWhileIdle="true" p:testOnReturn="true" p:validationQuery="select 1"
     p:timeBetweenEvictionRunsMillis="300000" p:minEvictableIdleTimeMillis="600000" />
