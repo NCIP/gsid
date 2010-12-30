@@ -41,7 +41,6 @@ public interface IdentifiersNAServiceI {
    * Returns metadata associated with the provided identifier
    *
    * @param identifier
-   *	The identifier to retrieve data from
    * @return The metadata associated with the provided identifier
    * @throws NamingAuthorityConfigurationFault
    *	A configuration error has been detected
@@ -50,25 +49,7 @@ public interface IdentifiersNAServiceI {
    * @throws NamingAuthoritySecurityFault
    *	User is not authorized to perform the operation
    */
-  public namingauthority.IdentifierData resolveIdentifier(org.apache.axis.types.URI identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault ;
-
-  /**
-   * Deletes keys from an identifier
-   *
-   * @param identifier
-   *	The identifier to be modified
-   * @param keyNames
-   *	Names of keys to be deleted
-   * @throws InvalidIdentifierFault
-   *	The provided identifier does not exist
-   * @throws NamingAuthorityConfigurationFault
-   *	A configuration error has been detected
-   * @throws NamingAuthoritySecurityFault
-   *	User is not authorized to perform the operation
-   * @throws InvalidIdentifierValuesFault
-   *	Invalid identifier metadata was provided
-   */
-  public void deleteKeys(org.apache.axis.types.URI identifier,java.lang.String[] keyNames) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault ;
+  public namingauthority.IdentifierData resolveIdentifier(java.lang.String identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault ;
 
   /**
    * Creates new keys on an existing identifier
@@ -87,24 +68,6 @@ public interface IdentifiersNAServiceI {
    *	Invalid identifier metadata was provided
    */
   public void createKeys(org.apache.axis.types.URI identifier,namingauthority.IdentifierData identifierData) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault ;
-
-  /**
-   * Replaces the values associated with the specified keys on an existing identifier
-   *
-   * @param identifier
-   *	The identifier to make changes to
-   * @param identifierValues
-   *	New values to be associated with the existing keys
-   * @throws InvalidIdentifierFault
-   *	The provided identifier does not exist
-   * @throws NamingAuthorityConfigurationFault
-   *	A configuration error has been detected
-   * @throws NamingAuthoritySecurityFault
-   *	User is not authorized to perform the operation
-   * @throws InvalidIdentifierValuesFault
-   *	The provided identifier metadata does not exist
-   */
-  public void replaceKeyValues(org.apache.axis.types.URI identifier,namingauthority.IdentifierValues identifierValues) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault ;
 
   /**
    * Gets key names associated with an existing identifier
@@ -143,7 +106,7 @@ public interface IdentifiersNAServiceI {
   /**
    * This operation registers a Specimen Identifier.
    *
-   * @param suggestedIdentifer
+   * @param suggestedIdentifier
    * @param parentIdentifiers
    * @throws NamingAuthorityConfigurationFault
    *	
@@ -154,7 +117,7 @@ public interface IdentifiersNAServiceI {
    * @throws NamingAuthoritySecurityFault
    *	
    */
-  public java.lang.String registerGSID(java.lang.String suggestedIdentifer,java.lang.String[] parentIdentifiers) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault ;
+  public java.lang.String registerGSID(java.lang.String suggestedIdentifier,java.lang.String[] parentIdentifiers) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault ;
 
   /**
    * Add the current user as an site that has information about the input specimen identifier.
@@ -232,6 +195,19 @@ public interface IdentifiersNAServiceI {
    *	
    */
   public void registerSite(java.lang.String application,java.lang.String applicationURL,java.lang.String applicationVersion,java.lang.String contactName,java.lang.String contactEmail,java.lang.String contactPhone,java.lang.String organization) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault ;
+
+  /**
+   * validates an identifier
+   *
+   * @param identifier
+   * @throws InvalidIdentifierFault
+   *	
+   * @throws InvalidIdentifierValuesFault
+   *	
+   * @throws NamingAuthorityConfigurationFault
+   *	
+   */
+  public boolean validateIdentifier(java.lang.String identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault ;
 
 }
 
