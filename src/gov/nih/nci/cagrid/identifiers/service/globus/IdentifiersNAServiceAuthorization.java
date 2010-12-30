@@ -79,15 +79,7 @@ public class IdentifiersNAServiceAuthorization implements PDP {
 		
 	}
 	   				
-	public void authorizeDeleteKeys(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
-		
-	}
-	   				
 	public void authorizeCreateKeys(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
-		
-	}
-	   				
-	public void authorizeReplaceKeyValues(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
 		
 	}
 	   				
@@ -122,6 +114,10 @@ public class IdentifiersNAServiceAuthorization implements PDP {
 	public void authorizeRegisterSite(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
 		
 	}
+	   				
+	public void authorizeValidateIdentifier(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
+		
+	}
 	   
 	
 	public boolean isPermitted(Subject peerSubject, MessageContext context, QName operation)
@@ -148,14 +144,8 @@ public class IdentifiersNAServiceAuthorization implements PDP {
 		} else if(operation.getLocalPart().equals("resolveIdentifier")){
 			authorizeResolveIdentifier(peerSubject, context, operation);
 			return true;
-		} else if(operation.getLocalPart().equals("deleteKeys")){
-			authorizeDeleteKeys(peerSubject, context, operation);
-			return true;
 		} else if(operation.getLocalPart().equals("createKeys")){
 			authorizeCreateKeys(peerSubject, context, operation);
-			return true;
-		} else if(operation.getLocalPart().equals("replaceKeyValues")){
-			authorizeReplaceKeyValues(peerSubject, context, operation);
 			return true;
 		} else if(operation.getLocalPart().equals("getKeyNames")){
 			authorizeGetKeyNames(peerSubject, context, operation);
@@ -180,6 +170,9 @@ public class IdentifiersNAServiceAuthorization implements PDP {
 			return true;
 		} else if(operation.getLocalPart().equals("registerSite")){
 			authorizeRegisterSite(peerSubject, context, operation);
+			return true;
+		} else if(operation.getLocalPart().equals("validateIdentifier")){
+			authorizeValidateIdentifier(peerSubject, context, operation);
 			return true;
 		} 		
 		return false;
