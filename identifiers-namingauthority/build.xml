@@ -23,10 +23,15 @@
 	<property name="ext.lib.dir" value="${basedir}/ext/dependencies/impl/jars" />
 	<property name="ext.test.lib.dir" location="${basedir}/ext/dependencies/test/jars" />
 
+	<!-- checkstyle stuff -->
+	<property name="checkstyle.dir" value="${basedir}/checkstyle" />
+	<property name="checkstyle.resource.dir" value="${checkstyle.dir}/resources"/>
+	<property name="checkstyle.out.dir" value="${checkstyle.dir}/output"/>
+	
 	<!-- javac options -->
 	<property name="java.source" value="1.5" />
-	<property name="java.debug" value="true" />
-
+	<property name="java.debug" value="true" />	
+	
 	<!-- testing stuff -->
 	<property name="test.dir" location="${basedir}/test" />
 	<property name="test.src.dir" location="${test.dir}/src" />
@@ -236,7 +241,14 @@
 		<echo message="copying files to the identifiers-namingauthority-gridsvc" />
 		<copy todir="${basedir}/../identifiers-namingauthority-gridsvc/ext/dependencies/service/jars" file="${namingauthority.jarfile}" />
 	</target>
-
+	
+	<taskdef resource="checkstyletask.properties"  classpath="${lib.dir}/checkstyle-5.3-all.jar" />
+	<target name="checkstyle"  description="Generates a report of code convention violations." >
+	  <checkstyle config="${checkstyle.resource.dir}/sun_checks.xml" failOnViolation="false">
+	    <formatter type="xml" tofile="${checkstyle.out.dir}/checkstyle_report.xml"/>
+	   	<fileset dir="${src.dir}" includes="**/*.java"/>	  	
+	  </checkstyle>	  
+	</target>
 </project>
 
 
