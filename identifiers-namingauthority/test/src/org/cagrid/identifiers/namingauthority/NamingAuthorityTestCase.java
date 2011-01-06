@@ -10,7 +10,6 @@ import org.cagrid.identifiers.namingauthority.impl.SecurityInfoImpl;
 import org.cagrid.identifiers.namingauthority.test.NamingAuthorityTestCaseBase;
 import org.cagrid.identifiers.namingauthority.util.Tree;
 import org.junit.Test;
-import org.springframework.test.annotation.Rollback;
 
 public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase
 {
@@ -28,7 +27,7 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase
 		globalValues.put("CODE", new KeyData(null, new String[] { "007" }));
 	}
 
-	@Test
+	@Test	
 	public void testRegisterGSID()
 	{
 		// System.out.println("testing the RegisterGSID");
@@ -46,7 +45,7 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase
 			LOG.info("passed registerGSID for " + secInfo.getUser() + ". MSG:\" " + e.getMessage() + "\"");
 		}
 
-		secInfo = new SecurityInfoImpl("User1");
+		secInfo = new SecurityInfoImpl("User13");
 
 		try
 		{
@@ -56,7 +55,10 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase
 		}
 		catch (Exception e)
 		{
-			fail("test registeSite for user " + secInfo.getUser() + ". MSG:\"" + e.getMessage() + "\"");
+			StringBuffer sb=new StringBuffer();
+			for(StackTraceElement temp:e.getStackTrace())
+				sb.append(temp.getClassName()+"["+temp.getLineNumber()+"]\n");
+			fail("test registeSite for user " + secInfo.getUser() + ". MSG:\"" + sb.toString() + "\"");
 		}
 		String identifier = null;
 		try
@@ -121,6 +123,7 @@ public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase
 		catch (Exception e)
 		{
 			fail("test registeSite for " + secInfo.getUser() + ". MSG: \"" + e.getMessage() + "\"");
+			e.getStackTrace();
 		}
 
 		try

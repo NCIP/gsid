@@ -31,12 +31,13 @@ public class IdentifierValueKey {
     private Long id;
 
     @Column(nullable = false, name = "value_key", length = 1024)
+    @Index(name="index_identifier_keys_key")
     private String key;
 
     @CollectionOfElements(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name = "identifier_key_values")
-    @Column(name = "value", length = 16777215)
+    @JoinTable(name = "identifier_key_values")    
+    @Column(name = "value", length = 500)
     private List<String> values;
 
     @Column(nullable = true, unique = false)

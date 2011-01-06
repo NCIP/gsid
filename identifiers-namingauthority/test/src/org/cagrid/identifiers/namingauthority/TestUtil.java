@@ -57,10 +57,10 @@ public class TestUtil
 		return tree;
 	}
 	
-	public boolean validateIdentifier(SecurityInfo client,String identifier)
+	public boolean validateIdentifier(SecurityInfo client,String identifier) throws InvalidIdentifierException, NamingAuthoritySecurityException, NamingAuthorityConfigurationException
 	{
 		boolean flag=false;	
-		flag=validateIdentifier(client, identifier);
+		flag=this.NamingAuthority.validateIdentifier(client, identifier);
 		return flag;
 	}
 	
