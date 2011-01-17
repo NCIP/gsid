@@ -192,5 +192,11 @@
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-authentication-service-stubs-1.4.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/mobius_common_client-1.1.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/serializer.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-gridgrouper-client-1.4.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-gridgrouper-common-1.4.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-gridgrouper-resources-1.4.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-gridgrouper-stubs-1.4.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/service/jars/grouper.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/service/jars/subject-0.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
