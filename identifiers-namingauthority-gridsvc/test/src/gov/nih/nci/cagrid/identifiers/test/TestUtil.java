@@ -13,114 +13,61 @@ import namingauthority.Tree;
 
 public class TestUtil
 {	
+	private IdentifiersNAServiceClient client;	
 	
-	public static String registerGSID(IdentifiersNAServiceClient client,String suggestedIdentifier,String[] parentIdentifiers) throws NamingAuthorityConfigurationFault, InvalidIdentifierValuesFault, InvalidIdentifierFault, NamingAuthoritySecurityFault, RemoteException
+	
+	public TestUtil(IdentifiersNAServiceClient client)
+	{		
+		this.client = client;
+	}
+
+	public TestUtil()
+	{
+	}
+
+	public String registerGSID(String suggestedIdentifier,String[] parentIdentifiers) throws NamingAuthorityConfigurationFault, InvalidIdentifierValuesFault, InvalidIdentifierFault, NamingAuthoritySecurityFault, RemoteException
 	{
 		String identifier=null;
 		identifier=client.registerGSID(suggestedIdentifier, parentIdentifiers);
-//		try
-//		{
-//			Thread.sleep(500);
-//		}
-//		catch (InterruptedException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		return identifier;
 	}
 	
-	public static void addSite(IdentifiersNAServiceClient client,String identifier) throws NamingAuthorityConfigurationFault, InvalidIdentifierValuesFault, InvalidIdentifierFault, NamingAuthoritySecurityFault, RemoteException
-	{
-		
+	public void addSite(String identifier) throws NamingAuthorityConfigurationFault, InvalidIdentifierValuesFault, InvalidIdentifierFault, NamingAuthoritySecurityFault, RemoteException
+	{		
 		client.addSite(identifier);
-//		try
-//		{
-//			Thread.sleep(500);
-//		}
-//		catch (InterruptedException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 	
-	public static String[] createBatchIdentifiers(IdentifiersNAServiceClient client,int numOfIdentifiers) throws NamingAuthorityConfigurationFault, NamingAuthoritySecurityFault, RemoteException
+	public String[] createBatchIdentifiers(int numOfIdentifiers) throws NamingAuthorityConfigurationFault, NamingAuthoritySecurityFault, RemoteException
 	{
 		String[] temp=null;
 		temp=client.generateIdentifiers(numOfIdentifiers);
-//		try
-//		{
-//			Thread.sleep(500);
-//		}
-//		catch (InterruptedException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		return temp;
 	}
 	
-	public static IdentifierData resolveIdentifier(IdentifiersNAServiceClient client,String identifier) throws NamingAuthorityConfigurationFault, InvalidIdentifierFault, NamingAuthoritySecurityFault, RemoteException
+	public IdentifierData resolveIdentifier(String identifier) throws NamingAuthorityConfigurationFault, InvalidIdentifierFault, NamingAuthoritySecurityFault, RemoteException
 	{
 		IdentifierData temp=client.resolveIdentifier(identifier);
-//		try
-//		{
-//			Thread.sleep(500);
-//		}
-//		catch (InterruptedException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		return temp;		
 	}
 	
-	public static Tree getParentHierarch(IdentifiersNAServiceClient client,String identifier) throws NamingAuthorityConfigurationFault, NamingAuthoritySecurityFault, InvalidIdentifierValuesFault, InvalidIdentifierFault, RemoteException
+	public Tree getParentHierarch(String identifier) throws NamingAuthorityConfigurationFault, NamingAuthoritySecurityFault, InvalidIdentifierValuesFault, InvalidIdentifierFault, RemoteException
 	{
 		Tree tree=null;
 		tree=client.getParentHierarchy(identifier);
-//		try
-//		{
-//			Thread.sleep(500);
-//		}
-//		catch (InterruptedException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		return tree;
 	}
 	
-	public static Tree getChildHierarch(IdentifiersNAServiceClient client,String identifier) throws NamingAuthorityConfigurationFault, NamingAuthoritySecurityFault, InvalidIdentifierValuesFault, InvalidIdentifierFault, RemoteException
+	public Tree getChildHierarch(String identifier) throws NamingAuthorityConfigurationFault, NamingAuthoritySecurityFault, InvalidIdentifierValuesFault, InvalidIdentifierFault, RemoteException
 	{
 		Tree tree=null;
 		tree=client.getChildHierarchy(identifier);
-//		try
-//		{
-//			Thread.sleep(500);
-//		}
-//		catch (InterruptedException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		return tree;
 	}
 	
-	public static boolean validateIdentifier(IdentifiersNAServiceClient client,String identifier)
+	public boolean validateIdentifier(String identifier) throws InvalidIdentifierFault, InvalidIdentifierValuesFault, NamingAuthorityConfigurationFault, RemoteException
 	{
 		boolean flag=false;	
-		flag=validateIdentifier(client, identifier);
-//		try
-//		{
-//			Thread.sleep(500);
-//		}
-//		catch (InterruptedException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		flag=client.validateIdentifier(identifier);
 		return flag;
 	}
 	

@@ -8,9 +8,17 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.axis.types.URI.MalformedURIException;
+import org.cagrid.identifiers.namingauthority.impl.SecurityInfoImpl;
 import org.globus.gsi.GlobusCredential;
 
 public class StressTestCase
@@ -88,7 +96,7 @@ public class StressTestCase
 
 	public static void main(String[] args)
 	{
-		long numberOfTests=1000l;
+		
 		GlobusCredential creds = null;
 		try
 		{
@@ -110,11 +118,58 @@ public class StressTestCase
 		{
 			IdentifiersNAServiceClient client = new IdentifiersNAServiceClient(
 					"https://localhost:8443/wsrf/services/cagrid/IdentifiersNAService", creds);
-//			client.registerSite("site", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443-481-7555", "sb");
-			long t1=System.currentTimeMillis();
-			StressTestUtil.testOnlyRegisterGSID(client, numberOfTests);
-			long t2=System.currentTimeMillis();
-			System.out.println("time taken is "+(t2-t1));
+			//client.registerSite("site", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443-481-7555", "sb");
+			
+			long numberOfTests = 1l;
+			int numberOfThreads = 5;
+			int threadPool = 5;
+			double average=0;
+			long total=0;			
+			TestName testName=TestName.RESOLVE_IDENTIFIER;
+			// this.NamingAuthority.registerSite(client, "site", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com","443-481-7555", "sb");
+			ExecutorService executor = Executors.newFixedThreadPool(threadPool);
+			List<Future<StressTestUtil>> futures = new ArrayList<Future<StressTestUtil>>();			
+			for (int i = 0; i < numberOfThreads; i++)
+			{
+				String threadName = "t" + i;
+				StressTestUtil thread = new StressTestUtil(threadName, numberOfTests,testName, client);
+				Future<StressTestUtil> future = executor.submit(thread, thread);
+				futures.add(future);
+			}
+			for (Future<StressTestUtil> future : futures)
+			{
+				try
+				{
+					StressTestUtil e = future.get();
+				}
+				catch (InterruptedException e)
+				{
+					System.out.println("Interrupted Exception occured "+e.getMessage());
+				}
+				catch (ExecutionException e)
+				{
+					System.out.println("Execution Exception occured "+e.getMessage());
+				}
+			}
+			Map<String,Pair<Long>> threadTime=StressTestUtil.getThreadTime();	
+			System.out.println("##############################################################");
+			System.out.println("Number of tests "+numberOfTests);
+			for(String key:threadTime.keySet())
+			{
+				
+				System.out.println("Thread: "+key);
+				Pair<Long> currentThreadPair=threadTime.get(key);
+				System.out.println("Start Time: "+currentThreadPair.start);
+				System.out.println("End Time: "+currentThreadPair.finish);
+				long diff=currentThreadPair.finish-currentThreadPair.start;
+				System.out.println("Duration: "+diff);			
+				
+				total+=diff;			
+			}
+			average=(double)total/((double)numberOfTests*(double)numberOfThreads*1000.0);
+			System.out.println("The average time is "+average);
+			System.out.println("##############################################################");	
+			executor.shutdown();
 			
 			
 		}
