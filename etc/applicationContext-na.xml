@@ -40,6 +40,7 @@
       <list>
         <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKey</value>
         <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata</value>
+        <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKeyValues</value>
       </list>
     </property>
   </bean>
