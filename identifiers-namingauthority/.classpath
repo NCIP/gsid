@@ -95,5 +95,11 @@
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/jta-1.0.1B.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/antlr-2.7.6rc1.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/commons-collections-3.2.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-client-1.4.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-common-1.4.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-resources-1.4.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-stubs-1.4.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/grouper.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/subject-0.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

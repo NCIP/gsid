@@ -1,5 +1,10 @@
 package org.cagrid.identifiers.namingauthority.dao;
 
+import edu.internet2.middleware.grouper.GroupNotFoundException;
+import edu.internet2.middleware.grouper.GrouperRuntimeException;
+import gov.nih.nci.cagrid.gridgrouper.client.GridGrouper;
+import gov.nih.nci.cagrid.gridgrouper.grouper.GrouperI;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -38,6 +43,28 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	protected static Log LOG = LogFactory.getLog(IdentifierMetadataDao.class.getName());
 	private IdentifierMetadata systemValues = null;
 	private URI prefix = null;
+	private String grouperURL = null;
+	private String groupName = null;
+
+	public String getGrouperURL()
+	{
+		return grouperURL;
+	}
+
+	public void setGrouperURL(String grouperURL)
+	{
+		this.grouperURL = grouperURL;
+	}
+
+	public String getGroupName()
+	{
+		return groupName;
+	}
+
+	public void setGroupName(String groupName)
+	{
+		this.groupName = groupName;
+	}
 
 	@Override
 	public Class<IdentifierMetadata> domainClass()
@@ -47,7 +74,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * initializer.
-	 * @param prefix prefix to be used for the representing data.
+	 * 
+	 * @param prefix
+	 *            prefix to be used for the representing data.
 	 * @throws NamingAuthorityConfigurationException
 	 */
 	public synchronized void initialize(URI prefix) throws NamingAuthorityConfigurationException
@@ -66,7 +95,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method is used to load the data of an identifier without prefix.
-	 * @param identifier unprefixed identifier for which the data has to be loaded.
+	 * 
+	 * @param identifier
+	 *            unprefixed identifier for which the data has to be loaded.
 	 * @return identifier data in the form of IdentifierMetaData.
 	 * @throws InvalidIdentifierException
 	 * @throws NamingAuthorityConfigurationException
@@ -100,7 +131,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method is used to load the data of an identifier with prefix.
-	 * @param identifier prefixed identifier for which the data has to be loaded.
+	 * 
+	 * @param identifier
+	 *            prefixed identifier for which the data has to be loaded.
 	 * @return identifier data in the form of IdentifierMetaData.
 	 * @throws InvalidIdentifierException
 	 * @throws NamingAuthorityConfigurationException
@@ -112,8 +145,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	/***
-	 * This method is get the site data from its identifier.
-	 * note: Site is used to store the user information.
+	 * This method is get the site data from its identifier. note: Site is used
+	 * to store the user information.
+	 * 
 	 * @param localIdentifier
 	 * @return IdentifierMetaData instance containing site data.
 	 * @throws InvalidIdentifierException
@@ -178,26 +212,28 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 */
 	public IdentifierData resolveIdentifier(SecurityInfo secInfo, java.net.URI identifier)
 			throws InvalidIdentifierException, NamingAuthoritySecurityException, NamingAuthorityConfigurationException
-	{		
+	{
 		if (identifier == null)
 		{
 			throw new InvalidIdentifierException("Identifier cannot be null.");
 		}
 		try
-		{			
+		{
 			if (!identifier.toString().startsWith(prefix.toString()))
 			{
-				try{
-				identifier = IdentifierUtil.build(prefix, identifier);
-				}catch(Exception e)
-				{					
+				try
+				{
+					identifier = IdentifierUtil.build(prefix, identifier);
+				}
+				catch (Exception e)
+				{
 				}
 			}
-			LOG.warn("the identifier is "+identifier.toString());
+			LOG.warn("the identifier is " + identifier.toString());
 			IdentifierData completeData = getIdentifierData(secInfo, identifier, null);
-			identifier=IdentifierUtil.getLocalName(prefix, identifier);
+			identifier = IdentifierUtil.getLocalName(prefix, identifier);
 			List<IdentifierMetadata> siteData = getSiteData(identifier);
-			LOG.warn("site data size is "+siteData.size());
+			LOG.warn("site data size is " + siteData.size());
 			if (siteData != null && siteData.size() > 0)
 			{
 				int counter = 0;
@@ -219,10 +255,10 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 								{
 									for (String key1 : siteIdentifier.getKeys())
 									{
-										LOG.debug("the key1 is "+key1);
+										LOG.debug("the key1 is " + key1);
 										if (!key1.equalsIgnoreCase("TYPE"))
 										{
-											LOG.debug("the key1 is "+key1);
+											LOG.debug("the key1 is " + key1);
 											completeData.put(counter + ":" + key1, siteIdentifier.getValues(key1));
 										}
 									}
@@ -236,7 +272,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 						}
 						else if (!key.equalsIgnoreCase("GSID") && !key.equalsIgnoreCase("TYPE"))
 						{
-							LOG.debug("the key is "+key);
+							LOG.debug("the key is " + key);
 							completeData.put(counter + ":" + key, currentData.getValues(key));
 						}
 					}
@@ -783,16 +819,21 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	/***
-	 * This method is used to register an identifier.
-	 * At the end of this method an identifier is generated and saved in the persistent store.	 
-	 * If suggestedIdentifier is set to null then a new identifier is created and is returned.
-	 * If suggestedIdentifier is not null then system uses this identifier only if the identifier
-	 * does not exists in the persistent store otherwise it creates a new identifier, saves it 
-	 * and returns the newly created identifier.   
-	 * @param secInfo provides the information about the user.
-	 * @param suggestedIdentifier is an identifier that a user would like to register.  
-	 * @param parentIdentifiers used to represent if current identifier should be child of any existing
-	 * identifiers or not.
+	 * This method is used to register an identifier. At the end of this method
+	 * an identifier is generated and saved in the persistent store. If
+	 * suggestedIdentifier is set to null then a new identifier is created and
+	 * is returned. If suggestedIdentifier is not null then system uses this
+	 * identifier only if the identifier does not exists in the persistent store
+	 * otherwise it creates a new identifier, saves it and returns the newly
+	 * created identifier.
+	 * 
+	 * @param secInfo
+	 *            provides the information about the user.
+	 * @param suggestedIdentifier
+	 *            is an identifier that a user would like to register.
+	 * @param parentIdentifiers
+	 *            used to represent if current identifier should be child of any
+	 *            existing identifiers or not.
 	 * @return an identifier.
 	 * @throws NamingAuthorityConfigurationException
 	 * @throws InvalidIdentifierValuesException
@@ -866,7 +907,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method is used to register a site for a user.
-	 * @param secInfo grid credentials for the user.
+	 * 
+	 * @param secInfo
+	 *            grid credentials for the user.
 	 * @param application
 	 * @param applicationURL
 	 * @param applicationVersion
@@ -907,8 +950,11 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method is used to add a site to existing identifier.
-	 * @param secInfo security info of the user.
-	 * @param identifier identifier to which user would like to add his/her site.
+	 * 
+	 * @param secInfo
+	 *            security info of the user.
+	 * @param identifier
+	 *            identifier to which user would like to add his/her site.
 	 * @throws NamingAuthorityConfigurationException
 	 * @throws InvalidIdentifierValuesException
 	 * @throws InvalidIdentifierException
@@ -954,11 +1000,14 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	/***
-	 * This method is used to validates the identifier.
-	 * Validation checks if the identifier is in the database or not.
-	 * if exists returns false else returns true.
-	 * @param secInfo secInfo of the user not a mandatory parameter.
-	 * @param identifier identifier for which validation is done.
+	 * This method is used to validates the identifier. Validation checks if the
+	 * identifier is in the database or not. if exists returns false else
+	 * returns true.
+	 * 
+	 * @param secInfo
+	 *            secInfo of the user not a mandatory parameter.
+	 * @param identifier
+	 *            identifier for which validation is done.
 	 * @return true if identifier does not exists in the database.
 	 * @throws InvalidIdentifierException
 	 * @throws NamingAuthoritySecurityException
@@ -995,10 +1044,13 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	/****
-	 * This method is used to get the parent hierarchy in the form 
-	 * of a tree with root node as identifier node.
-	 * @param secInfo security info of the user can be null.
-	 * @param identifier for which the hierarchy to be generated. 
+	 * This method is used to get the parent hierarchy in the form of a tree
+	 * with root node as identifier node.
+	 * 
+	 * @param secInfo
+	 *            security info of the user can be null.
+	 * @param identifier
+	 *            for which the hierarchy to be generated.
 	 * @return Tree representing the parent hierarchy.
 	 * @throws InvalidIdentifierException
 	 * @throws NamingAuthoritySecurityException
@@ -1100,10 +1152,13 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	/****
-	 * This method is used to get the child hierarchy in the form 
-	 * of a tree with root node as identifier node.
-	 * @param secInfo security info of the user can be null.
-	 * @param identifier for which the hierarchy to be generated. 
+	 * This method is used to get the child hierarchy in the form of a tree with
+	 * root node as identifier node.
+	 * 
+	 * @param secInfo
+	 *            security info of the user can be null.
+	 * @param identifier
+	 *            for which the hierarchy to be generated.
 	 * @return Tree representing the child hierarchy.
 	 * @throws InvalidIdentifierException
 	 * @throws NamingAuthoritySecurityException
@@ -1164,11 +1219,15 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	/***
-	 * This method is used to get all the identifiers whose parent is the provided identifier.
-	 * @param secInfo security info of the user can be null.
-	 * @param identifier for which the children are found.
-	 * @return list of IdentifierMetadata representing info of each identifier which have 
-	 * provided identifier as parent. 
+	 * This method is used to get all the identifiers whose parent is the
+	 * provided identifier.
+	 * 
+	 * @param secInfo
+	 *            security info of the user can be null.
+	 * @param identifier
+	 *            for which the children are found.
+	 * @return list of IdentifierMetadata representing info of each identifier
+	 *         which have provided identifier as parent.
 	 * @throws InvalidIdentifierException
 	 * @throws NamingAuthoritySecurityException
 	 * @throws InvalidIdentifierValuesException
@@ -1192,8 +1251,11 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method is used to gets the data for all the sites.
-	 * @param secInfo security info of the user.
-	 * @param naPrefix prefix uri.
+	 * 
+	 * @param secInfo
+	 *            security info of the user.
+	 * @param naPrefix
+	 *            prefix uri.
 	 * @return list of IdentifierData representing the sites.
 	 * @throws InvalidIdentifierException
 	 * @throws NamingAuthoritySecurityException
@@ -1237,7 +1299,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method is used to check if parent identifiers are empty or not.
-	 * @param parents 
+	 * 
+	 * @param parents
 	 * @return true if parent identifiers are not empty and false otherwise.
 	 */
 	private boolean checkIfParentsEmpty(String[] parents)
@@ -1262,9 +1325,11 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	/***
-	 * This method is used to get the identifier of the site 
-	 * associated with the user.
-	 * @param userName string representing user name.
+	 * This method is used to get the identifier of the site associated with the
+	 * user.
+	 * 
+	 * @param userName
+	 *            string representing user name.
 	 * @return identifier.
 	 */
 	public String getIdentifierFromUser(String userName)
@@ -1290,8 +1355,10 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method check if the identifier exists in the persistent code.
+	 * 
 	 * @param identifier
-	 * @return true if the identifier exists in the persistent and false otherwise.
+	 * @return true if the identifier exists in the persistent and false
+	 *         otherwise.
 	 */
 	public boolean checkIfIdentifierExists(URI identifier)
 	{
@@ -1303,9 +1370,15 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method is used to check the security based on the parameters.
-	 * @param secInfo info representing the user.
-	 * @param checkOnlyLogin if this is true then it checks if user belongs to a group or not.
-	 * @param checkHasSite if this is true then it check if the user has registered a site or not.
+	 * 
+	 * @param secInfo
+	 *            info representing the user.
+	 * @param checkOnlyLogin
+	 *            if this is true then it checks if user belongs to a group or
+	 *            not.
+	 * @param checkHasSite
+	 *            if this is true then it check if the user has registered a
+	 *            site or not.
 	 * @throws NamingAuthoritySecurityException
 	 */
 	public void checkSecurity(SecurityInfo secInfo, boolean checkOnlyLogin, boolean checkHasSite)
@@ -1319,6 +1392,10 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		if (!checkOnlyLogin)
 		{
 			// check for a group.
+			if(!isMember(caller))
+			{
+				throw new NamingAuthoritySecurityException("You should be a member of this \""+groupName+"\" group before you proceed.");
+			}
 		}
 		String Identifier = getIdentifierFromUser(caller);
 		if (checkHasSite)
@@ -1337,13 +1414,52 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 	}
 
+	/***
+	 * Check whether a user is member of a group or not.
+	 * @param userIdentity
+	 * @return
+	 */
+	private boolean isMember(String userIdentity)
+	{
+		if ((grouperURL != null || grouperURL.length()!=0) && (groupName != null || groupName.length()!=0))
+		{
+			// Create a Grid Grouper Instance
+			GrouperI grouper = new GridGrouper(grouperURL);
+
+			try
+			{
+				// Determine if the user is a member of the group.
+				boolean isMember = grouper.isMemberOf(userIdentity, groupName);
+
+				if (isMember)
+				{
+					LOG.debug("The user " + userIdentity + " is a member of " + groupName);
+					return true;
+				}
+				else
+				{
+					LOG.debug("The user " + userIdentity + " is NOT a member of " + groupName);
+					return false;
+				}
+			}
+			catch (GroupNotFoundException e)
+			{
+				LOG.debug("The group " + groupName + " does not exist, therefore the user " + userIdentity
+						+ " is NOT a member.");
+				return false;
+			}
+		}
+		//returning true for testing purpose.
+		return true;
+	}
+
 	/*
 	 * Private Stuff
 	 */
 
-	/***	 
-	 * this method save the identifier into the persistent store. 
-	 *
+	/***
+	 * this method save the identifier into the persistent store.
+	 * 
 	 */
 	private String createIdentifier(SecurityInfo secInfo, String identifier, List<String> keys, List<String> values)
 			throws InvalidIdentifierException, NamingAuthorityConfigurationException, NamingAuthoritySecurityException
@@ -1432,7 +1548,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			}
 			catch (URISyntaxException e)
 			{
-				
+
 				LOG.warn("URI Syntax exception occured");
 				throw new InvalidIdentifierException("URI is Invalid");
 			}
@@ -1779,6 +1895,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/****
 	 * This method is used to validate the security info of the user.
+	 * 
 	 * @param secInfo
 	 * @return
 	 */
@@ -1794,6 +1911,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method is used to load the security info of an identifier.
+	 * 
 	 * @param identifier
 	 * @return
 	 * @throws InvalidIdentifierException
@@ -1816,6 +1934,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/***
 	 * This method is used to validate the identifier pattern.
+	 * 
 	 * @param identifier
 	 * @throws InvalidIdentifierException
 	 */
@@ -1836,4 +1955,5 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			throw new InvalidIdentifierException("identifier is not valid");
 		}
 	}
+
 }

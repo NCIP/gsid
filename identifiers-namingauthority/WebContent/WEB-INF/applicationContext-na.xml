@@ -68,7 +68,10 @@
     </property>
   </bean>
 
-  <bean id="identifierDao" parent="daoTemplate" class="org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao" />
+  <bean id="identifierDao" parent="daoTemplate" class="org.cagrid.identifiers.namingauthority.dao.IdentifierMetadataDao" >
+  	<property name="grouperURL" value="${cagrid.na.gridgrouper.grouperURL}"/>
+  	<property name="groupName" value="${cagrid.na.gridgrouper.groupName}"/>
+  </bean>
 
   <bean id="NamingAuthority" class="org.cagrid.identifiers.namingauthority.impl.NamingAuthorityImpl" init-method="initialize">
     <property name="configuration">
