@@ -10,6 +10,7 @@ import org.cagrid.identifiers.namingauthority.impl.SecurityInfoImpl;
 import org.cagrid.identifiers.namingauthority.test.NamingAuthorityTestCaseBase;
 import org.cagrid.identifiers.namingauthority.util.Tree;
 import org.junit.Test;
+import org.springframework.test.annotation.Rollback;
 
 public class NamingAuthorityTestCase extends NamingAuthorityTestCaseBase
 {

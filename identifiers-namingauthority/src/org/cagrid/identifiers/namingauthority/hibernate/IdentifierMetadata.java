@@ -33,7 +33,7 @@ public class IdentifierMetadata {
     @Index(name="index_identifiers_localIdentifier")
     private URI localIdentifier;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "identifier_id", nullable = false)
     private Collection<IdentifierValueKey> values;
 

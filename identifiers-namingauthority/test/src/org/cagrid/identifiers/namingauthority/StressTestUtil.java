@@ -2,6 +2,7 @@ package org.cagrid.identifiers.namingauthority;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -24,28 +25,74 @@ public class StressTestUtil extends Thread
 	private static Random rand = new Random();
 	private static String fileName = "temp.txt";
 	private static int size = 500;
+	public static long avgNumOfTests=100l;
 	private static int randomIdentifierSize = 500;
-	private static final int MAX_NUM_FOR_BATCH = 100;
-	public static TestUtil testUtil;
+	public static final int MAX_NUM_FOR_BATCH = 100;
+	public TestUtil testUtil;
 	private String threadName;
 	private long currentNumberOfTests;
 	private TestName currentTestName;
 	SecurityInfo currentClient;
 	private static Map<String,Pair<Long>> threadTime=new HashMap<String,Pair<Long>>();
+	private static FileOutputStream fout = null;
+	private static PrintStream p=null;
+	
+	
+	public static void createStream()
+	{	
+		try
+		{
+			fout = new FileOutputStream(fileName, true);
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		if (fout != null)
+		{
+			p = new PrintStream(fout);
+		}
+	}
 
 	public StressTestUtil()
 	{
 		super();
+		testUtil=new TestUtil();
 	}
 
 	public StressTestUtil(String threadName, long currentNumberOfTests, TestName currentTestName,
 			SecurityInfo currentClient)
 	{
-		super();
+		this();
 		this.threadName = threadName;
 		this.currentNumberOfTests = currentNumberOfTests;
 		this.currentTestName = currentTestName;
 		this.currentClient = currentClient;		
+	}
+	
+	public StressTestUtil(String threadName, long currentNumberOfTests, TestName currentTestName,
+			SecurityInfo currentClient,TestUtil testUtil)
+	{
+		
+		this.threadName = threadName;
+		this.currentNumberOfTests = currentNumberOfTests;
+		this.currentTestName = currentTestName;
+		this.currentClient = currentClient;		
+		this.testUtil=testUtil;
+	}
+	
+	public static void recreateTempFile()
+	{
+		try
+		{
+			File f=new File(fileName);			
+			f.delete();
+		}
+		catch(Exception e)
+		{
+			
+		}
+		createStream();
 	}
 
 	public void run()
@@ -73,7 +120,8 @@ public class StressTestUtil extends Thread
 		long t1 = 0l;
 		switch (currentTestName)
 		{
-			case REGISTER_GSID:
+			case REGISTER_GSID:				
+				sleep(500);
 				message = "Time Taken for testOnlyRegisterGSID is ";
 				t1 = System.currentTimeMillis();
 				testOnlyRegisterGSID(currentClient, currentNumberOfTests);
@@ -118,7 +166,7 @@ public class StressTestUtil extends Thread
 		threadTime.put(threadName, new Pair(t1,t2));
 	}
 
-	public static void testOnlyRegisterGSID(SecurityInfo client, long numberOfTests)
+	public void testOnlyRegisterGSID(SecurityInfo client, long numberOfTests)
 	{
 		List<String> identifiers = new ArrayList<String>();
 
@@ -164,9 +212,9 @@ public class StressTestUtil extends Thread
 		}
 	}
 
-	public static void testOnlyGetParentHierarchy(SecurityInfo client, long numberOfTests)
+	public void testOnlyGetParentHierarchy(SecurityInfo client, long numberOfTests)
 	{
-		List<String> identifiers = readIdentifiers();
+		List<String> identifiers = readIdentifiers(numberOfTests);
 		if (identifiers.size() == 0)
 		{
 			log.error("Cannot perform this test as there are not identifiers in the file " + fileName);
@@ -189,9 +237,9 @@ public class StressTestUtil extends Thread
 		}
 	}
 
-	public static void testOnlyGetChildHierarchy(SecurityInfo client, long numberOfTests)
+	public void testOnlyGetChildHierarchy(SecurityInfo client, long numberOfTests)
 	{
-		List<String> identifiers = readIdentifiers();
+		List<String> identifiers = readIdentifiers(numberOfTests);
 		if (identifiers.size() == 0)
 		{
 			log.error("Cannot perform this test as there are not identifiers in the file " + fileName);
@@ -214,9 +262,9 @@ public class StressTestUtil extends Thread
 		}
 	}
 
-	public static void testOnlyResolveIdentifier(SecurityInfo client, long numberOfTests)
+	public void testOnlyResolveIdentifier(SecurityInfo client, long numberOfTests)
 	{
-		List<String> identifiers = readIdentifiers();
+		List<String> identifiers = readIdentifiers(numberOfTests);
 		if (identifiers.size() == 0)
 		{
 			log.error("Cannot perform this test as there are not identifiers in the file " + fileName);
@@ -239,9 +287,9 @@ public class StressTestUtil extends Thread
 		}
 	}
 
-	public static void testOnlyValidateIdentifier(SecurityInfo client, long numberOfTests)
+	public void testOnlyValidateIdentifier(SecurityInfo client, long numberOfTests)
 	{
-		List<String> identifiers = readIdentifiers();
+		List<String> identifiers = readIdentifiers(numberOfTests);
 		if (identifiers.size() == 0)
 		{
 			log.error("Cannot perform this test as there are not identifiers in the file " + fileName);
@@ -265,7 +313,7 @@ public class StressTestUtil extends Thread
 		}
 	}
 
-	public static void testOnlyBatchIdentifiers(SecurityInfo client, long numberOfTests)
+	public void testOnlyBatchIdentifiers(SecurityInfo client, long numberOfTests)
 	{
 		int randomNumber;
 		for (long i = 0l; i < numberOfTests; i++)
@@ -282,9 +330,9 @@ public class StressTestUtil extends Thread
 		}
 	}
 
-	public static void testOnlyAddSite(SecurityInfo client, long numberOfTests)
+	public void testOnlyAddSite(SecurityInfo client, long numberOfTests)
 	{
-		List<String> identifiers = readIdentifiers();
+		List<String> identifiers = readIdentifiers(numberOfTests);
 		if (identifiers.size() == 0)
 		{
 			log.error("Cannot perform this test as there are not identifiers in the file " + fileName);
@@ -307,7 +355,7 @@ public class StressTestUtil extends Thread
 		}
 	}
 
-	public static void testAll(SecurityInfo client, long numberOfTests)
+	public void testAll(SecurityInfo client, long numberOfTests)
 	{
 		int randomNumber;
 		String identifier;
@@ -367,30 +415,21 @@ public class StressTestUtil extends Thread
 		}
 	}
 
-	private static void writeToFile(String line)
-	{
-		FileOutputStream fout = null;
-		try
-		{
-			fout = new FileOutputStream(fileName, true);
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		if (fout != null)
-		{
-			PrintStream p = new PrintStream(fout);
-			p.println(line);
-			p.close();
-		}
+	private synchronized void writeToFile(String line)
+	{	
+		p.println(line);		
 	}
 
-	private static List<String> readIdentifiers()
+	private List<String> readIdentifiers(long numberOfTests)
 	{
 		BufferedReader br = null;
 		FileInputStream file = null;
 		List<String> identifiers = new ArrayList<String>();
+		int threadValue=Integer.parseInt(threadName);
+		long min_limit=threadValue*avgNumOfTests;
+		numberOfTests=numberOfTests==1?10:numberOfTests;
+		long max_limit=min_limit+numberOfTests;
+		long counter=0;
 		try
 		{
 			file = new FileInputStream(fileName);
@@ -408,6 +447,12 @@ public class StressTestUtil extends Thread
 			{
 				while ((line = br.readLine()) != null)
 				{
+					counter++;
+					if(counter<min_limit)
+						continue;
+					else if(counter>max_limit)
+						break;
+					else
 					addElement2List(identifiers, line);
 				}
 				br.close();
@@ -419,6 +464,12 @@ public class StressTestUtil extends Thread
 		}
 
 		return identifiers;
+	}
+	
+	public void finalize() throws Throwable
+	{
+		p.close();
+		super.finalize();
 	}
 
 }

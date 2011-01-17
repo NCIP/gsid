@@ -35,7 +35,7 @@
         <!--  log4j  -->
 	<dependency org="apache" name="log4j" rev="1.2.8"/>
     <!-- External Dependencies -->
-    <dependency org="org.hibernate" name="hibernate" rev="3.2.0.ga" >
+    <dependency org="org.hibernate" name="hibernate" rev="3.2.6.ga" >
     	<exclude org="ant|c3p0|c.*|j.*|o.*|p.*|s.*"/>               
     </dependency>
     <!--  The classes linked by annotations only seem to be needed at compile time; not runtime -->

@@ -5,16 +5,26 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.cagrid.identifiers.namingauthority.domain.IdentifierData;
+import org.cagrid.identifiers.namingauthority.impl.NamingAuthorityImpl;
+import org.cagrid.identifiers.namingauthority.test.SpringTestApplicationContextConstants;
 import org.cagrid.identifiers.namingauthority.util.Tree;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 
 
 public class TestUtil
 {
-	MaintainerNamingAuthority NamingAuthority=null;
-	
-	public TestUtil(MaintainerNamingAuthority NamingAuthority)
+	 MaintainerNamingAuthority NamingAuthority=null;
+	public TestUtil()
 	{
+		ApplicationContext context=new FileSystemXmlApplicationContext(new String[]{SpringTestApplicationContextConstants.NA_BASE_LOCATION,
+                SpringTestApplicationContextConstants.TEST_BASE_LOCATION});
+		NamingAuthority=(MaintainerNamingAuthority)context.getBean("NamingAuthority", NamingAuthorityImpl.class);
+	}
+	
+	public TestUtil( MaintainerNamingAuthority NamingAuthority)
+	{		
 		this.NamingAuthority=NamingAuthority;
 	}
 	
@@ -33,7 +43,7 @@ public class TestUtil
 	public  String[] createBatchIdentifiers(SecurityInfo client,int numOfIdentifiers) throws NamingAuthorityConfigurationException, InvalidIdentifierValuesException, InvalidIdentifierException, NamingAuthoritySecurityException 
 	{
 		String[] temp=null;
-		temp=this.NamingAuthority.createBatchIdentifiers(client,numOfIdentifiers);
+		temp=this.NamingAuthority.createBatchIdentifiers(client,numOfIdentifiers);		
 		return temp;
 	}
 	

@@ -6,7 +6,7 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
   <bean id="dataSourceTemplate" abstract="true" class="org.apache.commons.dbcp.BasicDataSource"
-    destroy-method="close" p:driverClassName="${cagrid.na.db.driver}" p:maxActive="70" p:maxIdle="50" p:maxOpenPreparedStatements="60" p:initialSize="40"
+    destroy-method="close" p:driverClassName="${cagrid.na.db.driver}" p:maxActive="100" p:maxIdle="70" p:maxOpenPreparedStatements="80" p:initialSize="60"
     p:maxWait="180000" p:removeAbandoned="true" p:removeAbandonedTimeout="300" p:logAbandoned="true"
     p:testWhileIdle="true" p:testOnReturn="true" p:validationQuery="select 1"
     p:timeBetweenEvictionRunsMillis="300000" p:minEvictableIdleTimeMillis="600000" />
@@ -21,7 +21,7 @@
     <property name="validationQuery" value="Select 1" />
   </bean>
 
-  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
     depends-on="databaseValidator">
     <property name="dataSource">
       <ref bean="dataSource" />
@@ -29,17 +29,19 @@
     <property name="hibernateProperties">
       <props>
         <prop key="hibernate.dialect">${cagrid.na.db.dialect}</prop>
-        <!--
+       <!--
           <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
          -->
-        <prop key="hibernate.hbm2ddl.auto">update</prop>
-        <prop key="hibernate.show_sql">false</prop>
+         <prop key="hibernate.hbm2ddl.auto">update</prop> 
+        <!-- <prop key="hibernate.format_sql">true</prop> -->
+        <!-- <prop key="hibernate.show_sql">true</prop> -->
       </props>
     </property>
     <property name="annotatedClasses">
       <list>
         <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKey</value>
         <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata</value>
+         <!--  <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKeyValues</value> -->  
       </list>
     </property>
   </bean>

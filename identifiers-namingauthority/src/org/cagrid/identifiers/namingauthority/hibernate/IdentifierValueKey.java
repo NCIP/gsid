@@ -26,18 +26,17 @@ import org.hibernate.annotations.Type;
 public class IdentifierValueKey {
 
     @Id
-    @GeneratedValue
-    @Index(name="index_identifier_keys_id")
+    @GeneratedValue    
     private Long id;
 
-    @Column(nullable = false, name = "value_key", length = 1024)
+    @Column(nullable = false, name = "value_key", length = 1024)  
     @Index(name="index_identifier_keys_key")
     private String key;
 
     @CollectionOfElements(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SELECT)
     @JoinTable(name = "identifier_key_values")    
-    @Column(name = "value", length = 500)
+    @Column(name = "value", length = 500)   
     private List<String> values;
 
     @Column(nullable = true, unique = false)

@@ -73,6 +73,9 @@ public class NamingAuthorityImpl implements MaintainerNamingAuthority
 		this.identifierDao.initialize(configuration.getNaPrefixURI());
 	}
 
+	/******
+	 * 
+	 */
 	public URI createIdentifier(SecurityInfo secInfo, URI localIdentifier, IdentifierData ivalues)
 			throws NamingAuthorityConfigurationException, InvalidIdentifierException, NamingAuthoritySecurityException,
 			InvalidIdentifierValuesException
@@ -113,7 +116,7 @@ public class NamingAuthorityImpl implements MaintainerNamingAuthority
 			throws NamingAuthorityConfigurationException, InvalidIdentifierValuesException, InvalidIdentifierException,
 			NamingAuthoritySecurityException
 	{
-		this.identifierDao.checkSecurity(secInfo,false, true);
+		this.identifierDao.checkSecurity(secInfo, false, true);
 		if (numberOfIdentifier < 0 || numberOfIdentifier > 100)
 		{
 			throw new InvalidIdentifierValuesException(Constant.INVALID_NUMBER_FOR_BATCH);
@@ -197,9 +200,9 @@ public class NamingAuthorityImpl implements MaintainerNamingAuthority
 	{
 		this.identifierDao.addSite(secInfo, identifier);
 	}
-	
-	public boolean validateIdentifier(SecurityInfo secInfo,String identifier) throws InvalidIdentifierException,
-	NamingAuthoritySecurityException, NamingAuthorityConfigurationException
+
+	public boolean validateIdentifier(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
+			NamingAuthoritySecurityException, NamingAuthorityConfigurationException
 	{
 		return this.identifierDao.validateIdentifier(secInfo, identifier);
 	}
