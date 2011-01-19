@@ -26,42 +26,28 @@
 
   <dependencies>
 
-    <!-- <dependency org="caGrid" name="testing" rev="latest.integration" conf="impl-test->system" /> -->
+    <dependency org="caGrid" name="testing" rev="latest.integration" conf="impl-test->system" />
 
     <dependency rev="4.4" org="junit" name="junit" conf="impl-test->default" />
-    <dependency rev="1.1" org="apache" name="commons-logging" conf="default->default">
-    	<exclude module="a.*|j.*|l.*" />
-    </dependency>
-        <!--  log4j  -->
-	<dependency org="apache" name="log4j" rev="1.2.8"/>
-    <!-- External Dependencies -->
-    <dependency org="org.hibernate" name="hibernate" rev="3.2.6.ga" >
-    	<exclude org="ant|c3p0|c.*|j.*|o.*|p.*|s.*"/>               
-    </dependency>
-    <!--  The classes linked by annotations only seem to be needed at compile time; not runtime -->
-	<dependency org="org.hibernate" name="hibernate-annotations" rev="3.3.1.GA">
-    	<exclude org="c.*" name="hibernate|hibernate-commons-annotations" />                
-    </dependency>
+    <dependency rev="1.1" org="apache" name="commons-logging" conf="default->default" />
 
-    <dependency rev="3.2" org="apache" name="commons-collections" conf="default->default">
-    <exclude org="junit"/>
-    </dependency>
+    <!-- External Dependencies -->
+    <dependency rev="3.2.+" org="hibernate" name="hibernate" conf="default->default" />
+    <!--  The classes linked by annotations only seem to be needed at compile time; not runtime -->
+    <dependency rev="3.3.1.GA" org="hibernate" name="hibernate-annotations"
+      conf="default->default;annotations->minimal" />
+    <dependency rev="3.2" org="apache" name="commons-collections" conf="default->default" />
     <dependency rev="2.2" org="apache" name="tomcat-servlet" conf="default->default" />
     <dependency rev="6.1.18" org="jetty" name="jetty" conf="default->default" />
     <dependency rev="6.1.18" org="jetty" name="jetty-util" conf="default->default" />
     <dependency rev="3.0.16-ga-bin" org="mysql" name="connector-java" conf="default->default" />
     <dependency rev="1.2.2" org="apache" name="commons-dbcp" conf="default->default" />
-    <!-- <dependency rev="1.3" org="castor" name="castor" conf="default->default,core">    	
-    </dependency> -->
-    <dependency org="castor" name="castor" rev="1.3"/>       
+    <dependency rev="1.3" org="castor" name="castor" conf="default->default,core" />
     <dependency rev="1.2.1" org="castor" name="spring-xml" conf="default->default" />
-    <!-- <dependency rev="2.5.5" org="springframework" name="spring" conf="default->full"/> -->
-    <dependency org="org.springframework" name="spring" rev="2.5.5" force="true">
-    <exclude org="[a-z].*"/>
-    </dependency>      
-	<dependency org="org.springframework" name="spring-test" rev="2.5.5" force="true" conf="default->default">
-	<exclude org="[a-z].*"/>
-	</dependency>
+    <dependency rev="2.5.5" org="springframework" name="spring" conf="default->full" transitive="true" />
+
+	<dependency rev="1.4" org="caGrid" name="gridgrouper" conf="default->client"/>
+	<dependency rev="1.1.0.1" org="internet2" name="grouper" conf="default->minimal"/>
   </dependencies>
 
 </ivy-module>

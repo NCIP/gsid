@@ -239,7 +239,7 @@
 
 	<target name="copyJar2Svc" depends="all">
 		<echo message="copying files to the identifiers-namingauthority-gridsvc" />
-		<copy todir="${basedir}/../identifiers-namingauthority-gridsvc/ext/dependencies/service/jars" file="${namingauthority.jarfile}" />
+		<copy todir="${basedir}/../identifiers-namingauthority-gridsvc/lib" file="${namingauthority.jarfile}" />
 	</target>
 	
 	<taskdef resource="checkstyletask.properties"  classpath="${lib.dir}/checkstyle-5.3-all.jar" />

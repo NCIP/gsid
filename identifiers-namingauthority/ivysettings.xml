@@ -19,14 +19,16 @@
 				pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact].[ext]" />
 		</filesystem>
 	</macrodef>
-	<macrodef name="gsid-fs-url-resolver">
-		<attribute name="repo.dir" />
-		<url name="fs" local="true">
-			<ivy pattern="@{repo.dir}/[organisation]/[module]/ivy-[revision].xml" />
-			<artifact
-				pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
-			<artifact
-				pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact].[ext]" />
+	<macrodef name="gsid-url-resolver">
+		<attribute name="repo.url" />		
+		<url>
+			<ivy pattern="@{repo.url}/[organisation]/[module]/ivy-[revision].xml" />
+			<artifact pattern="@{repo.url}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact pattern="@{repo.url}/[organisation]/[module]/[revision]/[artifact].[ext]" />
+			
+			<ivy pattern="@{repo.url}/[organisation]/[module]/[revision]/ivy.xml" />
+			<artifact pattern="@{repo.url}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact pattern="@{repo.url}/[organisation]/[module]/[revision]/[module]-[revision].[ext]" />
 		</url>
 	</macrodef>
 	<resolvers>
@@ -35,20 +37,15 @@
 			<gsid-fs-resolver repo.dir="${lib.dir}" name="gsid-local" />
 
 			<!-- Then, use the external repository -->
-			  <gsid-fs-resolver repo.dir="${user.home}/.ivy2/gsid"	name="gsid-external" /> 
+			<gsid-fs-resolver repo.dir="${user.home}/.ivy2/gsid" name="gsid-external" />		
+						 
 
 			<!-- And finally, the CBIIT BDA / commonlibrary repository -->
-			<url name="nci-ivy-repo">
-				<ivy pattern="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/[organisation]/[module]/[revision]/ivy.xml" />
-				<artifact pattern="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/[organisation]/[module]/[revision]/[module]-[revision].[ext]" />
-				<artifact pattern="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
-			</url>
+			<!-- <gsid-url-resolver name="ncisvn" url.name="ncisvn" repo.url="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk" /> -->
+			<gsid-url-resolver name="cagrid_ivy" repo.url="http://software.cagrid.org/repository-1.4" />
 			
-				<!--  useful at least for javax.transaction.jta -->
-			<ibiblio name="maven2-codehaus-mule" m2compatible="true" root="http://dist.codehaus.org/mule/dependencies/maven2" changingPattern=".*SNAPSHOT"/>
-			<ibiblio name="maven2-codehaus" m2compatible="true"	root="http://repository.codehaus.org" changingPattern=".*SNAPSHOT"/>
-			<ibiblio name="maven2-http" m2compatible="true" root="http://maven2.mirrors.skynet.be/pub/maven2" changingPattern=".*SNAPSHOT"/>			
-			<ibiblio name="mvn.repo" root="http://mirrors.ibiblio.org/pub/mirrors/maven2" m2compatible="true" changingPattern=".*SNAPSHOT"/>		
+		 	<ibiblio name="mvn.repo" root="http://mirrors.ibiblio.org/pub/mirrors/maven2" m2compatible="true" changingPattern=".*SNAPSHOT"/>		 
+		 	<ibiblio name="maven2-codehaus" m2compatible="true"	root="https://nexus.codehaus.org/content/groups/public" changingPattern=".*SNAPSHOT"/>		 
 		</chain>
 	</resolvers>
 </ivysettings>
