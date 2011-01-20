@@ -72,34 +72,42 @@
 	<classpathentry kind="var" path="GT4_LOCATION/lib/xercesImpl.jar"/>
 	<classpathentry kind="var" path="GT4_LOCATION/lib/xml-apis.jar"/>
 	<classpathentry kind="var" path="GT4_LOCATION/lib/xmlsec.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/antlr.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/asm.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/commons-dbcp-1.2.2.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/commons-logging-1.1.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/commons-pool-1.2.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/ehcache-1.2.3.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/jetty-6.1.18.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/jetty-util-6.1.18.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/mysql-connector-java-3.0.16-ga-bin.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/servlet.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/spring-test.jar" sourcepath="E:/software/java software/spring/spring-framework-3.0.3.RELEASE/projects/org.springframework.test/src"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/spring.jar" sourcepath="E:/software/java software/spring/spring-framework-3.0.3.RELEASE/projects"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/castor-1.3.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-core.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-client.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-common.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-stubs.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-metadata-common.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-metadata-security.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-ServiceSecurityProvider-client.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-ServiceSecurityProvider-common.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-ServiceSecurityProvider-service.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-ServiceSecurityProvider-stubs.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/castor-1.3-core.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/spring-xml-1.2.1.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/cglib-2.1_3.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/castor-1.3.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/cglib.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/commons-collections.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/commons-dbcp.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/commons-logging.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/commons-pool.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/dom4j.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/ehcache.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/grouper.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/hibernate-annotations.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/hibernate-commons-annotations.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/hibernate3.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/jta-1.0.1B.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/antlr-2.7.6rc1.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/commons-collections-3.2.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-client-1.4.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-common-1.4.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-resources-1.4.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/caGrid-gridgrouper-stubs-1.4.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/grouper.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/subject-0.2.1.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/jdom.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/jetty-util.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/jetty.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/jta.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/mysql-connector-java.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/servlet.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/spring-test.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/spring-xml.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/spring.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/subject.jar"/>
+	<classpathentry kind="lib" path="ext/dependencies/impl/jars/xml-apis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

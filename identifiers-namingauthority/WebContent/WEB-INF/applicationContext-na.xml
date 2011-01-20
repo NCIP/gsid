@@ -40,8 +40,7 @@
     <property name="annotatedClasses">
       <list>
         <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKey</value>
-        <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata</value>
-         <!--  <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierValueKeyValues</value> -->  
+        <value>org.cagrid.identifiers.namingauthority.hibernate.IdentifierMetadata</value>       
       </list>
     </property>
   </bean>
