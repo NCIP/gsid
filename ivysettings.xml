@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivysettings>
-  <settings defaultResolver="caGrid-ivy-resolver" circularDependencyStrategy="error"/>
-  <!--
-    TODO: I had to set checkUpToDate="false" so target grids would resolve properly...
-    The cache was correct, but it was not copying artifacts to projects if the previous date was newer than the new date
-    It should retrieve the necessary version regardless of the date... not sure why it does that.   
-  -->
-  <caches checkUpToDate="false" defaultCacheDir="${user.dir}/.cache" useOrigin="true">
-   <cache name="remote" basedir="${user.dir}/.cache-remote" useOrigin="false" />
-  </caches>
+	<settings defaultResolver="gsid-ivy-resolver" validate="false" />
+	<!-- TODO: I had to set checkUpToDate="false" so target grids would resolve 
+		properly... The cache was correct, but it was not copying artifacts to projects 
+		if the previous date was newer than the new date It should retrieve the necessary 
+		version regardless of the date... not sure why it does that. -->
+	 <caches default="user-local-gsid">
+		<cache name="user-local-gsid" basedir="${user.home}/.ivy2/gsid" />
+	</caches> 
 
-  <macrodef name="cagrid-fs-resolver">
-    <attribute name="repo.dir"/>
-    <filesystem name="fs" local="true">
-      <ivy pattern="@{repo.dir}/[organisation]/[module]/ivy-[revision].xml"/>
-      <artifact pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
-      <artifact pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact].[ext]"/>
-    </filesystem>
-  </macrodef>
-  <resolvers>
-    <chain name="caGrid-ivy-resolver" returnFirst="true">
-      <!-- First, try developer's local integration repository-->
-      <cagrid-fs-resolver repo.dir="${integration.repository.dir}" name="caGrid-local"/>
+	<macrodef name="gsid-fs-resolver">
+		<attribute name="repo.dir" />
+		<filesystem name="fs" local="true">
+			<ivy pattern="@{repo.dir}/[organisation]/[module]/ivy-[revision].xml" />
+			<artifact
+				pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact
+				pattern="@{repo.dir}/[organisation]/[module]/[revision]/[artifact].[ext]" />
+		</filesystem>
+	</macrodef>
+	<macrodef name="gsid-url-resolver">
+		<attribute name="repo.url" />		
+		<url>
+			<ivy pattern="@{repo.url}/[organisation]/[module]/ivy-[revision].xml" />
+			<artifact pattern="@{repo.url}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact pattern="@{repo.url}/[organisation]/[module]/[revision]/[artifact].[ext]" />
+			
+			<ivy pattern="@{repo.url}/[organisation]/[module]/[revision]/ivy.xml" />
+			<artifact pattern="@{repo.url}/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact pattern="@{repo.url}/[organisation]/[module]/[revision]/[module]-[revision].[ext]" />
+		</url>
+	</macrodef>
+	<resolvers>
+		<chain name="gsid-ivy-resolver" returnFirst="true" dual="true">
+			<!-- First, try developer's local integration repository -->
+			<gsid-fs-resolver repo.dir="${lib.dir}" name="gsid-local" />
 
-      <!-- Then, use the external repository -->
-      <cagrid-fs-resolver repo.dir="${repository.dir}" name="caGrid-external"/>
+			<!-- Then, use the external repository -->
+			<gsid-fs-resolver repo.dir="${user.home}/.ivy2/gsid" name="gsid-external" />		
+						 
 
-      <!-- And finally, the CBIIT BDA / commonlibrary repository -->
-      <url name="remote-cbiit-bda-commonlibrary-resolver" cache="remote">
-	<ivy pattern="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/[organisation]/[module]/[revision]/ivy.xml"/>
-	<artifact
-	   pattern="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
-	<artifact
-	   pattern="http://gforge.nci.nih.gov/svnroot/commonlibrary/trunk/ivy-repo/[organisation]/[module]/[revision]/[artifact].[ext]"/>
-      </url>
-    </chain>
-  </resolvers>
+			<!-- And finally, the CBIIT BDA / commonlibrary repository -->
+			<!-- <gsid-url-resolver name="ncisvn" url.name="ncisvn" repo.url="https://ncisvn.nci.nih.gov/svn/cbiit-ivy-repo/trunk" /> -->
+			<gsid-url-resolver name="cagrid_ivy" repo.url="http://software.cagrid.org/repository-1.4" />
+			
+		 	<ibiblio name="mvn.repo" root="http://mirrors.ibiblio.org/pub/mirrors/maven2" m2compatible="true" changingPattern=".*SNAPSHOT"/>		 
+		 	<ibiblio name="maven2-codehaus" m2compatible="true"	root="https://nexus.codehaus.org/content/groups/public" changingPattern=".*SNAPSHOT"/>		 
+		</chain>
+	</resolvers>
 </ivysettings>
