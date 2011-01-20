@@ -244,6 +244,7 @@
 	
 	<taskdef resource="checkstyletask.properties"  classpath="${lib.dir}/checkstyle-5.3-all.jar" />
 	<target name="checkstyle"  description="Generates a report of code convention violations." >
+	  <mkdir dir="${checkstyle.out.dir}"/>
 	  <checkstyle config="${checkstyle.resource.dir}/sun_checks.xml" failOnViolation="false">
 	    <formatter type="xml" tofile="${checkstyle.out.dir}/checkstyle_report.xml"/>
 	   	<fileset dir="${src.dir}" includes="**/*.java"/>	  	
