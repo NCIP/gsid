@@ -8,7 +8,7 @@
 
 	<!-- Define the environment variable -->
 	<property environment="env" />
-
+	
 	<property file="introduce.properties" />
 	<property name="introduce.ns.excludes" value="" />
 	<property name="service.name" value="${introduce.skeleton.service.name}" />
@@ -46,7 +46,11 @@
 	<property name="test.log.dir" value="test/logs" />
 	<property name="junit.results.dir" value="${test.log.dir}/junit" />
 
-
+	<!-- for SQL stuff -->	
+	<property name="sql.dir" value="${basedir}/sql"/>
+	<property name="sql.file" value="${sql.dir}/Schema.sql"/>
+	<property name="sqlTest.file" value="${sql.dir}/SchemaTest.sql"/>
+	
 	<!-- Basic Build directories -->
 
 	<!-- Auxiliary directory where all the intermediate files will be placed -->
@@ -382,6 +386,15 @@
 		<echo message="|    Type 'ant -h' for general help with Ant                                   |" />
 		<echo message="|    Type 'ant -p' for a description of this service's build targets.          |" />
 		<echo message="================================================================================" />
+	</target>
+	
+	<target name="createSchema" description="Generates the database schema" depends="init">
+	    <property file="${basedir}/${etc.dir}/na.properties"/>
+		<sql driver="${cagrid.na.db.driver}" url="${cagrid.na.db.url}" userid="${cagrid.na.db.username}" password="${cagrid.na.db.password}" onerror="continue">
+			<transaction src="${sql.file}" />
+			<transaction>commit;</transaction>
+			<classpath refid="service.build.classpath" />
+		</sql>
 	</target>
 
 </project>
