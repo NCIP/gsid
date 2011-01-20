@@ -80,11 +80,12 @@
 		<property file="${test.dir}/resources/na.test.properties" />
 		<property name="root.db.username" value="${cagrid.na.db.username}" />
 		<property name="root.db.password" value="${cagrid.na.db.password}" />
-		<property name="root.db.url" value="jdbc:mysql://localhost:3306/?autoReconnect=true" />
-		<sql driver="${cagrid.na.db.driver}" url="${root.db.url}" userid="${root.db.username}" password="${root.db.password}">
+		<property name="root.db.url" value="jdbc:mysql://localhost:3306/?autoReconnect=true" />		
+		<sql driver="${cagrid.na.db.driver}" url="${cagrid.na.db.url}" userid="${cagrid.na.db.username}" password="${cagrid.na.db.password}" onerror="continue">
+			<transaction src="${sqlTest.file}" />
+			<transaction>commit;</transaction>
 			<classpath refid="test.classpath" />
-			DROP DATABASE IF EXISTS ${cagrid.na.db.name};
-			CREATE DATABASE ${cagrid.na.db.name};
 		</sql>
 	</target>
+	
 </project>

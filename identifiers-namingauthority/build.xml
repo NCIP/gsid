@@ -8,7 +8,7 @@
 	<property environment="env" />
 	<property file="${basedir}/build.properties" />
 	<property file="${basedir}/project.properties" />
-
+	
 	<!-- Information -->
 	<property name="project.name" value="${ant.project.name}" />
 
@@ -23,11 +23,18 @@
 	<property name="ext.lib.dir" value="${basedir}/ext/dependencies/impl/jars" />
 	<property name="ext.test.lib.dir" location="${basedir}/ext/dependencies/test/jars" />
 
+	<!-- for SQL stuff -->
+    <property name="sql.dir" value="${basedir}/sql"/>
+	<property name="sql.file" value="${sql.dir}/Schema.sql"/>
+	<property name="sqlTest.file" value="${sql.dir}/SchemaTest.sql"/>
+	
 	<!-- checkstyle stuff -->
 	<property name="checkstyle.dir" value="${basedir}/checkstyle" />
 	<property name="checkstyle.resource.dir" value="${checkstyle.dir}/resources"/>
 	<property name="checkstyle.out.dir" value="${checkstyle.dir}/output"/>
 	
+		
+		
 	<!-- javac options -->
 	<property name="java.source" value="1.5" />
 	<property name="java.debug" value="true" />	
@@ -212,7 +219,7 @@
 	<!-- ============================================================== -->
 	<!-- Builds from scratch                                                -->
 	<!-- ============================================================== -->
-	<target name="all" description="Builds the entire application" depends="clean,jar,jar-tests,checkstyle" />
+	<target name="all" description="Builds the entire application" depends="clean,do.resolve,jar,jar-tests,checkstyle" />
 
 	<!-- ============================================================== -->
 	<!-- Deploys Naming Authority to Tomcat                             -->
@@ -250,6 +257,16 @@
 	   	<fileset dir="${src.dir}" includes="**/*.java"/>	  	
 	  </checkstyle>	  
 	</target>
+	
+	<target name="createSchema" description="Generates the database schema" depends="defineClasspaths">
+		<property file="${basedir}/WebContent/WEB-INF/na.properties"/>
+		<sql driver="${cagrid.na.db.driver}" url="${cagrid.na.db.url}" userid="${cagrid.na.db.username}" password="${cagrid.na.db.password}" onerror="continue">
+			<transaction src="${sql.file}" />
+			<transaction>commit;</transaction>
+			<classpath refid="build.classpath" />
+		</sql>
+	</target>
+	
 </project>
 
 
