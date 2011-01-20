@@ -1,23 +1,24 @@
 <?xml version="1.0"?>
 
 <project name="dependencies" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
-	<property file="project.properties" />
-
-	<!-- OVERLOADED-->
-	<property name="ivy.resolve.configurations" value="impl,test" />
-	<property name="ivy.generated.artifacts.pattern" value="${ivy.generated.artifacts.dir}/lib/[artifact]-[revision].[ext]" />
-
-	
-
-	<property name="ivy-shared-targets.file" location="${basedir}/../../antfiles/ivy/ivy-shared-targets.xml" />
+	<property file="project.properties" />	
+	<property name="ivy.generated.artifacts.pattern.src" value="${ext.lib.dir}/[artifact].[ext]" />
+	<property name="ivy.generated.artifacts.pattern.test" value="${ext.test.lib.dir}/[artifact].[ext]" />
+	<property name="ivy.checksums" value=""/>
+	<!--
+	<property name="ivy-shared-targets.file" location="${basedir}/ivy-shared-targets.xml" />
 	<import file="${ivy-shared-targets.file}" />
-
-	<target name="do.resolve-dependencies" depends="pre.resolve-dependencies">
-		<ivy:retrieve conf="impl" pattern="${ivy.resolved.artifacts.dir}/dependencies/service/[type]s/[originalname](.[ext])" sync="true" type="jar" />
-		<ivy:retrieve conf="impl-test" pattern="${ivy.resolved.artifacts.dir}/dependencies/test/[type]s/[originalname](.[ext])" sync="true" type="*"/>
-		
-		<ivy:retrieve conf="${ivy.resolve.configurations}" pattern="${basedir}/schema/IdentifiersNAService/xsd/[artifact](.[ext])" sync="true" type="xsd" />
-		<ivy:retrieve conf="serviceTools" pattern="${ivy.resolved.artifacts.dir}/dependencies/tools/[type]s/[originalname](.[ext])" type="jar" />
+-->
+	<target name="install.ivy">
+		<path id="ivy.lib.path">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
+	</target>	
+	<target name="do.resolve" depends="install.ivy">		
+		<ivy:retrieve conf="impl" pattern="${ivy.generated.artifacts.pattern.src}" sync="true" type="*" />
+		<ivy:retrieve conf="impl-test" pattern="${ivy.generated.artifacts.pattern.test}" sync="true" type="*" />
 	</target>
-
 </project>
