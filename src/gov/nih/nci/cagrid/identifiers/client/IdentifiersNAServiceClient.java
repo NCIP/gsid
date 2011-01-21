@@ -103,8 +103,8 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 
 			  IdentifiersNAServiceClient client = new IdentifiersNAServiceClient("https://localhost:8443/wsrf/services/cagrid/IdentifiersNAService",creds);
 //			  client.setAnonymousPrefered(true);
-			  client.registerSite("a", "a", "a", "a", "a", "a", "a");
-			  client.registerGSID(null, null);
+			  //client.registerSite("a", "a", "a", "a", "a", "a", "a");
+			  System.out.println("The identifier is "+client.registerGSID(null, null));
 			  
 			  // place client calls here if you want to use this main as a
 			  // test....
