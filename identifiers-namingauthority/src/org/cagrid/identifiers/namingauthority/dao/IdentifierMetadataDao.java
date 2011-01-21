@@ -1421,7 +1421,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 */
 	private boolean isMember(String userIdentity)
 	{
-		if ((grouperURL != null || grouperURL.length()!=0) && (groupName != null || groupName.length()!=0))
+		if ((grouperURL != null && grouperURL.length()!=0) && (groupName != null && groupName.length()!=0))
 		{
 			// Create a Grid Grouper Instance
 			GrouperI grouper = new GridGrouper(grouperURL);
