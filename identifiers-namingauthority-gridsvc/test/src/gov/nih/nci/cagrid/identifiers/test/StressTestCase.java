@@ -120,12 +120,12 @@ public class StressTestCase
 					"https://localhost:8443/wsrf/services/cagrid/IdentifiersNAService", creds);
 			//client.registerSite("site", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com", "443-481-7555", "sb");
 			
-			long numberOfTests = 1l;
-			int numberOfThreads = 5;
+			long numberOfTests = 100l;
+			int numberOfThreads = 1;
 			int threadPool = 5;
 			double average=0;
 			long total=0;			
-			TestName testName=TestName.RESOLVE_IDENTIFIER;
+			TestName testName=TestName.ALL;
 			// this.NamingAuthority.registerSite(client, "site", "a", "1.0", "srikalyan", "srikalyan@semanticbits.com","443-481-7555", "sb");
 			ExecutorService executor = Executors.newFixedThreadPool(threadPool);
 			List<Future<StressTestUtil>> futures = new ArrayList<Future<StressTestUtil>>();			
