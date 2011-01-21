@@ -108,6 +108,5 @@
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/spring-xml.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/spring.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/impl/jars/subject.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/impl/jars/xml-apis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
