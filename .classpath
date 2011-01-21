@@ -84,7 +84,6 @@
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-gts-client-1.4.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-gts-common-1.4.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-gts-stubs-1.4.jar"/>
-	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-identifiers-namingauthority-1.4.jar" sourcepath="/identifiers-namingauthority/src"/>
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-Introduce-serviceTools-1.4.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-metadata-common-1.4.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-metadata-data-1.4.jar"/>
@@ -198,5 +197,6 @@
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/caGrid-gridgrouper-stubs-1.4.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/grouper.jar"/>
 	<classpathentry kind="lib" path="ext/dependencies/service/jars/subject-0.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/caGrid-identifiers-namingauthority-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
