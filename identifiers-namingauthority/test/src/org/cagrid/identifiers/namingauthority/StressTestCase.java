@@ -18,7 +18,7 @@ public class StressTestCase
 	public void testStress() throws Exception
 	{
 		long numberOfTests = StressTestUtil.avgNumOfTests = 100l;
-		int[] numberOfThreadz = {  50};
+		int[] numberOfThreadz = {  1};
 		int threadPool = 50;		
 		for (int numberOfThreads : numberOfThreadz )
 		{

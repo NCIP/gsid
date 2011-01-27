@@ -1,7 +1,6 @@
 package org.cagrid.identifiers.namingauthority.dao;
 
 import edu.internet2.middleware.grouper.GroupNotFoundException;
-import edu.internet2.middleware.grouper.GrouperRuntimeException;
 import gov.nih.nci.cagrid.gridgrouper.client.GridGrouper;
 import gov.nih.nci.cagrid.gridgrouper.grouper.GrouperI;
 
@@ -15,6 +14,8 @@ import java.util.UUID;
 
 import javax.persistence.NonUniqueResultException;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cagrid.identifiers.namingauthority.InvalidIdentifierException;
@@ -40,11 +41,16 @@ import org.cagrid.identifiers.namingauthority.util.Tree;
 public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 {
 
-	protected static Log LOG = LogFactory.getLog(IdentifierMetadataDao.class.getName());
-	private IdentifierMetadata systemValues = null;
-	private URI prefix = null;
-	private String grouperURL = null;
-	private String groupName = null;
+	protected final static Log LOG = LogFactory.getLog(IdentifierMetadataDao.class.getName());
+	public static final String PUBLISHER="PUBLISHER";
+	public static final String TYPE="TYPE";
+	public static final String GSID="GSID";
+	public static final String SITE="SITE";
+	public static final String SITE_DATA="SITEDATA";
+	private IdentifierMetadata systemValues;
+	private URI prefix;
+	private String grouperURL;
+	private String groupName;
 
 	public String getGrouperURL()
 	{
@@ -72,7 +78,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return IdentifierMetadata.class;
 	}
 
-	/***
+	/******
 	 * initializer.
 	 * 
 	 * @param prefix
@@ -93,7 +99,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 	}
 
-	/***
+	/******
 	 * This method is used to load the data of an identifier without prefix.
 	 * 
 	 * @param identifier
@@ -129,7 +135,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return result;
 	}
 
-	/***
+	/******
 	 * This method is used to load the data of an identifier with prefix.
 	 * 
 	 * @param identifier
@@ -144,7 +150,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return loadLocalIdentifier(IdentifierUtil.getLocalName(prefix, identifier));
 	}
 
-	/***
+	/******
 	 * This method is get the site data from its identifier. note: Site is used
 	 * to store the user information.
 	 * 
@@ -166,7 +172,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return results;
 	}
 
-	/*
+	/****
 	 * Returns keys associated with the given identifier
 	 */
 	public String[] getKeyNames(SecurityInfo secInfo, java.net.URI identifier) throws InvalidIdentifierException,
@@ -192,7 +198,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return null;
 	}
 
-	/*
+	/****
 	 * Returns values associated with a key in the given identifier
 	 */
 	public KeyData getKeyData(SecurityInfo secInfo, URI identifier, String key) throws InvalidIdentifierException,
@@ -207,7 +213,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return null;
 	}
 
-	/*
+	/****
 	 * Resolves an identifier to its associated meta-data
 	 */
 	public IdentifierData resolveIdentifier(SecurityInfo secInfo, java.net.URI identifier)
@@ -227,22 +233,24 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 				}
 				catch (Exception e)
 				{
+					LOG.debug(identifier+" is not a prefixed URI.");
 				}
 			}
-			LOG.warn("the identifier is " + identifier.toString());
+			LOG.debug("the identifier is " + identifier);
 			IdentifierData completeData = getIdentifierData(secInfo, identifier, null);
 			identifier = IdentifierUtil.getLocalName(prefix, identifier);
 			List<IdentifierMetadata> siteData = getSiteData(identifier);
-			LOG.warn("site data size is " + siteData.size());
-			if (siteData != null && siteData.size() > 0)
+			
+			if (CollectionUtils.isNotEmpty(siteData))
 			{
+				LOG.debug("site data size is " + siteData.size());
 				int counter = 0;
 				for (IdentifierMetadata metaData : siteData)
 				{
 					IdentifierData currentData = IdentifierUtil.convert(metaData.getValues());
 					for (String key : currentData.getKeys())
 					{
-						if (key.equalsIgnoreCase("PUBLISHER"))
+						if (PUBLISHER.equalsIgnoreCase(key))
 						{
 							KeyData data = currentData.getValues(key);
 							String publisherIdentifier = data.getValues().get(0);
@@ -256,21 +264,19 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 									for (String key1 : siteIdentifier.getKeys())
 									{
 										LOG.debug("the key1 is " + key1);
-										if (!key1.equalsIgnoreCase("TYPE"))
-										{
-											LOG.debug("the key1 is " + key1);
+										if (!TYPE.equalsIgnoreCase(key1))
+										{											
 											completeData.put(counter + ":" + key1, siteIdentifier.getValues(key1));
 										}
 									}
 								}
 							}
 							catch (Exception e)
-							{
-								LOG.warn("");
+							{								
 								throw new InvalidIdentifierException();
 							}
 						}
-						else if (!key.equalsIgnoreCase("GSID") && !key.equalsIgnoreCase("TYPE"))
+						else if (!GSID.equalsIgnoreCase(key) && !TYPE.equalsIgnoreCase(key))
 						{
 							LOG.debug("the key is " + key);
 							completeData.put(counter + ":" + key, currentData.getValues(key));
@@ -289,7 +295,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 	}
 
-	/*
+	/****
 	 * A user can read a key from an identifier if any one of the below
 	 * conditions are met:
 	 * 
@@ -328,8 +334,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			return IdentifierUtil.convert(tmpValues.getValues());
 		}
 
-		Collection<IdentifierValueKey> valueCol = tmpValues.getValues();
-		if (valueCol == null || valueCol.size() == 0)
+		Collection<IdentifierValueKey> valueCol = tmpValues.getValues();		
+		if (CollectionUtils.isEmpty(valueCol))
 		{
 			return null;
 		}
@@ -403,7 +409,6 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			if (keyName != null)
 			{
 				msg = "resolve identifier key [" + keyName + "]";
-
 			}
 			else
 			{
@@ -416,7 +421,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return newValues;
 	}
 
-	/*
+	/****
 	 * Persists the provided identifier with the given values
 	 */
 	public void createIdentifier(SecurityInfo secInfo, URI localIdentifier, IdentifierData ivalues)
@@ -430,7 +435,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		save(IdentifierUtil.convert(localIdentifier, ivalues));
 	}
 
-	/*
+	/****
 	 * Adds the provided keys to the given identifier.
 	 * 
 	 * An exception is thrown if any of the provided keys already exists.
@@ -529,7 +534,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 	}
 
-	/*
+	/****
 	 * Deletes the provided keys from the given identifier.
 	 * 
 	 * An exception is thrown if any of the provided keys does not exist.
@@ -563,7 +568,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		URI localIdentifier = IdentifierUtil.getLocalName(prefix, identifier);
 		IdentifierMetadata resolvedValues = loadLocalIdentifier(localIdentifier);
 
-		if (resolvedValues.getValues() == null || resolvedValues.getValues().size() == 0)
+		if (resolvedValues.getValues() == null || resolvedValues.getValues().isEmpty())
 		{
 			throw new InvalidIdentifierValuesException("Identifier [" + identifier + "] has no keys");
 		}
@@ -657,7 +662,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 	}
 
-	/*
+	/****
 	 * Replaces the values associated with existing keys with the new provided
 	 * values.
 	 * 
@@ -693,7 +698,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		URI localIdentifier = IdentifierUtil.getLocalName(prefix, identifier);
 		IdentifierMetadata resolvedValues = loadLocalIdentifier(localIdentifier);
 
-		if (resolvedValues.getValues() == null || resolvedValues.getValues().size() == 0)
+		if (resolvedValues.getValues() == null || resolvedValues.getValues().isEmpty())
 		{
 			throw new InvalidIdentifierValuesException("Identifier [" + identifier + "] has no keys");
 		}
@@ -779,7 +784,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 	}
 
-	/*
+	/****
 	 * Adds administrator identity to system identifier
 	 */
 	public synchronized void createInitialAdministrator(String identity) throws NamingAuthorityConfigurationException
@@ -818,7 +823,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		save(systemValues);
 	}
 
-	/***
+	/******
 	 * This method is used to register an identifier. At the end of this method
 	 * an identifier is generated and saved in the persistent store. If
 	 * suggestedIdentifier is set to null then a new identifier is created and
@@ -857,7 +862,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		if (!checkIfParentsEmpty(parentIdentifiers))
 		{
 			for (String parent : parentIdentifiers)
-				LOG.warn("the parent is " + parent);
+				LOG.debug("the parent is " + parent);
 			keys.add("parent");
 			String value = "";
 			String total_value = "";
@@ -883,8 +888,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			}
 			values.add(total_value);
 		}
-		keys.add("TYPE");
-		values.add("GSID");
+		keys.add(TYPE);
+		values.add(GSID);
 		temp = suggestedIdentifier = createIdentifier(secInfo, suggestedIdentifier, keys, values);
 
 		if (suggestedIdentifier != null)
@@ -893,19 +898,19 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			keys = new ArrayList<String>();
 			values = new ArrayList<String>();
 
-			keys.add("PUBLISHER");
+			keys.add(PUBLISHER);
 			values.add(publisherIdentifier);
-			keys.add("GSID");
+			keys.add(GSID);
 			values.add(suggestedIdentifier);
-			keys.add("TYPE");
-			values.add("SITEDATA");
+			keys.add(TYPE);
+			values.add(SITE_DATA);
 			createIdentifier(secInfo, null, keys, values);
 		}
 		return temp;
 
 	}
 
-	/***
+	/******
 	 * This method is used to register a site for a user.
 	 * 
 	 * @param secInfo
@@ -943,12 +948,12 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			keys.add(fixedKeys[i]);
 			values.add(tempValues[i]);
 		}
-		keys.add("TYPE");
-		values.add("SITE");
+		keys.add(TYPE);
+		values.add(SITE);
 		createIdentifier(secInfo, null, keys, values);
 	}
 
-	/***
+	/******
 	 * This method is used to add a site to existing identifier.
 	 * 
 	 * @param secInfo
@@ -964,7 +969,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			InvalidIdentifierValuesException, InvalidIdentifierException, NamingAuthoritySecurityException
 	{
 		checkSecurity(secInfo, true, true);
-		if (identifier == null || identifier.length() == 0)
+		
+		if (StringUtils.isBlank(identifier))
 		{
 			throw new InvalidIdentifierException("Identifier cannot be null.");
 		}
@@ -988,18 +994,17 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 		List<String> keys = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
-		keys.add("TYPE");
-		values.add("SITEDATA");
-		keys.add("PUBLISHER");
+		keys.add(TYPE);
+		values.add(SITE_DATA);
+		keys.add(PUBLISHER);
 		values.add(publisherIdentifier);
 
-		keys.add("GSID");
+		keys.add(GSID);
 		values.add(identifier);
-
-		String temp = createIdentifier(secInfo, null, keys, values);
+		createIdentifier(secInfo, null, keys, values);
 	}
 
-	/***
+	/******
 	 * This method is used to validates the identifier. Validation checks if the
 	 * identifier is in the database or not. if exists returns false else
 	 * returns true.
@@ -1043,7 +1048,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return true;
 	}
 
-	/****
+	/*******
 	 * This method is used to get the parent hierarchy in the form of a tree
 	 * with root node as identifier node.
 	 * 
@@ -1059,7 +1064,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public Tree getParentHierarchy(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
 			NamingAuthoritySecurityException, NamingAuthorityConfigurationException
 	{
-		if (identifier == null || identifier.length() == 0)
+		if (StringUtils.isBlank(identifier))
 		{
 			throw new InvalidIdentifierException("Identifier cannot be null");
 		}
@@ -1151,7 +1156,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return rootNode;
 	}
 
-	/****
+	/*******
 	 * This method is used to get the child hierarchy in the form of a tree with
 	 * root node as identifier node.
 	 * 
@@ -1218,7 +1223,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return rootNode;
 	}
 
-	/***
+	/******
 	 * This method is used to get all the identifiers whose parent is the
 	 * provided identifier.
 	 * 
@@ -1237,9 +1242,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			throws InvalidIdentifierException, NamingAuthoritySecurityException, InvalidIdentifierValuesException,
 			NamingAuthorityConfigurationException
 	{
-		secInfo = validateSecurityInfo(secInfo);
-
-		List<IdentifierMetadata> children = null;
+		validateSecurityInfo(secInfo);		
 		List<IdentifierMetadata> results = getHibernateTemplate()
 				.find("SELECT md FROM "
 						+ domainClass().getName()
@@ -1249,7 +1252,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return results;
 	}
 
-	/***
+	/******
 	 * This method is used to gets the data for all the sites.
 	 * 
 	 * @param secInfo
@@ -1265,8 +1268,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public List<IdentifierData> getSitesData(SecurityInfo secInfo, URI naPrefix) throws InvalidIdentifierException,
 			NamingAuthoritySecurityException, InvalidIdentifierValuesException, NamingAuthorityConfigurationException
 	{
-		secInfo = validateSecurityInfo(secInfo);
-
+		validateSecurityInfo(secInfo);
 		List<IdentifierMetadata> results = getHibernateTemplate()
 				.find("SELECT md FROM "
 						+ domainClass().getName()
@@ -1297,7 +1299,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return resultData;
 	}
 
-	/***
+	/******
 	 * This method is used to check if parent identifiers are empty or not.
 	 * 
 	 * @param parents
@@ -1324,7 +1326,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return flag;
 	}
 
-	/***
+	/******
 	 * This method is used to get the identifier of the site associated with the
 	 * user.
 	 * 
@@ -1334,7 +1336,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 */
 	public String getIdentifierFromUser(String userName)
 	{
-		if (userName == null)
+		if (StringUtils.isEmpty(userName))
 			return null;
 		String temp = null;
 		List<IdentifierMetadata> results = getHibernateTemplate()
@@ -1353,7 +1355,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return temp;
 	}
 
-	/***
+	/******
 	 * This method check if the identifier exists in the persistent code.
 	 * 
 	 * @param identifier
@@ -1365,10 +1367,10 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		List<IdentifierMetadata> results = getHibernateTemplate().find(
 				"SELECT md FROM " + domainClass().getName() + " md WHERE md.localIdentifier = ?",
 				new Object[] { identifier });
-		return results == null || results.size() == 0 ? false : true;
+		return results == null || results.isEmpty() ? false : true;
 	}
 
-	/***
+	/******
 	 * This method is used to check the security based on the parameters.
 	 * 
 	 * @param secInfo
@@ -1385,7 +1387,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			throws NamingAuthoritySecurityException
 	{
 		String caller = secInfo.getUser();
-		if (caller == null || caller.length() == 0)
+		if (StringUtils.isEmpty(caller))
 		{
 			throw new NamingAuthoritySecurityException("Please login into the grid to identify yourselves");
 		}
@@ -1414,14 +1416,14 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 	}
 
-	/***
+	/******
 	 * Check whether a user is member of a group or not.
 	 * @param userIdentity
 	 * @return
 	 */
 	private boolean isMember(String userIdentity)
 	{
-		if ((grouperURL != null && grouperURL.length()!=0) && (groupName != null && groupName.length()!=0))
+		if ((StringUtils.isNotEmpty(grouperURL)) && (StringUtils.isNotEmpty(groupName)))
 		{
 			// Create a Grid Grouper Instance
 			GrouperI grouper = new GridGrouper(grouperURL);
@@ -1449,15 +1451,15 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 				return false;
 			}
 		}
-		//returning true for testing purpose.
+		//returning true if no grouper authentication needed.
 		return true;
 	}
 
-	/*
+	/****
 	 * Private Stuff
 	 */
 
-	/***
+	/******
 	 * this method save the identifier into the persistent store.
 	 * 
 	 */
@@ -1496,29 +1498,14 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 					{
 						URI valueAr1URI = new URI(valueAr1);
 						valueAr1URI = IdentifierUtil.build(prefix, valueAr1URI);
-						IdentifierData data = resolveIdentifier(secInfo, valueAr1URI);
+						resolveIdentifier(secInfo, valueAr1URI);
 
 					}
 					catch (URISyntaxException e)
 					{
 						LOG.debug("URI casting from String execption " + valueAr1);
-						throw new InvalidIdentifierException();
-					}
-					catch (NamingAuthorityConfigurationException e)
-					{
-						LOG.debug("NamingAuthorityConfigurationException occured during resolving Identifier");
-						throw new InvalidIdentifierException();
-					}
-					catch (InvalidIdentifierException e)
-					{
-						LOG.debug("InvalidIdentifierException occured during resolving Identifier");
-						throw new InvalidIdentifierException();
-					}
-					catch (NamingAuthoritySecurityException e)
-					{
-						LOG.debug("NamingAuthoritySecurityException occured during resolving Identifier");
-						throw new NamingAuthoritySecurityException();
-					}
+						throw new InvalidIdentifierException("Unable to convert "+valueAr1+" ");
+					}			
 
 				}
 			}
@@ -1585,7 +1572,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return temp;
 	}
 
-	/*
+	/****
 	 * A user can create identifiers if any one of the below conditions are met:
 	 * 
 	 * (a) PUBLIC_CREATTION key set to "Y" in root identifier (b) User is listed
@@ -1598,7 +1585,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	{
 
 		List<String> values = SecurityUtil.getPublicCreation(systemValues);
-		if (values == null || values.size() == 0)
+		if (values == null || values.isEmpty())
 		{
 			// no security
 			LOG.debug("SECURITY: No PUBLIC_CREATION");
@@ -1623,7 +1610,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 	}
 
-	/*
+	/****
 	 * Returns any directly specified READ_USERS plus any included by
 	 * READWRITE_IDENTIFIERS
 	 */
@@ -1694,7 +1681,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return false;
 	}
 
-	/*
+	/****
 	 * Checks whether user has WRITE_USER permission. Default is "true" if there
 	 * are no security settings (no WRITE_USERS key defined)
 	 */
@@ -1893,7 +1880,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		save(systemValues);
 	}
 
-	/****
+	/*******
 	 * This method is used to validate the security info of the user.
 	 * 
 	 * @param secInfo
@@ -1909,7 +1896,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return secInfo;
 	}
 
-	/***
+	/******
 	 * This method is used to load the security info of an identifier.
 	 * 
 	 * @param identifier
@@ -1932,7 +1919,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 	}
 
-	/***
+	/******
 	 * This method is used to validate the identifier pattern.
 	 * 
 	 * @param identifier

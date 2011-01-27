@@ -38,6 +38,7 @@
       conf="default->default;annotations->minimal" />
     <dependency rev="3.2" org="apache" name="commons-collections" conf="default->default" />
     <dependency rev="2.2" org="apache" name="tomcat-servlet" conf="default->default" />
+    <dependency rev="2.2" org="apache" name="commons-lang" conf="default->default"/>   
     <dependency rev="6.1.18" org="jetty" name="jetty" conf="default->default" />
     <dependency rev="6.1.18" org="jetty" name="jetty-util" conf="default->default" />
     <dependency rev="3.0.16-ga-bin" org="mysql" name="connector-java" conf="default->default" />
