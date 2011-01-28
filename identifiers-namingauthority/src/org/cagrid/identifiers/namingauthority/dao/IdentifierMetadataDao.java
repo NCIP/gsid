@@ -38,43 +38,37 @@ import org.cagrid.identifiers.namingauthority.util.SecurityUtil;
 import org.cagrid.identifiers.namingauthority.util.SecurityUtil.Access;
 import org.cagrid.identifiers.namingauthority.util.Tree;
 
-public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
-{
+public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata> {
 
 	protected final static Log LOG = LogFactory.getLog(IdentifierMetadataDao.class.getName());
-	public static final String PUBLISHER="PUBLISHER";
-	public static final String TYPE="TYPE";
-	public static final String GSID="GSID";
-	public static final String SITE="SITE";
-	public static final String SITE_DATA="SITEDATA";
+	public static final String PUBLISHER = "PUBLISHER";
+	public static final String TYPE = "TYPE";
+	public static final String GSID = "GSID";
+	public static final String SITE = "SITE";
+	public static final String SITE_DATA = "SITEDATA";
 	private IdentifierMetadata systemValues;
 	private URI prefix;
 	private String grouperURL;
 	private String groupName;
 
-	public String getGrouperURL()
-	{
+	public String getGrouperURL() {
 		return grouperURL;
 	}
 
-	public void setGrouperURL(String grouperURL)
-	{
+	public void setGrouperURL(String grouperURL) {
 		this.grouperURL = grouperURL;
 	}
 
-	public String getGroupName()
-	{
+	public String getGroupName() {
 		return groupName;
 	}
 
-	public void setGroupName(String groupName)
-	{
+	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
 
 	@Override
-	public Class<IdentifierMetadata> domainClass()
-	{
+	public Class<IdentifierMetadata> domainClass() {
 		return IdentifierMetadata.class;
 	}
 
@@ -85,15 +79,12 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 *            prefix to be used for the representing data.
 	 * @throws NamingAuthorityConfigurationException
 	 */
-	public synchronized void initialize(URI prefix) throws NamingAuthorityConfigurationException
-	{
+	public synchronized void initialize(URI prefix) throws NamingAuthorityConfigurationException {
 		this.prefix = prefix;
-		try
-		{
+		try {
 			systemValues = loadLocalIdentifier(SecurityUtil.LOCAL_SYSTEM_IDENTIFIER);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			LOG.debug("No system identifier defined");
 			createSystemIdentifier();
 		}
@@ -109,29 +100,21 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthorityConfigurationException
 	 */
 	public IdentifierMetadata loadLocalIdentifier(final URI localIdentifier) throws InvalidIdentifierException,
-			NamingAuthorityConfigurationException
-	{
+			NamingAuthorityConfigurationException {
 		LOG.debug("The local identifier is " + localIdentifier);
 		List<IdentifierMetadata> results = getHibernateTemplate().find(
 				"SELECT md FROM " + domainClass().getName() + " md WHERE md.localIdentifier = ?",
 				new Object[] { localIdentifier });
-
 		IdentifierMetadata result = null;
-
-		if (results.size() > 1)
-		{
+		if (results.size() > 1) {
 			throw new NonUniqueResultException("Found " + results.size() + " " + domainClass().getName() + " objects.");
 		}
-		else if (results.size() == 1)
-		{
+		else if (results.size() == 1) {
 			result = results.get(0);
 		}
-
-		if (result == null)
-		{
+		if (result == null) {
 			throw new InvalidIdentifierException("Local identifier (" + localIdentifier + ") does not exist");
 		}
-
 		return result;
 	}
 
@@ -145,8 +128,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthorityConfigurationException
 	 */
 	public IdentifierMetadata loadIdentifier(URI identifier) throws InvalidIdentifierException,
-			NamingAuthorityConfigurationException
-	{
+			NamingAuthorityConfigurationException {
 		return loadLocalIdentifier(IdentifierUtil.getLocalName(prefix, identifier));
 	}
 
@@ -160,15 +142,13 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthorityConfigurationException
 	 */
 	public List<IdentifierMetadata> getSiteData(URI localIdentifier) throws InvalidIdentifierException,
-			NamingAuthorityConfigurationException
-	{
+			NamingAuthorityConfigurationException {
 		LOG.debug("The local identifier is " + localIdentifier);
 		List<IdentifierMetadata> results = getHibernateTemplate()
 				.find("SELECT md FROM "
 						+ domainClass().getName()
 						+ " as md INNER JOIN md.values as value INNER JOIN value.values as val WHERE value.key='GSID' and val=?",
 						new Object[] { localIdentifier.toString() });
-
 		return results;
 	}
 
@@ -176,25 +156,17 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * Returns keys associated with the given identifier
 	 */
 	public String[] getKeyNames(SecurityInfo secInfo, java.net.URI identifier) throws InvalidIdentifierException,
-			NamingAuthoritySecurityException, NamingAuthorityConfigurationException
-	{
-
+			NamingAuthoritySecurityException, NamingAuthorityConfigurationException {
 		IdentifierData values = null;
-
-		try
-		{
+		try {
 			values = getIdentifierData(secInfo, identifier, null);
 		}
-		catch (InvalidIdentifierValuesException e)
-		{
+		catch (InvalidIdentifierValuesException e) {
 			throw new NamingAuthorityConfigurationException(e);
 		}
-
-		if (values != null)
-		{
+		if (values != null) {
 			return values.getKeys();
 		}
-
 		return null;
 	}
 
@@ -202,12 +174,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * Returns values associated with a key in the given identifier
 	 */
 	public KeyData getKeyData(SecurityInfo secInfo, URI identifier, String key) throws InvalidIdentifierException,
-			NamingAuthoritySecurityException, NamingAuthorityConfigurationException, InvalidIdentifierValuesException
-	{
-
+			NamingAuthoritySecurityException, NamingAuthorityConfigurationException, InvalidIdentifierValuesException {
 		IdentifierData values = getIdentifierData(secInfo, identifier, key);
-		if (values != null && values.getValues(key) != null)
-		{
+		if (values != null && values.getValues(key) != null) {
 			return values.getValues(key);
 		}
 		return null;
@@ -217,80 +186,59 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * Resolves an identifier to its associated meta-data
 	 */
 	public IdentifierData resolveIdentifier(SecurityInfo secInfo, java.net.URI identifier)
-			throws InvalidIdentifierException, NamingAuthoritySecurityException, NamingAuthorityConfigurationException
-	{
-		if (identifier == null)
-		{
+			throws InvalidIdentifierException, NamingAuthoritySecurityException, NamingAuthorityConfigurationException {
+		if (identifier == null) {
 			throw new InvalidIdentifierException("Identifier cannot be null.");
 		}
-		try
-		{
-			if (!identifier.toString().startsWith(prefix.toString()))
-			{
-				try
-				{
+		try {
+			if (!identifier.toString().startsWith(prefix.toString())) {
+				try {
 					identifier = IdentifierUtil.build(prefix, identifier);
 				}
-				catch (Exception e)
-				{
-					LOG.debug(identifier+" is not a prefixed URI.");
+				catch (Exception e) {
+					LOG.debug(identifier + " is not a prefixed URI.");
 				}
 			}
 			LOG.debug("the identifier is " + identifier);
 			IdentifierData completeData = getIdentifierData(secInfo, identifier, null);
 			identifier = IdentifierUtil.getLocalName(prefix, identifier);
 			List<IdentifierMetadata> siteData = getSiteData(identifier);
-			
-			if (CollectionUtils.isNotEmpty(siteData))
-			{
+			if (CollectionUtils.isNotEmpty(siteData)) {
 				LOG.debug("site data size is " + siteData.size());
 				int counter = 0;
-				for (IdentifierMetadata metaData : siteData)
-				{
+				for (IdentifierMetadata metaData : siteData) {
 					IdentifierData currentData = IdentifierUtil.convert(metaData.getValues());
-					for (String key : currentData.getKeys())
-					{
-						if (PUBLISHER.equalsIgnoreCase(key))
-						{
+					for (String key : currentData.getKeys()) {
+						if (PUBLISHER.equalsIgnoreCase(key)) {
 							KeyData data = currentData.getValues(key);
 							String publisherIdentifier = data.getValues().get(0);
-
-							try
-							{
+							try {
 								URI publisherURI = new URI(prefix + publisherIdentifier);
 								IdentifierData siteIdentifier = getIdentifierData(secInfo, publisherURI, null);
-								if (siteIdentifier != null)
-								{
-									for (String key1 : siteIdentifier.getKeys())
-									{
+								if (siteIdentifier != null) {
+									for (String key1 : siteIdentifier.getKeys()) {
 										LOG.debug("the key1 is " + key1);
-										if (!TYPE.equalsIgnoreCase(key1))
-										{											
+										if (!TYPE.equalsIgnoreCase(key1)) {
 											completeData.put(counter + ":" + key1, siteIdentifier.getValues(key1));
 										}
 									}
 								}
 							}
-							catch (Exception e)
-							{								
+							catch (Exception e) {
 								throw new InvalidIdentifierException();
 							}
 						}
-						else if (!GSID.equalsIgnoreCase(key) && !TYPE.equalsIgnoreCase(key))
-						{
+						else if (!GSID.equalsIgnoreCase(key) && !TYPE.equalsIgnoreCase(key)) {
 							LOG.debug("the key is " + key);
 							completeData.put(counter + ":" + key, currentData.getValues(key));
 						}
 					}
 					counter++;
 				}
-
 			}
-
 			return completeData;
 		}
-		catch (InvalidIdentifierValuesException e)
-		{
+		catch (InvalidIdentifierValuesException e) {
 			throw new NamingAuthorityConfigurationException(e);
 		}
 	}
@@ -314,110 +262,72 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 */
 	public IdentifierData getIdentifierData(SecurityInfo secInfo, java.net.URI identifier, String keyName)
 			throws InvalidIdentifierException, NamingAuthoritySecurityException, NamingAuthorityConfigurationException,
-			InvalidIdentifierValuesException
-	{
-
+			InvalidIdentifierValuesException {
 		secInfo = validateSecurityInfo(secInfo);
-
 		IdentifierMetadata tmpValues = loadIdentifier(identifier);
-
-		if (tmpValues == null)
-		{
+		if (tmpValues == null) {
 			return null;
 		}
-
-		if (hasIdentifierAdminUserAccess(secInfo, tmpValues))
-		{
+		if (hasIdentifierAdminUserAccess(secInfo, tmpValues)) {
 			//
 			// User is ADMIN_USER
 			//
 			return IdentifierUtil.convert(tmpValues.getValues());
 		}
-
-		Collection<IdentifierValueKey> valueCol = tmpValues.getValues();		
-		if (CollectionUtils.isEmpty(valueCol))
-		{
+		Collection<IdentifierValueKey> valueCol = tmpValues.getValues();
+		if (CollectionUtils.isEmpty(valueCol)) {
 			return null;
 		}
-
-		if (keyName != null)
-		{
+		if (keyName != null) {
 			IdentifierValueKey searchKey = new IdentifierValueKey();
 			searchKey.setKey(keyName);
-			if (!valueCol.contains(searchKey))
-			{
+			if (!valueCol.contains(searchKey)) {
 				throw new InvalidIdentifierValuesException("Key [" + keyName + "] does not exist");
 			}
 		}
-
 		Access identifierReadAccess = null;
 		IdentifierData newValues = new IdentifierData();
-
-		for (IdentifierValueKey ivk : valueCol)
-		{
-
-			if (keyName != null && !keyName.equals(ivk.getKey()))
-			{
+		for (IdentifierValueKey ivk : valueCol) {
+			if (keyName != null && !keyName.equals(ivk.getKey())) {
 				continue;
 			}
-
 			Access keyAccess = getKeyReadAccess(secInfo, ivk.getPolicyIdentifier());
-			if (keyAccess == Access.GRANTED)
-			{
+			if (keyAccess == Access.GRANTED) {
 				LOG.debug("SECURITY: User [" + secInfo.getUser() + "] can access key [" + ivk.getKey() + "]");
 				newValues.put(ivk.getKey(), IdentifierUtil.convert(ivk));
-
 			}
-			else if (keyAccess == Access.DENIED)
-			{
+			else if (keyAccess == Access.DENIED) {
 				LOG.debug("SECURITY: User [" + secInfo.getUser() + "] can't access key [" + ivk.getKey() + "]");
-
 			}
-			else if (keyAccess == Access.NOSECURITY)
-			{
+			else if (keyAccess == Access.NOSECURITY) {
 				LOG.debug("SECURITY: No key security for [" + ivk.getKey() + "]. Checking identifier security...");
-
 				// Apply identifier level security
-
-				if (identifierReadAccess == null)
-				{
+				if (identifierReadAccess == null) {
 					List<String> identifierReadUsers = getAllReadUsers(tmpValues);
 					identifierReadAccess = userAccess(secInfo.getUser(), identifierReadUsers);
 				}
-
-				if (identifierReadAccess == Access.DENIED)
-				{
+				if (identifierReadAccess == Access.DENIED) {
 					LOG.debug("SECURITY: User [" + secInfo.getUser() + "] is NOT authorized to read key ["
 							+ ivk.getKey() + "] by identifier");
-
 				}
-				else
-				{
+				else {
 					LOG.debug("SECURITY: User [" + secInfo.getUser() + "] is authorized to read [" + ivk.getKey()
 							+ "] by identifier");
 					newValues.put(ivk.getKey(), IdentifierUtil.convert(ivk));
 				}
-
 			}
-			;
 		}
-
 		// Is this the only case when we bark?
-		if (newValues.getKeys() == null || newValues.getKeys().length == 0)
-		{
+		if (newValues.getKeys() == null || newValues.getKeys().length == 0) {
 			String msg;
-			if (keyName != null)
-			{
+			if (keyName != null) {
 				msg = "resolve identifier key [" + keyName + "]";
 			}
-			else
-			{
+			else {
 				msg = "resolve identifier";
 			}
-
 			throw new NamingAuthoritySecurityException(SecurityUtil.securityError(secInfo, msg));
 		}
-
 		return newValues;
 	}
 
@@ -425,13 +335,10 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * Persists the provided identifier with the given values
 	 */
 	public void createIdentifier(SecurityInfo secInfo, URI localIdentifier, IdentifierData ivalues)
-			throws InvalidIdentifierException, NamingAuthorityConfigurationException, NamingAuthoritySecurityException
-	{
+			throws InvalidIdentifierException, NamingAuthorityConfigurationException, NamingAuthoritySecurityException {
 		LOG.debug("The value of localIdentifier is " + localIdentifier);
 		secInfo = validateSecurityInfo(secInfo);
-
 		createIdentifierSecurityChecks(secInfo);
-
 		save(IdentifierUtil.convert(localIdentifier, ivalues));
 	}
 
@@ -455,81 +362,54 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 */
 	public void createKeys(SecurityInfo secInfo, URI identifier, IdentifierData values)
 			throws InvalidIdentifierException, NamingAuthoritySecurityException, InvalidIdentifierValuesException,
-			NamingAuthorityConfigurationException
-	{
-
+			NamingAuthorityConfigurationException {
 		Boolean writerAccess = null;
 		Boolean adminAccess = null;
-
-		if (values == null || values.getKeys() == null || values.getKeys().length == 0)
-		{
+		if (values == null || values.getKeys() == null || values.getKeys().length == 0) {
 			throw new InvalidIdentifierValuesException("No keys were provided");
 		}
-
 		secInfo = validateSecurityInfo(secInfo);
-
 		URI localIdentifier = IdentifierUtil.getLocalName(prefix, identifier);
 		IdentifierMetadata resolvedValues = loadLocalIdentifier(localIdentifier);
-
 		Collection<IdentifierValueKey> valueKeys = resolvedValues.getValues();
-		for (String key : values.getKeys())
-		{
-
+		for (String key : values.getKeys()) {
 			// Start of security checks
-			if (Keys.isAdminKey(key))
-			{
-
-				if (adminAccess == null)
-				{
+			if (Keys.isAdminKey(key)) {
+				if (adminAccess == null) {
 					adminAccess = hasIdentifierAdminUserAccess(secInfo, resolvedValues);
 				}
-
-				if (!adminAccess)
-				{
+				if (!adminAccess) {
 					throw new NamingAuthoritySecurityException(SecurityUtil.securityError(secInfo, "create key [" + key
 							+ "]. Not an ADMIN_USER"));
 				}
-
 			}
-			else
-			{
-				if (writerAccess == null)
-				{
+			else {
+				if (writerAccess == null) {
 					writerAccess = hasWriteUserAccess(secInfo, resolvedValues);
 				}
-
-				if (!writerAccess)
-				{
+				if (!writerAccess) {
 					//
 					// Check if user is administrator
 					//
-					if (adminAccess == null)
-					{
+					if (adminAccess == null) {
 						adminAccess = hasIdentifierAdminUserAccess(secInfo, resolvedValues);
 					}
-
-					if (!adminAccess)
-					{
+					if (!adminAccess) {
 						throw new NamingAuthoritySecurityException(SecurityUtil.securityError(secInfo,
 								"create keys. Neither WRITE_USER nor ADMIN_USER"));
 					}
 				}
 			}
 			// End of security checks
-
 			IdentifierValueKey ivk = IdentifierUtil.convert(key, values.getValues(key));
-			if (valueKeys.contains(ivk))
-			{
+			if (valueKeys.contains(ivk)) {
 				throw new InvalidIdentifierValuesException("Key [" + key + "] already exists for identifier ["
 						+ identifier.normalize().toString() + "]");
 			}
 			valueKeys.add(ivk);
 		}
-
 		save(resolvedValues);
-
-		if (SecurityUtil.isSystemIdentifier(localIdentifier))
-		{
+		if (SecurityUtil.isSystemIdentifier(localIdentifier)) {
 			replaceSystemValues(secInfo, resolvedValues);
 		}
 	}
@@ -553,92 +433,61 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * to list them as WRITE_USERS.
 	 */
 	public void deleteKeys(SecurityInfo secInfo, URI identifier, String[] keyList) throws InvalidIdentifierException,
-			NamingAuthoritySecurityException, InvalidIdentifierValuesException, NamingAuthorityConfigurationException
-	{
-
-		if (keyList == null || keyList.length == 0)
-		{
+			NamingAuthoritySecurityException, InvalidIdentifierValuesException, NamingAuthorityConfigurationException {
+		if (keyList == null || keyList.length == 0) {
 			throw new InvalidIdentifierValuesException("No keys were provided");
 		}
-
 		secInfo = validateSecurityInfo(secInfo);
-
 		Boolean writerAccess = null;
 		Boolean adminAccess = null;
 		URI localIdentifier = IdentifierUtil.getLocalName(prefix, identifier);
 		IdentifierMetadata resolvedValues = loadLocalIdentifier(localIdentifier);
-
-		if (resolvedValues.getValues() == null || resolvedValues.getValues().isEmpty())
-		{
+		if (resolvedValues.getValues() == null || resolvedValues.getValues().isEmpty()) {
 			throw new InvalidIdentifierValuesException("Identifier [" + identifier + "] has no keys");
 		}
-
 		LOG.debug("User [" + secInfo.getUser() + "] deleting some keys for identifier [" + identifier.toString() + "]");
-
 		List<IdentifierValueKey> keysToDelete = new ArrayList<IdentifierValueKey>();
 		ArrayList<String> keyNames = new ArrayList<String>(Arrays.asList(keyList));
-
-		for (IdentifierValueKey ivk : resolvedValues.getValues())
-		{
-			if (!keyNames.contains(ivk.getKey()))
-			{
+		for (IdentifierValueKey ivk : resolvedValues.getValues()) {
+			if (!keyNames.contains(ivk.getKey())) {
 				continue;
 			}
-
 			// Start of security checks
-			if (Keys.isAdminKey(ivk.getKey()))
-			{
-
-				if (adminAccess == null)
-				{
+			if (Keys.isAdminKey(ivk.getKey())) {
+				if (adminAccess == null) {
 					adminAccess = hasIdentifierAdminUserAccess(secInfo, resolvedValues);
 				}
-
-				if (!adminAccess)
-				{
+				if (!adminAccess) {
 					throw new NamingAuthoritySecurityException(SecurityUtil.securityError(secInfo,
 							"delete key [" + ivk.getKey() + "]. Not an ADMIN_USER"));
 				}
-
 			}
-			else
-			{
-				if (writerAccess == null)
-				{
+			else {
+				if (writerAccess == null) {
 					writerAccess = hasWriteUserAccess(secInfo, resolvedValues);
 				}
-
-				if (!writerAccess)
-				{
+				if (!writerAccess) {
 					//
 					// Check if user is administrator
 					//
-					if (adminAccess == null)
-					{
+					if (adminAccess == null) {
 						adminAccess = hasIdentifierAdminUserAccess(secInfo, resolvedValues);
 					}
-
-					if (!adminAccess)
-					{
+					if (!adminAccess) {
 						throw new NamingAuthoritySecurityException(SecurityUtil.securityError(secInfo,
 								"delete keys. Neither WRITE_USER nor ADMIN_USER"));
 					}
 				}
 			}
 			// End of security checks
-
 			LOG.debug("Removing key [" + ivk.getKey() + "]");
 			keysToDelete.add(ivk);
 		}
-
-		if (keysToDelete.size() != keyNames.size())
-		{
+		if (keysToDelete.size() != keyNames.size()) {
 			// Unrecognized key. Should we actually fail this?
 			String missingKeys = "";
-			for (String key : keyNames)
-			{
-				if (!keysToDelete.contains(key))
-				{
+			for (String key : keyNames) {
+				if (!keysToDelete.contains(key)) {
 					if (missingKeys.equals(""))
 						missingKeys += key;
 					else
@@ -647,17 +496,12 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			}
 			throw new InvalidIdentifierValuesException("Unexpected keys found in the request [" + missingKeys + "]");
 		}
-
-		if (keysToDelete.size() > 0)
-		{
+		if (keysToDelete.size() > 0) {
 			getHibernateTemplate().deleteAll(keysToDelete);
 			resolvedValues.getValues().removeAll(keysToDelete);
 		}
-
 		save(resolvedValues);
-
-		if (SecurityUtil.isSystemIdentifier(localIdentifier))
-		{
+		if (SecurityUtil.isSystemIdentifier(localIdentifier)) {
 			replaceSystemValues(secInfo, resolvedValues);
 		}
 	}
@@ -685,53 +529,35 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 */
 	public void replaceKeyValues(SecurityInfo secInfo, URI identifier, IdentifierValues newValues)
 			throws InvalidIdentifierException, NamingAuthoritySecurityException, InvalidIdentifierValuesException,
-			NamingAuthorityConfigurationException
-	{
-
-		if (newValues == null || newValues.getKeys() == null || newValues.getKeys().length == 0)
-		{
+			NamingAuthorityConfigurationException {
+		if (newValues == null || newValues.getKeys() == null || newValues.getKeys().length == 0) {
 			throw new InvalidIdentifierValuesException(Constant.NO_KEY_VALUES);
 		}
-
 		secInfo = validateSecurityInfo(secInfo);
-
 		URI localIdentifier = IdentifierUtil.getLocalName(prefix, identifier);
 		IdentifierMetadata resolvedValues = loadLocalIdentifier(localIdentifier);
-
-		if (resolvedValues.getValues() == null || resolvedValues.getValues().isEmpty())
-		{
+		if (resolvedValues.getValues() == null || resolvedValues.getValues().isEmpty()) {
 			throw new InvalidIdentifierValuesException("Identifier [" + identifier + "] has no keys");
 		}
-
 		Boolean identifierAdminAccess = hasIdentifierAdminUserAccess(secInfo, resolvedValues);
 		Boolean identifierWriteAccess = null;
-
 		ArrayList<String> keysToReplace = new ArrayList<String>(Arrays.asList(newValues.getKeys()));
-		for (IdentifierValueKey ivk : resolvedValues.getValues())
-		{
-
-			if (!keysToReplace.contains(ivk.getKey()))
-			{
+		for (IdentifierValueKey ivk : resolvedValues.getValues()) {
+			if (!keysToReplace.contains(ivk.getKey())) {
 				continue;
 			}
-
-			if (!identifierAdminAccess)
-			{
-
-				if (Keys.isAdminKey(ivk.getKey()))
-				{
+			if (!identifierAdminAccess) {
+				if (Keys.isAdminKey(ivk.getKey())) {
 					String error = SecurityUtil.securityError(secInfo, "replace key [" + ivk.getKey()
 							+ "]. Not an ADMIN_USER");
 					LOG.error(error);
 					throw new NamingAuthoritySecurityException(error);
 				}
-
 				//
 				// Check key level security using key's read-write identifier
 				//
 				Access keyAccess = getKeyWriteAccess(secInfo, ivk.getPolicyIdentifier());
-				if (keyAccess == Access.DENIED)
-				{
+				if (keyAccess == Access.DENIED) {
 					//
 					// WRITE_USERS defined for key and this user is not listed
 					//
@@ -740,19 +566,15 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 					LOG.error(error);
 					throw new NamingAuthoritySecurityException(error);
 				}
-
-				if (keyAccess == Access.NOSECURITY)
-				{
+				if (keyAccess == Access.NOSECURITY) {
 					//
 					// Fall back to identifier level security
 					//
-					if (identifierWriteAccess == null)
-					{
+					if (identifierWriteAccess == null) {
 						identifierWriteAccess = hasWriteUserAccess(secInfo, resolvedValues);
 					}
 
-					if (!identifierWriteAccess)
-					{
+					if (!identifierWriteAccess) {
 						//
 						// WRITE_USERS defined identifier and this user is not
 						// listed
@@ -769,17 +591,13 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 			ivk.setValues(kvs.getValues());
 		}
 
-		if (keysToReplace.size() > 0)
-		{
+		if (keysToReplace.size() > 0) {
 			throw new InvalidIdentifierValuesException("Key [" + keysToReplace.get(0)
 					+ "] does not exist for identifier [" + identifier.normalize().toString() + "]");
 		}
-
 		save(resolvedValues);
-
 		// Save system identifier if necessary
-		if (SecurityUtil.isSystemIdentifier(localIdentifier))
-		{
+		if (SecurityUtil.isSystemIdentifier(localIdentifier)) {
 			replaceSystemValues(secInfo, resolvedValues);
 		}
 	}
@@ -787,36 +605,26 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	/****
 	 * Adds administrator identity to system identifier
 	 */
-	public synchronized void createInitialAdministrator(String identity) throws NamingAuthorityConfigurationException
-	{
-
-		if (systemValues == null || systemValues.getValues() == null)
-		{
+	public synchronized void createInitialAdministrator(String identity) throws NamingAuthorityConfigurationException {
+		if (systemValues == null || systemValues.getValues() == null) {
 			throw new NamingAuthorityConfigurationException("No system values. Please initialize DAO first");
 		}
 
 		IdentifierValueKey adminKey = null;
 		Collection<IdentifierValueKey> valCol = systemValues.getValues();
-		for (IdentifierValueKey ivk : valCol)
-		{
-			if (ivk.getKey().equals(Keys.ADMIN_USERS))
-			{
+		for (IdentifierValueKey ivk : valCol) {
+			if (ivk.getKey().equals(Keys.ADMIN_USERS)) {
 				adminKey = ivk;
 				break;
 			}
 		}
-
-		if (adminKey == null)
-		{
+		if (adminKey == null) {
 			adminKey = new IdentifierValueKey();
 			valCol.add(adminKey);
 		}
-
-		if (adminKey.getValues() != null && adminKey.getValues().size() > 0)
-		{
+		if (adminKey.getValues() != null && adminKey.getValues().size() > 0) {
 			throw new NamingAuthorityConfigurationException("An administrator already exists");
 		}
-
 		ArrayList<String> values = new ArrayList<String>();
 		values.add(identity);
 		adminKey.setValues(values);
@@ -847,57 +655,49 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 */
 	public String registerGSID(SecurityInfo secInfo, String suggestedIdentifier, String[] parentIdentifiers)
 			throws NamingAuthorityConfigurationException, InvalidIdentifierValuesException, InvalidIdentifierException,
-			NamingAuthoritySecurityException
-	{
+			NamingAuthoritySecurityException {
 		checkSecurity(secInfo, false, true);
 		String userName = secInfo.getUser();
 		String publisherIdentifier = getIdentifierFromUser(userName);
 		String temp = null;
 		List<String> keys = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
-		if (suggestedIdentifier != null && suggestedIdentifier.length() > 0)
-		{
+		if (StringUtils.isNotBlank(suggestedIdentifier)) {
 			validateIdentifierPattern(suggestedIdentifier);
 		}
-		if (!checkIfParentsEmpty(parentIdentifiers))
-		{
+		if (parentIdentifiers != null && parentIdentifiers.length > 0) {
 			for (String parent : parentIdentifiers)
 				LOG.debug("the parent is " + parent);
-			keys.add("parent");
 			String value = "";
 			String total_value = "";
-			for (int i = 0; i < parentIdentifiers.length; i++)
-			{
+			boolean atleastOneParent = false;
+			for (int i = 0; i < parentIdentifiers.length; i++) {
 				value = parentIdentifiers[i];
-				// try
-				// {
-				// validateIdentifierPattern(value);
-				// }
-				// catch(InvalidIdentifierException e)
-				// {
-				// LOG.warn("invalid value for parent identifier \n"+value+"\n"+parentIdentifiers.length);
-				// throw new
-				// InvalidIdentifierException("Parent identifier cannot be null.");
-				// }
-				// out.println(key+" "+value);
-				total_value += value;
-				if (i < parentIdentifiers.length - 1)
-				{
-					total_value += ",";
+				if (StringUtils.isNotBlank(value)) {
+					if (StringUtils.isNotBlank(suggestedIdentifier) && value.equals(suggestedIdentifier)) {
+						// throw an exception saying that an suggestedIdentifier
+						// cannot be a parent.
+						throw new InvalidIdentifierValuesException("Violation: suggested identifier "
+								+ suggestedIdentifier + " is also present in parent identifiers array");
+					}
+					total_value += value + ",";
+					atleastOneParent = true;
 				}
 			}
-			values.add(total_value);
+			if (atleastOneParent) {
+				// remove last comma.
+				total_value = total_value.substring(0, total_value.length() - 1);
+				keys.add("parent");
+				values.add(total_value);
+			}
 		}
 		keys.add(TYPE);
 		values.add(GSID);
 		temp = suggestedIdentifier = createIdentifier(secInfo, suggestedIdentifier, keys, values);
-
-		if (suggestedIdentifier != null)
-		{
+		if (suggestedIdentifier != null) {
 			// second transaction.
 			keys = new ArrayList<String>();
 			values = new ArrayList<String>();
-
 			keys.add(PUBLISHER);
 			values.add(publisherIdentifier);
 			keys.add(GSID);
@@ -930,8 +730,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	public void registerSite(SecurityInfo secInfo, String application, String applicationURL,
 			String applicationVersion, String contactName, String contactEmail, String contactPhone, String organization)
 			throws NamingAuthorityConfigurationException, InvalidIdentifierValuesException, InvalidIdentifierException,
-			NamingAuthoritySecurityException
-	{
+			NamingAuthoritySecurityException {
 		checkSecurity(secInfo, false, false);
 		List<String> keys = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
@@ -939,10 +738,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 				contactPhone, organization, secInfo.getUser() };
 		String[] fixedKeys = { "application", "applicationUrl", "applicationVersion", "contactEmail", "contactName",
 				"contactPhone", "organization", "userName" };
-		for (int i = 0; i < fixedKeys.length; i++)
-		{
-			if (tempValues[i] == null || tempValues[i].trim().length() == 0)
-			{
+		for (int i = 0; i < fixedKeys.length; i++) {
+			if (tempValues[i] == null || tempValues[i].trim().length() == 0) {
 				throw new InvalidIdentifierException();
 			}
 			keys.add(fixedKeys[i]);
@@ -966,39 +763,31 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthoritySecurityException
 	 */
 	public void addSite(SecurityInfo secInfo, String identifier) throws NamingAuthorityConfigurationException,
-			InvalidIdentifierValuesException, InvalidIdentifierException, NamingAuthoritySecurityException
-	{
+			InvalidIdentifierValuesException, InvalidIdentifierException, NamingAuthoritySecurityException {
 		checkSecurity(secInfo, true, true);
-		
-		if (StringUtils.isBlank(identifier))
-		{
+		if (StringUtils.isBlank(identifier)) {
 			throw new InvalidIdentifierException("Identifier cannot be null.");
 		}
 		validateIdentifierPattern(identifier);
 		URI identifierURI = null;
-		try
-		{
+		try {
 			identifierURI = new URI(identifier);
 		}
-		catch (URISyntaxException e)
-		{
+		catch (URISyntaxException e) {
 			throw new InvalidIdentifierException("Unable to parse identifier.");
 		}
 		IdentifierMetadata imd = loadLocalIdentifier(identifierURI);
-		if (imd == null)
-		{
+		if (imd == null) {
 			throw new InvalidIdentifierException("Identifier does not exists.");
 		}
 		String userName = secInfo.getUser();
 		String publisherIdentifier = getIdentifierFromUser(userName);
-
 		List<String> keys = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		keys.add(TYPE);
 		values.add(SITE_DATA);
 		keys.add(PUBLISHER);
 		values.add(publisherIdentifier);
-
 		keys.add(GSID);
 		values.add(identifier);
 		createIdentifier(secInfo, null, keys, values);
@@ -1019,29 +808,23 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthorityConfigurationException
 	 */
 	public boolean validateIdentifier(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
-			NamingAuthoritySecurityException, NamingAuthorityConfigurationException
-	{
-		if (identifier == null)
-		{
+			NamingAuthoritySecurityException, NamingAuthorityConfigurationException {
+		if (identifier == null) {
 			throw new InvalidIdentifierException("Identifier cannot be null.");
 		}
 		validateIdentifierPattern(identifier);
-		try
-		{
+		try {
 			URI temp = new URI(identifier);
-			try
-			{
+			try {
 				IdentifierMetadata metaData = loadLocalIdentifier(temp);
 				if (metaData != null)
 					return false;
 			}
-			catch (Exception e)
-			{
+			catch (Exception e) {
 				return true;
 			}
 		}
-		catch (URISyntaxException e)
-		{
+		catch (URISyntaxException e) {
 			throw new InvalidIdentifierException("Identifier cannot parsed.");
 		}
 
@@ -1062,10 +845,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthorityConfigurationException
 	 */
 	public Tree getParentHierarchy(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
-			NamingAuthoritySecurityException, NamingAuthorityConfigurationException
-	{
-		if (StringUtils.isBlank(identifier))
-		{
+			NamingAuthoritySecurityException, NamingAuthorityConfigurationException {
+		if (StringUtils.isBlank(identifier)) {
 			throw new InvalidIdentifierException("Identifier cannot be null");
 		}
 		validateIdentifierPattern(identifier);
@@ -1074,81 +855,62 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		Tree currentNode = new Tree(identifier);
 		Tree rootNode = currentNode;
 		parents.add(currentNode);
-		while (parents.size() != 0)
-		{
+		while (parents.size() != 0) {
 			currentNode = parents.get(0);
 			String tempIdentifier = (currentNode).getIdentifier();
 			parents.remove(0);
 			IdentifierData currentKeyData = null;
-			try
-			{
+			try {
 				URI uri = null;
-				try
-				{
+				try {
 					uri = new java.net.URI(prefix + tempIdentifier);
 				}
-				catch (Exception e)
-				{
+				catch (Exception e) {
 				}
-				if (uri != null)
-				{
+				if (uri != null) {
 					currentKeyData = getIdentifierData(secInfo, uri, "parent");
 				}
 			}
-			catch (InvalidIdentifierValuesException e1)
-			{
+			catch (InvalidIdentifierValuesException e1) {
 				tempIdentifier = null;
 			}
-			if (currentKeyData != null)
-			{
-				if (currentKeyData.getKeys() != null)
-				{
-					for (String key : currentKeyData.getKeys())
-					{
+			if (currentKeyData != null) {
+				if (currentKeyData.getKeys() != null) {
+					for (String key : currentKeyData.getKeys()) {
 						KeyData values = currentKeyData.getValues(key);
 						// parent should have only one value so get the first
 						// one.
-						if (values != null)
-						{
-							for (String value : values.getValues())
-							{
+						if (values != null) {
+							for (String value : values.getValues()) {
 								String tempURI = null;
-								try
-								{
-									if (value != null)
-									{
+								try {
+									if (value != null) {
 										tempURI = value;
 									}
-									else
-									{
+									else {
 										LOG.debug("values is null");
 									}
 								}
-								catch (Exception e)
-								{
+								catch (Exception e) {
 									e.printStackTrace();
 								}
-								if (tempURI != null)
-								{
+								if (tempURI != null) {
 									Tree tempNode = new Tree(tempURI);
 									currentNode.addChild(tempNode);
 									parents.add(tempNode);
 								}
 							}
 						}
-						else
-						{
+						else {
 							LOG.debug("values are null");
 						}
 					}
 				}
-				else
-				{
+				else {
 					LOG.debug("getKeys is null");
 				}
 			}
-			else
-			{
+			else {
 				LOG.debug("currentkeydata is null");
 			}
 		}
@@ -1170,10 +932,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthorityConfigurationException
 	 */
 	public Tree getChildHierarchy(SecurityInfo secInfo, String identifier) throws InvalidIdentifierException,
-			NamingAuthoritySecurityException, InvalidIdentifierValuesException, NamingAuthorityConfigurationException
-	{
-		if (identifier == null || identifier.length() == 0)
-		{
+			NamingAuthoritySecurityException, InvalidIdentifierValuesException, NamingAuthorityConfigurationException {
+		if (identifier == null || identifier.length() == 0) {
 			throw new InvalidIdentifierException("Identifier cannot be null");
 		}
 		validateIdentifierPattern(identifier);
@@ -1181,41 +941,33 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		Tree currentNode = new Tree(identifier);
 		Tree rootNode = currentNode;
 		parents.add(currentNode);
-		while (parents.size() != 0)
-		{
+		while (parents.size() != 0) {
 			currentNode = parents.get(0);
 			String tempIdentifier = currentNode.getIdentifier();
 			parents.remove(0);
 			List<IdentifierMetadata> currentChildren = getChildItems(secInfo, tempIdentifier);
-			if (currentChildren != null)
-			{
-				if (currentChildren.size() > 0)
-				{
-					for (IdentifierMetadata child : currentChildren)
-					{
+			if (currentChildren != null) {
+				if (currentChildren.size() > 0) {
+					for (IdentifierMetadata child : currentChildren) {
 						String key = child.getLocalIdentifier().toString();
 						// parent should have only one value so get the first
 						// one.
-						if (key != null)
-						{
+						if (key != null) {
 							LOG.debug("the key is " + key);
 							Tree tempNode = new Tree(key);
 							currentNode.addChild(tempNode);
 							parents.add(tempNode);
 						}
-						else
-						{
+						else {
 							LOG.debug("values are null");
 						}
 					}
 				}
-				else
-				{
+				else {
 					LOG.debug("current children size is zero");
 				}
 			}
-			else
-			{
+			else {
 				LOG.debug("current child is null");
 			}
 		}
@@ -1240,9 +992,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 */
 	public List<IdentifierMetadata> getChildItems(SecurityInfo secInfo, String identifier)
 			throws InvalidIdentifierException, NamingAuthoritySecurityException, InvalidIdentifierValuesException,
-			NamingAuthorityConfigurationException
-	{
-		validateSecurityInfo(secInfo);		
+			NamingAuthorityConfigurationException {
+		validateSecurityInfo(secInfo);
 		List<IdentifierMetadata> results = getHibernateTemplate()
 				.find("SELECT md FROM "
 						+ domainClass().getName()
@@ -1266,27 +1017,21 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthorityConfigurationException
 	 */
 	public List<IdentifierData> getSitesData(SecurityInfo secInfo, URI naPrefix) throws InvalidIdentifierException,
-			NamingAuthoritySecurityException, InvalidIdentifierValuesException, NamingAuthorityConfigurationException
-	{
+			NamingAuthoritySecurityException, InvalidIdentifierValuesException, NamingAuthorityConfigurationException {
 		validateSecurityInfo(secInfo);
 		List<IdentifierMetadata> results = getHibernateTemplate()
 				.find("SELECT md FROM "
 						+ domainClass().getName()
 						+ " as md INNER JOIN md.values as value INNER JOIN value.values as val WHERE value.key='TYPE' and val='SITE'");
-		if (results != null)
-		{
+		if (results != null) {
 			LOG.debug("The results Size is " + results.size());
 		}
 		List<IdentifierData> resultData = new ArrayList<IdentifierData>();
-		if (results != null)
-		{
-			for (IdentifierMetadata result : results)
-			{
-				if (result != null)
-				{
+		if (results != null) {
+			for (IdentifierMetadata result : results) {
+				if (result != null) {
 					IdentifierData tempData = IdentifierUtil.convert(result.getValues());
-					if (tempData != null)
-					{
+					if (tempData != null) {
 						String identifierValue = result.getLocalIdentifier().toString();
 						KeyData tempKeyData = new KeyData(tempData.getValues(tempData.getKeys()[0])
 								.getPolicyIdentifier(), new String[] { identifierValue });
@@ -1300,27 +1045,22 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	/******
-	 * This method is used to check if parent identifiers are empty or not.
+	 * This method is used to checks if parent identifiers are empty or not.
 	 * 
 	 * @param parents
 	 * @return true if parent identifiers are not empty and false otherwise.
 	 */
-	private boolean checkIfParentsEmpty(String[] parents)
-	{
+	private boolean checkIfParentsEmpty(String[] parents) {
 		boolean flag = false;
-		if (parents != null && parents.length > 0)
-		{
-			for (String parent : parents)
-			{
-				if (parent == null || parent.trim().length() == 0)
-				{
+		if (parents != null && parents.length > 0) {
+			for (String parent : parents) {
+				if (StringUtils.isBlank(parent)) {
 					flag = true;
 					break;
 				}
 			}
 		}
-		else
-		{
+		else {
 			flag = true;
 		}
 		return flag;
@@ -1334,9 +1074,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 *            string representing user name.
 	 * @return identifier.
 	 */
-	public String getIdentifierFromUser(String userName)
-	{
-		if (StringUtils.isEmpty(userName))
+	public String getIdentifierFromUser(String userName) {
+		if (StringUtils.isBlank(userName))
 			return null;
 		String temp = null;
 		List<IdentifierMetadata> results = getHibernateTemplate()
@@ -1344,11 +1083,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 						+ domainClass().getName()
 						+ " as md INNER JOIN md.values as value INNER JOIN value.values as val WHERE value.key='userName' and val=?",
 						new Object[] { userName.trim() });
-		if (results != null && results.size() == 1)
-		{
+		if (results != null && results.size() == 1) {
 			URI tempGURI = results.get(0).getLocalIdentifier();
-			if (tempGURI != null)
-			{
+			if (tempGURI != null) {
 				temp = tempGURI.toString();
 			}
 		}
@@ -1362,8 +1099,7 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @return true if the identifier exists in the persistent and false
 	 *         otherwise.
 	 */
-	public boolean checkIfIdentifierExists(URI identifier)
-	{
+	public boolean checkIfIdentifierExists(URI identifier) {
 		List<IdentifierMetadata> results = getHibernateTemplate().find(
 				"SELECT md FROM " + domainClass().getName() + " md WHERE md.localIdentifier = ?",
 				new Object[] { identifier });
@@ -1384,33 +1120,26 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthoritySecurityException
 	 */
 	public void checkSecurity(SecurityInfo secInfo, boolean checkOnlyLogin, boolean checkHasSite)
-			throws NamingAuthoritySecurityException
-	{
+			throws NamingAuthoritySecurityException {
 		String caller = secInfo.getUser();
-		if (StringUtils.isEmpty(caller))
-		{
+		if (StringUtils.isBlank(caller)) {
 			throw new NamingAuthoritySecurityException("Please login into the grid to identify yourselves");
 		}
-		if (!checkOnlyLogin)
-		{
+		if (!checkOnlyLogin) {
 			// check for a group.
-			if(!isMember(caller))
-			{
-				throw new NamingAuthoritySecurityException("You should be a member of this \""+groupName+"\" group before you proceed.");
+			if (!isMember(caller)) {
+				throw new NamingAuthoritySecurityException("You should be a member of this \"" + groupName
+						+ "\" group before you proceed.");
 			}
 		}
 		String Identifier = getIdentifierFromUser(caller);
-		if (checkHasSite)
-		{
-			if (Identifier == null)
-			{
+		if (checkHasSite) {
+			if (Identifier == null) {
 				throw new NamingAuthoritySecurityException("Please register a site before you proceed");
 			}
 		}
-		else
-		{
-			if (Identifier != null)
-			{
+		else {
+			if (Identifier != null) {
 				throw new NamingAuthoritySecurityException("You have already registered a site");
 			}
 		}
@@ -1418,40 +1147,35 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 
 	/******
 	 * Check whether a user is member of a group or not.
+	 * 
 	 * @param userIdentity
 	 * @return
 	 */
-	private boolean isMember(String userIdentity)
-	{
-		if ((StringUtils.isNotEmpty(grouperURL)) && (StringUtils.isNotEmpty(groupName)))
-		{
+	private boolean isMember(String userIdentity) {
+		if ((StringUtils.isNotEmpty(grouperURL)) && (StringUtils.isNotEmpty(groupName))) {
 			// Create a Grid Grouper Instance
 			GrouperI grouper = new GridGrouper(grouperURL);
 
-			try
-			{
+			try {
 				// Determine if the user is a member of the group.
 				boolean isMember = grouper.isMemberOf(userIdentity, groupName);
 
-				if (isMember)
-				{
+				if (isMember) {
 					LOG.debug("The user " + userIdentity + " is a member of " + groupName);
 					return true;
 				}
-				else
-				{
+				else {
 					LOG.debug("The user " + userIdentity + " is NOT a member of " + groupName);
 					return false;
 				}
 			}
-			catch (GroupNotFoundException e)
-			{
+			catch (GroupNotFoundException e) {
 				LOG.debug("The group " + groupName + " does not exist, therefore the user " + userIdentity
 						+ " is NOT a member.");
 				return false;
 			}
 		}
-		//returning true if no grouper authentication needed.
+		// returning true if no grouper authentication needed.
 		return true;
 	}
 
@@ -1464,48 +1188,40 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * 
 	 */
 	private String createIdentifier(SecurityInfo secInfo, String identifier, List<String> keys, List<String> values)
-			throws InvalidIdentifierException, NamingAuthorityConfigurationException, NamingAuthoritySecurityException
-	{
+			throws InvalidIdentifierException, NamingAuthorityConfigurationException, NamingAuthoritySecurityException {
 
 		String temp = null;
 
 		String[] keyArray = new String[keys.size()];
 		String[][] valueArray = new String[keys.size()][];
-		for (int i = 0; i < keys.size(); i++)
-		{
+		for (int i = 0; i < keys.size(); i++) {
 			keyArray[i] = keys.get(i);
 			String value = values.get(i);
 			String[] valueArr;
-			if (value != null && value.contains(","))
-			{
+			if (value != null && value.contains(",")) {
 				valueArr = value.split(",");
 			}
-			else
-			{
+			else {
 				valueArr = new String[1];
 				valueArr[0] = value;
 			}
-			if (keys.get(i).contains("parent"))
-			{
+			if (keys.get(i).contains("parent")) {
 				LOG.debug("the values are " + valueArr);
-				for (String valueAr1 : valueArr)
-				{
+				for (String valueAr1 : valueArr) {
 
 					// org.apache.axis.types.URI axisUri = getAxisURI(valueAr1,
 					// builder);
 					LOG.debug("value Ar1 " + valueAr1);
-					try
-					{
+					try {
 						URI valueAr1URI = new URI(valueAr1);
 						valueAr1URI = IdentifierUtil.build(prefix, valueAr1URI);
 						resolveIdentifier(secInfo, valueAr1URI);
 
 					}
-					catch (URISyntaxException e)
-					{
+					catch (URISyntaxException e) {
 						LOG.debug("URI casting from String execption " + valueAr1);
-						throw new InvalidIdentifierException("Unable to convert "+valueAr1+" ");
-					}			
+						throw new InvalidIdentifierException("Unable to convert " + valueAr1 + " ");
+					}
 
 				}
 			}
@@ -1513,59 +1229,47 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		}
 
 		org.cagrid.identifiers.namingauthority.domain.IdentifierData ivs = new org.cagrid.identifiers.namingauthority.domain.IdentifierData();
-		for (int i = 0; i < keyArray.length; i++)
-		{
+		for (int i = 0; i < keyArray.length; i++) {
 			URI policyReference = null;
 			KeyData kd = new KeyData(policyReference, valueArray[i]);
 			ivs.put(keyArray[i], kd);
 		}
 		URI identifierURI = null;
-		if (identifier == null)
-		{
+		if (identifier == null) {
 			identifier = (new IdentifierGeneratorImpl()).generate(null).toString();
 		}
-		else
-		{
-			try
-			{
-				while (checkIfIdentifierExists(new URI(identifier)))
-				{
+		else {
+			try {
+				while (checkIfIdentifierExists(new URI(identifier))) {
 					identifier = (new IdentifierGeneratorImpl()).generate(null).toString();
 				}
 			}
-			catch (URISyntaxException e)
-			{
+			catch (URISyntaxException e) {
 
 				LOG.warn("URI Syntax exception occured");
 				throw new InvalidIdentifierException("URI is Invalid");
 			}
 		}
 
-		try
-		{
+		try {
 			identifierURI = new URI(identifier);
 		}
-		catch (URISyntaxException e)
-		{
+		catch (URISyntaxException e) {
 			LOG.debug("URI sytanx exception occured by identifier " + identifier);
 		}
-		try
-		{
+		try {
 			createIdentifier(secInfo, identifierURI, ivs);
 			temp = identifierURI.toString();
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			LOG.debug("Naming authority configuration exception occured");
 			throw new NamingAuthorityConfigurationException();
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			LOG.debug("Invalid Identifier Exception occured");
 			throw new InvalidIdentifierException();
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			LOG.debug("Naming Authority Security Exception occured");
 			throw new NamingAuthoritySecurityException();
 		}
@@ -1581,31 +1285,26 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * root identifier
 	 */
 	private synchronized void createIdentifierSecurityChecks(SecurityInfo secInfo) throws InvalidIdentifierException,
-			NamingAuthorityConfigurationException, NamingAuthoritySecurityException
-	{
+			NamingAuthorityConfigurationException, NamingAuthoritySecurityException {
 
 		List<String> values = SecurityUtil.getPublicCreation(systemValues);
-		if (values == null || values.isEmpty())
-		{
+		if (values == null || values.isEmpty()) {
 			// no security
 			LOG.debug("SECURITY: No PUBLIC_CREATION");
 			return;
 		}
 
-		if (values.size() != 1)
-		{
+		if (values.size() != 1) {
 			throw new NamingAuthorityConfigurationException("Bad PUBLIC_CREATION setting detected");
 		}
 
-		if (values.get(0).equalsIgnoreCase(SecurityUtil.PUBLIC_CREATION_YES))
-		{
+		if (values.get(0).equalsIgnoreCase(SecurityUtil.PUBLIC_CREATION_YES)) {
 			// everyone can create identifiers
 			return;
 		}
 
 		List<String> authorizedUsers = SecurityUtil.getIdentifierCreationUsers(systemValues);
-		if (authorizedUsers == null || !authorizedUsers.contains(secInfo.getUser()))
-		{
+		if (authorizedUsers == null || !authorizedUsers.contains(secInfo.getUser())) {
 			throw new NamingAuthoritySecurityException(SecurityUtil.securityError(secInfo, "create identifiers"));
 		}
 	}
@@ -1615,19 +1314,16 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * READWRITE_IDENTIFIERS
 	 */
 	private List<String> getAllReadUsers(IdentifierMetadata values) throws InvalidIdentifierException,
-			NamingAuthorityConfigurationException
-	{
+			NamingAuthorityConfigurationException {
 
 		List<String> readUsers = SecurityUtil.getReadUsers(values);
 		List<String> otherReadUsers = getReadUsersFromReadWriteIdentifiers(values);
 
-		if (readUsers == null)
-		{
+		if (readUsers == null) {
 			return otherReadUsers;
 		}
 
-		if (otherReadUsers != null)
-		{
+		if (otherReadUsers != null) {
 			readUsers.addAll(otherReadUsers);
 		}
 
@@ -1635,11 +1331,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	private boolean hasIdentifierAdminUserAccess(SecurityInfo secInfo, IdentifierMetadata values)
-			throws InvalidIdentifierException, NamingAuthorityConfigurationException
-	{
+			throws InvalidIdentifierException, NamingAuthorityConfigurationException {
 
-		if (hasAdminUserAccess(secInfo, values) || hasSystemAdminUserAccess(secInfo))
-		{
+		if (hasAdminUserAccess(secInfo, values) || hasSystemAdminUserAccess(secInfo)) {
 			return true;
 		}
 
@@ -1647,10 +1341,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	}
 
 	// Checks if user is in ADMIN_USERS in system identifier
-	private synchronized boolean hasSystemAdminUserAccess(SecurityInfo secInfo)
-	{
-		if (userAccess(secInfo.getUser(), SecurityUtil.getAdminUsers(systemValues)) == Access.GRANTED)
-		{
+	private synchronized boolean hasSystemAdminUserAccess(SecurityInfo secInfo) {
+		if (userAccess(secInfo.getUser(), SecurityUtil.getAdminUsers(systemValues)) == Access.GRANTED) {
 			return true;
 		}
 		return false;
@@ -1660,21 +1352,18 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	// Checks whether user is an ADMIN_USER
 	//
 	private boolean hasAdminUserAccess(SecurityInfo secInfo, IdentifierMetadata values)
-			throws InvalidIdentifierException, NamingAuthorityConfigurationException
-	{
+			throws InvalidIdentifierException, NamingAuthorityConfigurationException {
 
 		// Check locally defined ADMIN_USERS list
 		Access access = userAccess(secInfo.getUser(), SecurityUtil.getAdminUsers(values));
-		if (access == Access.GRANTED)
-		{
+		if (access == Access.GRANTED) {
 			// No further checks needed
 			return true;
 		}
 
 		// Check ADMIN_USERS defined by ADMIN_IDENTIFIERS
 		Access rwAccess = userAccess(secInfo.getUser(), getAdminUsersFromAdminIdentifiers(values));
-		if (rwAccess == Access.GRANTED)
-		{
+		if (rwAccess == Access.GRANTED) {
 			return true;
 		}
 
@@ -1686,25 +1375,21 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * are no security settings (no WRITE_USERS key defined)
 	 */
 	private boolean hasWriteUserAccess(SecurityInfo secInfo, IdentifierMetadata values)
-			throws InvalidIdentifierException, NamingAuthorityConfigurationException
-	{
+			throws InvalidIdentifierException, NamingAuthorityConfigurationException {
 
 		// Check locally defined WRITE_USERS list
 		Access access = userAccess(secInfo.getUser(), SecurityUtil.getWriteUsers(values));
-		if (access == Access.GRANTED)
-		{
+		if (access == Access.GRANTED) {
 			return true;
 		}
 
 		// Check WRITE_USERS defined by READWRITE_IDENTIFIERS
 		Access rwAccess = userAccess(secInfo.getUser(), getWriteUsersFromReadWriteIdentifiers(values));
-		if (rwAccess != Access.NOSECURITY)
-		{
+		if (rwAccess != Access.NOSECURITY) {
 			access = rwAccess;
 		}
 
-		if (access == Access.DENIED)
-		{
+		if (access == Access.DENIED) {
 			return false;
 		}
 
@@ -1712,15 +1397,12 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return true;
 	}
 
-	private Access userAccess(String requestingUser, List<String> authorizedUsers)
-	{
-		if (authorizedUsers == null)
-		{
+	private Access userAccess(String requestingUser, List<String> authorizedUsers) {
+		if (authorizedUsers == null) {
 			return Access.NOSECURITY;
 		}
 
-		if (authorizedUsers.contains(requestingUser))
-		{
+		if (authorizedUsers.contains(requestingUser)) {
 			return Access.GRANTED;
 		}
 
@@ -1731,21 +1413,16 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	// Returns WRITE_USERS listed by any READWRITE_IDENTIFIERS
 	//
 	private List<String> getWriteUsersFromReadWriteIdentifiers(IdentifierMetadata values)
-			throws InvalidIdentifierException, NamingAuthorityConfigurationException
-	{
+			throws InvalidIdentifierException, NamingAuthorityConfigurationException {
 
 		List<String> writers = null;
 
 		List<String> rwIdentifiers = SecurityUtil.getReadWriteIdentifiers(values);
-		if (rwIdentifiers != null)
-		{
-			for (String identifier : rwIdentifiers)
-			{
+		if (rwIdentifiers != null) {
+			for (String identifier : rwIdentifiers) {
 				List<String> writeUsers = SecurityUtil.getWriteUsers(loadSecurityIdentifier(identifier));
-				if (writeUsers != null)
-				{
-					if (writers == null)
-					{
+				if (writeUsers != null) {
+					if (writers == null) {
 						writers = new ArrayList<String>();
 					}
 					writers.addAll(writeUsers);
@@ -1760,21 +1437,16 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	// Returns READ_USERS listed by any READWRITE_IDENTIFIERS
 	//
 	private List<String> getReadUsersFromReadWriteIdentifiers(IdentifierMetadata values)
-			throws InvalidIdentifierException, NamingAuthorityConfigurationException
-	{
+			throws InvalidIdentifierException, NamingAuthorityConfigurationException {
 
 		List<String> readers = null;
 
 		List<String> rwIdentifiers = SecurityUtil.getReadWriteIdentifiers(values);
-		if (rwIdentifiers != null)
-		{
-			for (String identifier : rwIdentifiers)
-			{
+		if (rwIdentifiers != null) {
+			for (String identifier : rwIdentifiers) {
 				List<String> readUsers = SecurityUtil.getReadUsers(loadSecurityIdentifier(identifier));
-				if (readUsers != null)
-				{
-					if (readers == null)
-					{
+				if (readUsers != null) {
+					if (readers == null) {
 						readers = new ArrayList<String>();
 					}
 					readers.addAll(readUsers);
@@ -1789,22 +1461,17 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	// Returns ADMIN_USERS listed by any ADMIN_IDENTIFIERS
 	//
 	private List<String> getAdminUsersFromAdminIdentifiers(IdentifierMetadata values)
-			throws InvalidIdentifierException, NamingAuthorityConfigurationException
-	{
+			throws InvalidIdentifierException, NamingAuthorityConfigurationException {
 
 		List<String> allAdmins = null;
 
 		List<String> adminIdentifiers = SecurityUtil.getAdminIdentifiers(values);
-		if (adminIdentifiers != null)
-		{
-			for (String identifier : adminIdentifiers)
-			{
+		if (adminIdentifiers != null) {
+			for (String identifier : adminIdentifiers) {
 				List<String> admins = SecurityUtil.getAdminUsers(loadSecurityIdentifier(identifier));
 
-				if (admins != null)
-				{
-					if (allAdmins == null)
-					{
+				if (admins != null) {
+					if (allAdmins == null) {
 						allAdmins = new ArrayList<String>();
 					}
 					allAdmins.addAll(admins);
@@ -1821,11 +1488,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	// attached to the key.
 	//
 	private Access getKeyReadAccess(SecurityInfo secInfo, URI rwIdentifier) throws InvalidIdentifierException,
-			NamingAuthorityConfigurationException
-	{
+			NamingAuthorityConfigurationException {
 
-		if (rwIdentifier == null || rwIdentifier.normalize().toString().length() == 0)
-		{
+		if (rwIdentifier == null || rwIdentifier.normalize().toString().length() == 0) {
 			// no security at key level
 			return Access.NOSECURITY;
 		}
@@ -1841,11 +1506,9 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	// attached to the key.
 	//
 	private Access getKeyWriteAccess(SecurityInfo secInfo, URI rwIdentifier) throws InvalidIdentifierException,
-			NamingAuthorityConfigurationException
-	{
+			NamingAuthorityConfigurationException {
 
-		if (rwIdentifier == null || rwIdentifier.normalize().toString().length() == 0)
-		{
+		if (rwIdentifier == null || rwIdentifier.normalize().toString().length() == 0) {
 			// no security at key level
 			return Access.NOSECURITY;
 		}
@@ -1855,14 +1518,12 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 		return userAccess(secInfo.getUser(), writers);
 	}
 
-	private synchronized void replaceSystemValues(SecurityInfo secInfo, IdentifierMetadata resolvedValues)
-	{
+	private synchronized void replaceSystemValues(SecurityInfo secInfo, IdentifierMetadata resolvedValues) {
 		systemValues = resolvedValues;
 		LOG.debug("System identifier updated by [" + secInfo.getUser() + "]");
 	}
 
-	private synchronized void createSystemIdentifier()
-	{
+	private synchronized void createSystemIdentifier() {
 		systemValues = new IdentifierMetadata();
 		Collection<IdentifierValueKey> valCol = new ArrayList<IdentifierValueKey>();
 		systemValues.setLocalIdentifier(SecurityUtil.LOCAL_SYSTEM_IDENTIFIER);
@@ -1886,10 +1547,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @param secInfo
 	 * @return
 	 */
-	private SecurityInfo validateSecurityInfo(SecurityInfo secInfo)
-	{
-		if (secInfo == null || secInfo.getUser() == null)
-		{
+	private SecurityInfo validateSecurityInfo(SecurityInfo secInfo) {
+		if (secInfo == null || secInfo.getUser() == null) {
 			return new SecurityInfoImpl("");
 		}
 
@@ -1905,15 +1564,12 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @throws NamingAuthorityConfigurationException
 	 */
 	private IdentifierMetadata loadSecurityIdentifier(String identifier) throws InvalidIdentifierException,
-			NamingAuthorityConfigurationException
-	{
+			NamingAuthorityConfigurationException {
 
-		try
-		{
+		try {
 			return loadIdentifier(new URI(identifier));
 		}
-		catch (URISyntaxException e)
-		{
+		catch (URISyntaxException e) {
 			LOG.error(IdentifierUtil.getStackTrace(e));
 			throw new NamingAuthorityConfigurationException("Referred security identifier is bad [" + identifier + "]");
 		}
@@ -1925,19 +1581,15 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata>
 	 * @param identifier
 	 * @throws InvalidIdentifierException
 	 */
-	private void validateIdentifierPattern(String identifier) throws InvalidIdentifierException
-	{
+	private void validateIdentifierPattern(String identifier) throws InvalidIdentifierException {
 
-		if (identifier == null || identifier.length() == 0)
-		{
+		if (StringUtils.isBlank(identifier)) {
 			return;
 		}
-		try
-		{
+		try {
 			UUID temp = UUID.fromString(identifier);
 		}
-		catch (IllegalArgumentException e)
-		{
+		catch (IllegalArgumentException e) {
 			LOG.warn("Invalid Identifier " + identifier);
 			throw new InvalidIdentifierException("identifier is not valid");
 		}
