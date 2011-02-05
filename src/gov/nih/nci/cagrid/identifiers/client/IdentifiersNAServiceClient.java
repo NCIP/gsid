@@ -82,164 +82,140 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 	public static void main(String [] args){
 	    System.out.println("Running the Grid Service Client");
 	    
-		try{
-		if(true){//!(args.length < 2)){
-			if(true){//args[0].equals("-url")){
-				GlobusCredential creds = null;
-		        try {
-		        	syncTrust();
-		        	String userId="srikal";		
-		        	String password="123456G00gle12#";
-		        	String authenticationServiceURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
-		        	String dorianURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
-		        	creds=GridAuthenticationClient.authenticate(dorianURL, authenticationServiceURL, userId, password);
-//		            creds = gov.nih.nci.cagrid.common.security.ProxyUtil.loadProxy("E:/temp.proxy");
-		           System.out.println("Using proxy with id= " + creds.getIdentity() + " and lifetime "
-		                            + creds.getTimeLeft());
-		        } catch (Exception e1) {
-		           System.out.println("No proxy file loaded so running with no credentials\n"+e1.getMessage());
-		           e1.getStackTrace();
-		        }
-
-			  IdentifiersNAServiceClient client = new IdentifiersNAServiceClient("https://localhost:8443/wsrf/services/cagrid/IdentifiersNAService",creds);
-//			  client.setAnonymousPrefered(true);
-			  //client.registerSite("a", "a", "a", "a", "a", "a", "a");
-			  System.out.println("The identifier is "+client.registerGSID(null, null));
-			  
-			  // place client calls here if you want to use this main as a
-			  // test....
-
-//			  String[] keys = new String[] { "URLS" };
-//			  String[][] values = new String[][]{
-//					  {"http://www.google.com"},
-//			  };
+//		try{
+//		if(true){//!(args.length < 2)){
+//			if(true){//args[0].equals("-url")){
+//				GlobusCredential creds = null;
+//		        try {
+//		        	syncTrust();
+//		        	String userId="srikal";
+//		        	String password="123456G00gle12#";
+//		        	String authenticationServiceURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
+//		        	String dorianURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
+//		        	creds=GridAuthenticationClient.authenticate(dorianURL, authenticationServiceURL, userId, password);
+////		            creds = gov.nih.nci.cagrid.common.security.ProxyUtil.loadProxy("E:/temp.proxy");
+//		           System.out.println("Using proxy with id= " + creds.getIdentity() + " and lifetime "
+//		                            + creds.getTimeLeft());
+//		        } catch (Exception e1) {
+//		           System.out.println("No proxy file loaded so running with no credentials\n"+e1.getMessage());
+//		           e1.getStackTrace();
+//		        }
 //
-//			  KeyNameData[] kvs = new KeyNameData[ keys.length ];
-//			  for( int i=0; i < keys.length; i++) {
-//
-//				  KeyData kd = new KeyData();
-//				  kd.setValue(values[i]);
-//				  kvs[i] = new KeyNameData(kd, keys[i]);
-//			  }
-//
-//			  IdentifierData id = new IdentifierData(kvs);
-//
-//			  org.apache.axis.types.URI identifier = client.createIdentifier(id);
-//			  System.out.println("Identifier: " + identifier.toString());
-			  
-			  
-			  //////////////////////////////////////////////////////////////////////
-			  // Test identifier keys with no values are supported
-			  //
-//			  System.out.println(client.createIdentifier(null).toString());
-//			  System.out.println(client.createIdentifier(new IdentifierKeyData()));
-//			  
-//			  IdentifierKeyData values = new IdentifierKeyData();
-//			  values.setKeyData(null);
-//			  System.out.println(client.createIdentifier(values).toString());
-//			  
-//			  values.setKeyData(new KeyData[]{});
-//			  System.out.println(client.createIdentifier(values).toString());
-//
-//			  KeyData[] kvs = new KeyData[4];
-//			  kvs[0] = new KeyData();
-//			  kvs[0].setKeyName("key1");
-			  
-//				new KeyData("key1", null),
-//				new KeyData("key2", new KeyData()),
-//				new KeyData("key3", new KeyData(null, null)),
-//				new KeyData("key4", new KeyData(null, new String[]{}))
-//			  };
-//			  values.setKeyValues(kvs);
-//			  System.out.println(client.createIdentifier(values));
-//
-//			  // Try inserting a key with no name
-//			  kvs = new KeyValues[] {
-//					new KeyValues("", null),
-//					new KeyValues("key2", new KeyData())
-//			  };
-//			  values.setKeyValues(kvs);
-//			  System.out.println(client.createIdentifier(values));
-					  
-//
-//			  values2 = client.resolveIdentifier(identifier);
-//			  System.out.println("\n-------------------------------------\nAfter creating identifier:");
-//			  printValues(values2);
+//			  IdentifiersNAServiceClient client = new IdentifiersNAServiceClient("https://localhost:8443/wsrf/services/cagrid/IdentifiersNAService",creds);
+////			  client.setAnonymousPrefered(true);
+//			  //client.registerSite("a", "a", "a", "a", "a", "a", "a");
+//			  System.out.println("The identifier is "+client.registerGSID(null, null));
 //
 //
-//			  IdentifiersNAUtil.assertEquals(values1, values2);
-			  
-			  ////////////////////////////////////////
-			  // Add couple of other keys
-			  ////////////////////////////////////////
-//			  KeyValues[] newKeyValues = new KeyValues[2];
-//			  newKeyValues[0] = new KeyValues();
-//			  newKeyValues[0].setKey("KEY3");
-//			  newKeyValues[0].setKeyData(new KeyData(null, new String[]{"KEY3 VALUE"}));
-//			  newKeyValues[1] = new KeyValues();
-//			  newKeyValues[1].setKey("KEY4");
-//			  newKeyValues[1].setKeyData(new KeyData(null, new String[]{"KEY4 VALUE"}));
-//			  client.createKeys(identifier, new IdentifierValues(newKeyValues));
-//			  values2 = client.resolveIdentifier(identifier);
-//			  System.out.println("After createKeys:");
-//			  System.out.println(values2.toString());
-			  
-			  // Delete all keys
-//			  client.deleteAllKeys(identifier);
-//			  IdentifierValues deleteAllKeysValues = client.resolveIdentifier(identifier);
-//			  System.out.println("\n-------------------------------\nAfter deleteAllKeys:");
-//			  printValues(deleteAllKeysValues);
-			  
-			  //Delete some keys
-//			  client.deleteKeys(identifier, new String[]{ "URL" });
-//			  IdentifierValues deleteKeysValues = client.resolveIdentifier(identifier);
-//			  System.out.println("\n-----------------------------------------------\nAfter deleteKeys:");
-//			  printValues(deleteKeysValues);
-			  
-			  //Replace some keys
-//			  KeyValues[] replacedKeys = new KeyValues[2];
-//			  replacedKeys[0] = new KeyValues();
-//			  replacedKeys[0].setKey("EPR");
-//			  replacedKeys[0].setKeyData(new KeyData(null, new String[] {"end point reference 3"}));
-//			  
-//			  replacedKeys[1] = new KeyValues();
-//			  replacedKeys[1].setKey("URL");
-//			  replacedKeys[1].setKeyData(new KeyData(null, new String[] {"http://www.casafiesta.com"}));
-//			  
-//			  client.replaceKeys(identifier, new IdentifierValues(replacedKeys));
-//			  IdentifierValues replacedValues = client.resolveIdentifier(identifier);
-//			  System.out.println("\n***************\nAfter replacedKeys:");
-//			  printValues(replacedValues);				
-			} else {
-				usage();
-				System.exit(1);
-			}
-		} else {
-			usage();
-			System.exit(1);
-		}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
-
-//	private static void printValues(IdentifierValues values) {
-//		if (values == null) {
-//			return;
+//			} else {
+//				usage();
+//				System.exit(1);
+//			}
+//		} else {
+//			usage();
+//			System.exit(1);
 //		}
-//		
-//		for( KeyValues kv : values.getKeyValues()) {
-//			  System.out.println("\n***********************\nKEY: " + kv.getKey());
-//			  KeyData kd = kv.getKeyData();
-//			  if (kd != null && kd.getValue() != null) {
-//				  for(String value : kd.getValue()) {
-//					  System.out.println("\t\tVALUE: " + value);
-//				  }
-//			  }
-//		  }
-//	}
-	
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.exit(1);
+//		}
+	}	
+
+  /******
+   * This method is used to get the data associated with an identifier. This method is a non authentication oriented operation.
+   * @param identifier
+   * @return Identifier data.
+   * @throws RemoteException
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+   */
+
+  /****
+  * This method is used to register GSID in to the database of the GSID. This method is an authentication oriented operation.
+  * @param suggestedIdentifier is an optional parameter (can be null) which is used to register an non existing identifier. If the identifier already exists then new identifier is generated and returned.
+  * @param parentIdentifiers is an array of identifiers which are already registered and exists in the database.
+  * @return registered identifier.
+  * @throws RemoteException
+  * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+  * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+  * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+  * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+  */
+
+  /*****************************
+   * This method is used to add an identifier to a site. This method is an authentication oriented operation. The identifier should exists in the database.
+   * @param identifier is an existing GSID to which you would like to attach your site data.
+   * @return
+   * @throws RemoteException
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+   */
+
+  /**********************************
+   * This method is used to generate a batch of identifiers. This method is a non authentication oriented operation.
+   * @param numOfIdentifiers is the number of identifiers you are requesting for should be between 1 and 100.
+   * @return array of identifiers.
+   * @throws RemoteException
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+   */
+
+  /****************************************
+   * This method is used to get the parent hierarchy details about the identifiers. This method is a non authentication oriented operation.
+   * @param identifier is the GSID for which you would like to get parent hierarchy information.
+   * @return a tree representing the parent hierarchy.
+   * @throws RemoteException
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+   */
+
+  /*****************************************
+   * This method is used to get the child hierarchy details about the identifiers.
+   * This method is a non authentication oriented operation.
+   * @param identifier is the GSID for which you would like to get child hierarchy information.
+   * @return a tree representing the child hierarchy.
+   * @throws RemoteException
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+   */
+
+  /******************************
+   * This method is used to register site information related to a globus credential.
+   * This is an authentication oriented operation. This operation should be executed
+   * before any other authentication operation for a new globus credential.
+   * Throws an exception if the globus credentials has already registered a site.
+   * @param application is the name of the application
+   * @param applicationURL is the URL of the application
+   * @param applicationVersion is the version of the application
+   * @param contactName is the contact of the site.
+   * @param contactEmail is the email address of the contact of the site.
+   * @param contactPhone is the phone number of the contact.
+   * @param organization is the organization of the site.
+   * @throws RemoteException
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+   */
+
+  /**************************************************
+   * This method checks if the identifier exists in the database or not.
+   * if identifier does not exists returns true else false.
+   * This is a non authentication oriented operation.
+   * @param identifier
+   * @return
+   * @throws RemoteException
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+   * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+   */
 
   public org.oasis.wsrf.properties.GetMultipleResourcePropertiesResponse getMultipleResourceProperties(org.oasis.wsrf.properties.GetMultipleResourceProperties_Element params) throws RemoteException {
     synchronized(portTypeMutex){

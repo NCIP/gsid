@@ -17,11 +17,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import junit.framework.TestCase;
+
 import org.apache.axis.types.URI.MalformedURIException;
 import org.cagrid.identifiers.namingauthority.impl.SecurityInfoImpl;
 import org.globus.gsi.GlobusCredential;
 
-public class StressTestCase
+public class StressTestCase extends TestCase
 {
 
 	private static final String CLIENT_PROPERTIES = "etc/client.properties";
@@ -64,45 +66,19 @@ public class StressTestCase
 		return idStr;
 	}
 
-	private static void run(String gridSvcUrl, int iterations, String eprStr, String cqlStr)
-			throws MalformedURIException, RemoteException
+	public void testStress1()
 	{
-
-		// KeyValues[] keyValues = new KeyValues[2];
-		// keyValues[0] = new KeyValues();
-		// keyValues[0].setKey("EPR");
-		// Values values = new Values();
-		// values.setValue(new String[] { eprStr });
-		// keyValues[0].setValues(values);
-		//
-		// keyValues[1] = new KeyValues();
-		// keyValues[1].setKey("CQL");
-		// values = new Values();
-		// values.setValue(new String[] { cqlStr });
-		// keyValues[1].setValues(values);
-		//
-		// KeyValuesMap keyValuesMap = new KeyValuesMap();
-		// keyValuesMap.setKeyValues(keyValues);
-		//
-		// IdentifiersNAServiceClient client = new IdentifiersNAServiceClient(
-		// gridSvcUrl );
-		//
-		// for(int i=0; i < iterations; i++) {
-		// org.apache.axis.types.URI identifier =
-		// client.createIdentifier(keyValuesMap);
-		// System.out.println("["+i+"] " + identifier);
-		// }
+		return;
 	}
-
-	public static void main(String[] args)
+	private void testStress()
 	{
 		
 		GlobusCredential creds = null;
 		try
 		{
 			syncTrust();
-			String userId = "srikal";
-			String password = "123456G00gle12#";
+			String userId = "";
+			String password = "";
 			String authenticationServiceURL = "https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
 			String dorianURL = "https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
 			creds = GridAuthenticationClient.authenticate(dorianURL, authenticationServiceURL, userId, password);			
