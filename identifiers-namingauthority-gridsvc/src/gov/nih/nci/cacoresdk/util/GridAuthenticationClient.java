@@ -20,6 +20,15 @@ import org.globus.gsi.GlobusCredential;
  */
 public class GridAuthenticationClient
 {
+	/*********************
+	 * This method is used to get the globus credential for given dorian url, authentication service url, user id and string.
+	 * @param dorianURL
+	 * @param authenticationServiceURL
+	 * @param userId
+	 * @param password
+	 * @return globus credential of the user.
+	 * @throws Exception
+	 */
 	public static GlobusCredential authenticate(String dorianURL,
 			String authenticationServiceURL, String userId, String password)
 			throws Exception

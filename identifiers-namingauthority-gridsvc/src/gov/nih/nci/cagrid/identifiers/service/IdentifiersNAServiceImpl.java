@@ -36,19 +36,16 @@ import org.springframework.core.io.FileSystemResource;
  * 
  * @created by Introduce Toolkit version 1.3
  */
-public class IdentifiersNAServiceImpl extends IdentifiersNAServiceImplBase
-{
+public class IdentifiersNAServiceImpl extends IdentifiersNAServiceImplBase {
 
 	protected static Log LOG = LogFactory.getLog(IdentifiersNAServiceImpl.class.getName());
 	protected static final String NA_BEAN_NAME = "NamingAuthority";
 	protected MaintainerNamingAuthority namingAuthority = null;
 
-	public IdentifiersNAServiceImpl() throws RemoteException
-	{
+	public IdentifiersNAServiceImpl() throws RemoteException {
 		super();
 
-		try
-		{
+		try {
 			String naConfigurationFile = getConfiguration().getNaConfigurationFile();
 			String naProperties = getConfiguration().getNaPropertiesFile();
 			FileSystemResource naConfResource = new FileSystemResource(naConfigurationFile);
@@ -63,420 +60,514 @@ public class IdentifiersNAServiceImpl extends IdentifiersNAServiceImplBase
 					MaintainerNamingAuthority.class);
 
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			String message = "Problem inititializing NamingAuthority while loading configuration:" + e.getMessage();
 			LOG.error(message, e);
 			throw new RemoteException(message, e);
 		}
 	}
 
+	/**********************
+	 * creates an identifier
+	 * 
+	 * @param identifierData
+	 * @return
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+	 */
   public org.apache.axis.types.URI createIdentifier(namingauthority.IdentifierData identifierData) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
 
-		try
-		{
+		try {
 			LOG.info("createIdentifier: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
 			java.net.URI identifier = namingAuthority.createIdentifier(secInfo, IdentifiersNAUtil.map(identifierData));
 			return new org.apache.axis.types.URI(identifier.toString());
 		}
-		catch (InvalidIdentifierValuesException e)
-		{
+		catch (InvalidIdentifierValuesException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 	}
 
+	/******
+	 * This method is used to get the data associated with an identifier. This
+	 * method is a non authentication oriented operation.
+	 * 
+	 * @param identifier
+	 * @return Identifier data.
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 */
   public namingauthority.IdentifierData resolveIdentifier(java.lang.String identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
 
-		try
-		{
+		try {
 			LOG.info("resolveIdentifier: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
 			return IdentifiersNAUtil.map(namingAuthority.resolveIdentifier(secInfo, URI.create(identifier)));
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 	}
 
+	/**********
+	 * This method is used to create keys.
+	 * @param identifier
+	 * @param identifierData
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+	 */
   public void createKeys(org.apache.axis.types.URI identifier,namingauthority.IdentifierData identifierData) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
 
-		try
-		{
+		try {
 			LOG.info("createKeys: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
 			namingAuthority.createKeys(secInfo, URI.create(identifier.toString()),
 					IdentifiersNAUtil.map(identifierData));
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierValuesException e)
-		{
+		catch (InvalidIdentifierValuesException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 	}
 
+	/*************
+	 * This method is used to get the key names of the of an identifier.
+	 * @param identifier
+	 * @return
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 */
   public java.lang.String[] getKeyNames(org.apache.axis.types.URI identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
-		try
-		{
+		try {
 			LOG.info("getKeyNames: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
 			return namingAuthority.getKeyNames(secInfo, URI.create(identifier.toString()));
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 	}
 
+	/**************
+	 * This method is used to get the key data associated with a key for an identifier.
+	 * @param identifier
+	 * @param keyName
+	 * @return
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+	 */
   public namingauthority.KeyNameData getKeyData(org.apache.axis.types.URI identifier,java.lang.String keyName) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
-		try
-		{
+		try {
 			LOG.info("getKeyData: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
 			return IdentifiersNAUtil.map(keyName,
 					namingAuthority.getKeyData(secInfo, URI.create(identifier.toString()), keyName));
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierValuesException e)
-		{
+		catch (InvalidIdentifierValuesException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 	}
 
+	/****
+	 * This method is used to register GSID in to the database of the GSID. This
+	 * method is an authentication oriented operation.
+	 * 
+	 * @param suggestedIdentifier
+	 *            is an optional parameter (can be null) which is used to
+	 *            register an non existing identifier. If the identifier already
+	 *            exists then new identifier is generated and returned.
+	 * @param parentIdentifiers
+	 *            is an array of identifiers which are already registered and
+	 *            exists in the database.
+	 * @return registered identifier.
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 */
   public java.lang.String registerGSID(java.lang.String suggestedIdentifier,java.lang.String[] parentIdentifiers) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
 		LOG.info("registerGSID: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 		SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
-		try
-		{
+		try {
 			return namingAuthority.registerGSID(secInfo, suggestedIdentifier, parentIdentifiers);
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierValuesException e)
-		{
+		catch (InvalidIdentifierValuesException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 	}
 
+	/*****************************
+	 * This method is used to add an identifier to a site. This method is an
+	 * authentication oriented operation. The identifier should exists in the
+	 * database.
+	 * 
+	 * @param identifier
+	 *            is an existing GSID to which you would like to attach your
+	 *            site data.
+	 * @return
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 */
   public org.apache.axis.types.URI addSite(java.lang.String identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
 		LOG.info("addSite: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 		SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
-		try
-		{
-			 namingAuthority.addSite(secInfo, identifier);
+		try {
+			namingAuthority.addSite(secInfo, identifier);
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierValuesException e)
-		{
+		catch (InvalidIdentifierValuesException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
-				
-			return null;
-		
+
+		return null;
+
 	}
 
+	/**********************************
+	 * This method is used to generate a batch of identifiers. This method is a
+	 * non authentication oriented operation.
+	 * 
+	 * @param numOfIdentifiers
+	 *            is the number of identifiers you are requesting for should be
+	 *            between 1 and 100.
+	 * @return array of identifiers.
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 */
   public java.lang.String[] generateIdentifiers(int numOfIdentifiers) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
 		LOG.info("generateIdentifiers: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 		SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
-		try
-		{
-			return namingAuthority.createBatchIdentifiers(secInfo,numOfIdentifiers);
+		try {
+			return namingAuthority.createBatchIdentifiers(secInfo, numOfIdentifiers);
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierValuesException e)
-		{
+		catch (InvalidIdentifierValuesException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 
 	}
 
+	/****************************************
+	 * This method is used to get the parent hierarchy details about the
+	 * identifiers. This method is a non authentication oriented operation.
+	 * 
+	 * @param identifier
+	 *            is the GSID for which you would like to get parent hierarchy
+	 *            information.
+	 * @return a tree representing the parent hierarchy.
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 */
   public namingauthority.Tree getParentHierarchy(java.lang.String identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault {
-		try
-		{
+		try {
 			LOG.info("getParentHierarchy: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
 			Tree parents = namingAuthority.getParentHierarchy(secInfo, identifier.toString());
 			return convert(parents);
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 
 	}
 
+	/*****************************************
+	 * This method is used to get the child hierarchy details about the
+	 * identifiers. This method is a non authentication oriented operation.
+	 * 
+	 * @param identifier
+	 *            is the GSID for which you would like to get child hierarchy
+	 *            information.
+	 * @return a tree representing the child hierarchy.
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 */
   public namingauthority.Tree getChildHierarchy(java.lang.String identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
-		try
-		{
+		try {
 			LOG.info("getChildHierarchy: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
 			Tree children = namingAuthority.getChildHierarchy(secInfo, identifier.toString());
 			return convert(children);
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 	}
 
+	/******************************
+	 * This method is used to register site information related to a globus
+	 * credential. This is an authentication oriented operation. This operation
+	 * should be executed before any other authentication operation for a new
+	 * globus credential. Throws an exception if the globus credentials has
+	 * already registered a site.
+	 * 
+	 * @param application
+	 *            is the name of the application
+	 * @param applicationURL
+	 *            is the URL of the application
+	 * @param applicationVersion
+	 *            is the version of the application
+	 * @param contactName
+	 *            is the contact of the site.
+	 * @param contactEmail
+	 *            is the email address of the contact of the site.
+	 * @param contactPhone
+	 *            is the phone number of the contact.
+	 * @param organization
+	 *            is the organization of the site.
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
+	 */
   public void registerSite(java.lang.String application,java.lang.String applicationURL,java.lang.String applicationVersion,java.lang.String contactName,java.lang.String contactEmail,java.lang.String contactPhone,java.lang.String organization) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
 
 		LOG.info("registerSite: USER=========[" + SecurityManager.getManager().getCaller() + "]");
-		try
-		{
+		try {
 			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
-			namingAuthority.registerSite(secInfo, application, applicationURL, applicationVersion, contactName, contactEmail, contactPhone, organization);			
+			namingAuthority.registerSite(secInfo, application, applicationURL, applicationVersion, contactName,
+					contactEmail, contactPhone, organization);
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
 
 	}
-  
+
+	/**************************************************
+	 * This method checks if the identifier exists in the database or not. if
+	 * identifier does not exists returns true else false. This is a non
+	 * authentication oriented operation.
+	 * 
+	 * @param identifier
+	 * @return
+	 * @throws RemoteException
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
+	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
+	 */
   public boolean validateIdentifier(java.lang.String identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault {
-	  try
-		{
+		try {
 			LOG.info("getChildHierarchy: USER=========[" + SecurityManager.getManager().getCaller() + "]");
 			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
 			boolean flag = namingAuthority.validateIdentifier(secInfo, identifier);
 			return flag;
 		}
-		catch (NamingAuthorityConfigurationException e)
-		{
+		catch (NamingAuthorityConfigurationException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (InvalidIdentifierException e)
-		{
+		catch (InvalidIdentifierException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (NamingAuthoritySecurityException e)
-		{
+		catch (NamingAuthoritySecurityException e) {
 			e.printStackTrace();
 			throw IdentifiersNAUtil.map(e);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.toString());
 		}
-	  }
+	}
 
-	private namingauthority.Tree convert(Tree tree)
-	{
+	private namingauthority.Tree convert(Tree tree) {
 		namingauthority.Tree temp = null;
-		if (tree != null)
-		{
+		if (tree != null) {
 			String identifier = tree.getIdentifier();
 			namingauthority.Tree[] mytrees = null;
-			if (tree.getChildren() != null && tree.getChildren().size() > 0)
-			{
+			if (tree.getChildren() != null && tree.getChildren().size() > 0) {
 				mytrees = new namingauthority.Tree[tree.getChildren().size()];
-				for (int i = 0; i < mytrees.length; i++)
-				{
+				for (int i = 0; i < mytrees.length; i++) {
 					mytrees[i] = convert(tree.getChildren().get(i));
 				}
 			}
@@ -484,7 +575,5 @@ public class IdentifiersNAServiceImpl extends IdentifiersNAServiceImplBase
 		}
 		return temp;
 	}
-
- 
 
 }

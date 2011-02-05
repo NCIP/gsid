@@ -259,41 +259,30 @@
       <ns4:Exception description="" name="NamingAuthorityConfigurationFault" qname="ns54:NamingAuthorityConfigurationFault" xmlns:ns54="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
       <ns4:Exception description="" name="NamingAuthoritySecurityFault" qname="ns55:NamingAuthoritySecurityFault" xmlns:ns55="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
      </ns4:Exceptions>
-     <ns56:MethodSecurity xsi:type="ns56:MethodSecurity" xmlns:ns56="gme://gov.nih.nci.cagrid.introduce/1/Security">
-      <ns56:SecuritySetting xsi:type="ns56:SecuritySetting">Custom</ns56:SecuritySetting>
-      <ns56:TransportLevelSecurity xsi:type="ns56:TransportLevelSecurity">
-       <ns56:CommunicationMethod xsi:type="ns56:CommunicationMethod">Privacy</ns56:CommunicationMethod>
-      </ns56:TransportLevelSecurity>
-      <ns56:RunAsMode xsi:type="ns56:RunAsMode">System</ns56:RunAsMode>
-      <ns56:AnonymousClients xsi:type="ns56:AnonymousCommunication">No</ns56:AnonymousClients>
-      <ns56:MethodAuthorization xsi:type="ns56:MethodAuthorization">
-       <ns56:InheritServiceAuthorization xsi:type="ns56:InheritServiceAuthorization"/>
-      </ns56:MethodAuthorization>
-     </ns56:MethodSecurity>
-     <ns57:Extensions xsi:type="ns57:ExtensionsType" xmlns:ns57="gme://gov.nih.nci.cagrid.introduce/1/Extension"/>
+     <ns56:Extensions xsi:type="ns56:ExtensionsType" xmlns:ns56="gme://gov.nih.nci.cagrid.introduce/1/Extension"/>
     </ns4:Method>
     <ns4:Method description="Return the parent hierarchy of the input Specimen Identifier" isImported="false" isProvided="false" name="getParentHierarchy" xsi:type="ns4:MethodType">
      <ns4:Inputs>
       <ns4:Input qName="xsd:string" description="" isArray="false" name="identifier" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
      </ns4:Inputs>
-     <ns4:Output qName="ns58:Tree" description="" isArray="false" xmlns:ns58="http://na.cagrid.org/1.0/NamingAuthority"/>
+     <ns4:Output qName="ns57:Tree" description="" isArray="false" xmlns:ns57="http://na.cagrid.org/1.0/NamingAuthority"/>
      <ns4:Exceptions>
-      <ns4:Exception description="" name="NamingAuthorityConfigurationFault" qname="ns59:NamingAuthorityConfigurationFault" xmlns:ns59="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="NamingAuthoritySecurityFault" qname="ns60:NamingAuthoritySecurityFault" xmlns:ns60="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="InvalidIdentifierValuesFault" qname="ns61:InvalidIdentifierValuesFault" xmlns:ns61="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="InvalidIdentifierFault" qname="ns62:InvalidIdentifierFault" xmlns:ns62="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="NamingAuthorityConfigurationFault" qname="ns58:NamingAuthorityConfigurationFault" xmlns:ns58="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="NamingAuthoritySecurityFault" qname="ns59:NamingAuthoritySecurityFault" xmlns:ns59="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="InvalidIdentifierValuesFault" qname="ns60:InvalidIdentifierValuesFault" xmlns:ns60="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="InvalidIdentifierFault" qname="ns61:InvalidIdentifierFault" xmlns:ns61="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
      </ns4:Exceptions>
     </ns4:Method>
     <ns4:Method description="Return the parent hierarchy of the input Specimen Identifier." isImported="false" isProvided="false" name="getChildHierarchy" xsi:type="ns4:MethodType">
      <ns4:Inputs>
       <ns4:Input qName="xsd:string" description="" isArray="false" name="identifier" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
      </ns4:Inputs>
-     <ns4:Output qName="ns63:Tree" description="" isArray="false" xmlns:ns63="http://na.cagrid.org/1.0/NamingAuthority"/>
+     <ns4:Output qName="ns62:Tree" description="" isArray="false" xmlns:ns62="http://na.cagrid.org/1.0/NamingAuthority"/>
      <ns4:Exceptions>
-      <ns4:Exception description="" name="NamingAuthorityConfigurationFault" qname="ns64:NamingAuthorityConfigurationFault" xmlns:ns64="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="InvalidIdentifierFault" qname="ns65:InvalidIdentifierFault" xmlns:ns65="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="InvalidIdentifierValuesFault" qname="ns66:InvalidIdentifierValuesFault" xmlns:ns66="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="NamingAuthoritySecurityFault" qname="ns67:NamingAuthoritySecurityFault" xmlns:ns67="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="NamingAuthorityConfigurationFault" qname="ns63:NamingAuthorityConfigurationFault" xmlns:ns63="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="InvalidIdentifierFault" qname="ns64:InvalidIdentifierFault" xmlns:ns64="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="InvalidIdentifierValuesFault" qname="ns65:InvalidIdentifierValuesFault" xmlns:ns65="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="NamingAuthoritySecurityFault" qname="ns66:NamingAuthoritySecurityFault" xmlns:ns66="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
      </ns4:Exceptions>
     </ns4:Method>
     <ns4:Method description="Registers a Site." isImported="false" isProvided="false" name="registerSite" xsi:type="ns4:MethodType">
@@ -308,23 +297,23 @@
      </ns4:Inputs>
      <ns4:Output qName="void" description="" isArray="false"/>
      <ns4:Exceptions>
-      <ns4:Exception description="" name="InvalidIdentifierFault" qname="ns68:InvalidIdentifierFault" xmlns:ns68="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="InvalidIdentifierValuesFault" qname="ns69:InvalidIdentifierValuesFault" xmlns:ns69="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="NamingAuthorityConfigurationFault" qname="ns70:NamingAuthorityConfigurationFault" xmlns:ns70="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="NamingAuthoritySecurityFault" qname="ns71:NamingAuthoritySecurityFault" xmlns:ns71="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="InvalidIdentifierFault" qname="ns67:InvalidIdentifierFault" xmlns:ns67="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="InvalidIdentifierValuesFault" qname="ns68:InvalidIdentifierValuesFault" xmlns:ns68="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="NamingAuthorityConfigurationFault" qname="ns69:NamingAuthorityConfigurationFault" xmlns:ns69="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="NamingAuthoritySecurityFault" qname="ns70:NamingAuthoritySecurityFault" xmlns:ns70="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
      </ns4:Exceptions>
-     <ns72:MethodSecurity xsi:type="ns72:MethodSecurity" xmlns:ns72="gme://gov.nih.nci.cagrid.introduce/1/Security">
-      <ns72:SecuritySetting xsi:type="ns72:SecuritySetting">Custom</ns72:SecuritySetting>
-      <ns72:TransportLevelSecurity xsi:type="ns72:TransportLevelSecurity">
-       <ns72:CommunicationMethod xsi:type="ns72:CommunicationMethod">Privacy</ns72:CommunicationMethod>
-      </ns72:TransportLevelSecurity>
-      <ns72:RunAsMode xsi:type="ns72:RunAsMode">System</ns72:RunAsMode>
-      <ns72:AnonymousClients xsi:type="ns72:AnonymousCommunication">No</ns72:AnonymousClients>
-      <ns72:MethodAuthorization xsi:type="ns72:MethodAuthorization">
-       <ns72:InheritServiceAuthorization xsi:type="ns72:InheritServiceAuthorization"/>
-      </ns72:MethodAuthorization>
-     </ns72:MethodSecurity>
-     <ns73:Extensions xsi:type="ns73:ExtensionsType" xmlns:ns73="gme://gov.nih.nci.cagrid.introduce/1/Extension"/>
+     <ns71:MethodSecurity xsi:type="ns71:MethodSecurity" xmlns:ns71="gme://gov.nih.nci.cagrid.introduce/1/Security">
+      <ns71:SecuritySetting xsi:type="ns71:SecuritySetting">Custom</ns71:SecuritySetting>
+      <ns71:TransportLevelSecurity xsi:type="ns71:TransportLevelSecurity">
+       <ns71:CommunicationMethod xsi:type="ns71:CommunicationMethod">Privacy</ns71:CommunicationMethod>
+      </ns71:TransportLevelSecurity>
+      <ns71:RunAsMode xsi:type="ns71:RunAsMode">System</ns71:RunAsMode>
+      <ns71:AnonymousClients xsi:type="ns71:AnonymousCommunication">No</ns71:AnonymousClients>
+      <ns71:MethodAuthorization xsi:type="ns71:MethodAuthorization">
+       <ns71:InheritServiceAuthorization xsi:type="ns71:InheritServiceAuthorization"/>
+      </ns71:MethodAuthorization>
+     </ns71:MethodSecurity>
+     <ns72:Extensions xsi:type="ns72:ExtensionsType" xmlns:ns72="gme://gov.nih.nci.cagrid.introduce/1/Extension"/>
     </ns4:Method>
     <ns4:Method description="validates an identifier" isImported="false" isProvided="false" name="validateIdentifier" xsi:type="ns4:MethodType">
      <ns4:Inputs>
@@ -332,15 +321,15 @@
      </ns4:Inputs>
      <ns4:Output qName="xsd:boolean" description="" isArray="false" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
      <ns4:Exceptions>
-      <ns4:Exception description="" name="InvalidIdentifierFault" qname="ns74:InvalidIdentifierFault" xmlns:ns74="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="InvalidIdentifierValuesFault" qname="ns75:InvalidIdentifierValuesFault" xmlns:ns75="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
-      <ns4:Exception description="" name="NamingAuthorityConfigurationFault" qname="ns76:NamingAuthorityConfigurationFault" xmlns:ns76="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="InvalidIdentifierFault" qname="ns73:InvalidIdentifierFault" xmlns:ns73="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="InvalidIdentifierValuesFault" qname="ns74:InvalidIdentifierValuesFault" xmlns:ns74="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
+      <ns4:Exception description="" name="NamingAuthorityConfigurationFault" qname="ns75:NamingAuthorityConfigurationFault" xmlns:ns75="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types"/>
      </ns4:Exceptions>
     </ns4:Method>
    </ns4:Methods>
-   <ns77:ResourcePropertiesList xsi:type="ns77:ResourcePropertiesListType" xmlns:ns77="gme://gov.nih.nci.cagrid.introduce/1/Resources">
-    <ns77:ResourceProperty qName="ns78:ServiceMetadata" description="caGrid standard Service Metadata" fileLocation="serviceMetadata.xml" populateFromFile="true" register="true" xsi:type="ns77:ResourcePropertyType" xmlns:ns78="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata"/>
-   </ns77:ResourcePropertiesList>
+   <ns76:ResourcePropertiesList xsi:type="ns76:ResourcePropertiesListType" xmlns:ns76="gme://gov.nih.nci.cagrid.introduce/1/Resources">
+    <ns76:ResourceProperty qName="ns77:ServiceMetadata" description="caGrid standard Service Metadata" fileLocation="serviceMetadata.xml" populateFromFile="true" register="true" xsi:type="ns76:ResourcePropertyType" xmlns:ns77="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata"/>
+   </ns76:ResourcePropertiesList>
    <ns3:description xsi:type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema">The Naming Authority service enables users to maintain and resolve identifiers in the grid</ns3:description>
    <ns3:ResourceFrameworkOptions xsi:type="ns3:ResourceFrameworkOptions">
     <ns3:Main xsi:type="ns3:Main"/>
@@ -350,11 +339,11 @@
    </ns3:ResourceFrameworkOptions>
   </ns3:Service>
  </ns3:Services>
- <ns79:Extensions xsi:type="ns79:ExtensionsType" xmlns:ns79="gme://gov.nih.nci.cagrid.introduce/1/Extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <ns79:Extension name="cagrid_metadata" version="1.4" xsi:type="ns79:ExtensionType"/>
- </ns79:Extensions>
- <ns80:ServiceProperties xmlns:ns80="gme://gov.nih.nci.cagrid.introduce/1/Property">
-  <ns80:Property description="The location (relative to the service's ETC location) of the XML configuration file" isFromETC="true" key="naConfigurationFile" value="applicationContext-na.xml"/>
-  <ns80:Property description="The location (relative to the service's ETC location) of the properties file containing information about the naming authority" isFromETC="true" key="naPropertiesFile" value="na.properties"/>
- </ns80:ServiceProperties>
+ <ns78:Extensions xsi:type="ns78:ExtensionsType" xmlns:ns78="gme://gov.nih.nci.cagrid.introduce/1/Extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ns78:Extension name="cagrid_metadata" version="1.4" xsi:type="ns78:ExtensionType"/>
+ </ns78:Extensions>
+ <ns79:ServiceProperties xmlns:ns79="gme://gov.nih.nci.cagrid.introduce/1/Property">
+  <ns79:Property description="The location (relative to the service's ETC location) of the XML configuration file" isFromETC="true" key="naConfigurationFile" value="applicationContext-na.xml"/>
+  <ns79:Property description="The location (relative to the service's ETC location) of the properties file containing information about the naming authority" isFromETC="true" key="naPropertiesFile" value="na.properties"/>
+ </ns79:ServiceProperties>
 </ns1:ServiceDescription>

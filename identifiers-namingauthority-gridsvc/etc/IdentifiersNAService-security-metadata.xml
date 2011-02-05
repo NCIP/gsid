@@ -33,11 +33,6 @@
     <ns1:GSITransport protectionLevel="privacy" xsi:type="ns1:GSITransport"/>
    </ns1:CommunicationMechanism>
   </ns1:Operation>
-  <ns1:Operation name="generateIdentifiers" xsi:type="ns1:Operation">
-   <ns1:CommunicationMechanism anonymousPermitted="false" xsi:type="ns1:CommunicationMechanism">
-    <ns1:GSITransport protectionLevel="privacy" xsi:type="ns1:GSITransport"/>
-   </ns1:CommunicationMechanism>
-  </ns1:Operation>
   <ns1:Operation name="registerSite" xsi:type="ns1:Operation">
    <ns1:CommunicationMechanism anonymousPermitted="false" xsi:type="ns1:CommunicationMechanism">
     <ns1:GSITransport protectionLevel="privacy" xsi:type="ns1:GSITransport"/>
