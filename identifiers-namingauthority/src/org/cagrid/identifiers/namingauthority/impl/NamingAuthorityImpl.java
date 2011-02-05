@@ -115,9 +115,8 @@ public class NamingAuthorityImpl implements MaintainerNamingAuthority
 	public String[] createBatchIdentifiers(SecurityInfo secInfo, int numberOfIdentifier)
 			throws NamingAuthorityConfigurationException, InvalidIdentifierValuesException, InvalidIdentifierException,
 			NamingAuthoritySecurityException
-	{
-		this.identifierDao.checkSecurity(secInfo, false, true);
-		if (numberOfIdentifier < 0 || numberOfIdentifier > 100)
+	{		
+		if (numberOfIdentifier <= 0 || numberOfIdentifier > 100)
 		{
 			throw new InvalidIdentifierValuesException(Constant.INVALID_NUMBER_FOR_BATCH);
 		}

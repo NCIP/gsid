@@ -674,7 +674,8 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata> {
 			for (int i = 0; i < parentIdentifiers.length; i++) {
 				value = parentIdentifiers[i];
 				if (StringUtils.isNotBlank(value)) {
-					if (StringUtils.isNotBlank(suggestedIdentifier) && value.equals(suggestedIdentifier)) {
+					if (StringUtils.isNotBlank(suggestedIdentifier) && StringUtils.isNotBlank(suggestedIdentifier)
+							&& value.equals(suggestedIdentifier)) {
 						// throw an exception saying that an suggestedIdentifier
 						// cannot be a parent.
 						throw new InvalidIdentifierValuesException("Violation: suggested identifier "
@@ -734,6 +735,28 @@ public class IdentifierMetadataDao extends AbstractDao<IdentifierMetadata> {
 		checkSecurity(secInfo, false, false);
 		List<String> keys = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
+		if (StringUtils.isBlank(application)) {
+			throw new InvalidIdentifierValuesException("application value cannot be null");
+		}
+		else if (StringUtils.isBlank(applicationURL)) {
+			throw new InvalidIdentifierValuesException("application url value cannot be null");
+		}
+		else if (StringUtils.isBlank(applicationVersion)) {
+			throw new InvalidIdentifierValuesException("applicaiton version value cannot be null");
+		}
+		else if (StringUtils.isBlank(contactName)) {
+			throw new InvalidIdentifierValuesException("contact name value cannot be null");
+		}
+		else if (StringUtils.isBlank(contactEmail)) {
+			throw new InvalidIdentifierValuesException("contact email value cannot be null");
+		}
+		else if (StringUtils.isBlank(contactPhone)) {
+			throw new InvalidIdentifierValuesException("contact phone value cannot be null");
+		}
+		else if (StringUtils.isBlank(organization)) {
+			throw new InvalidIdentifierValuesException("organization value cannot be null");
+		}
+
 		String[] tempValues = { application, applicationURL, applicationVersion, contactEmail, contactName,
 				contactPhone, organization, secInfo.getUser() };
 		String[] fixedKeys = { "application", "applicationUrl", "applicationVersion", "contactEmail", "contactName",
