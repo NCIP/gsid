@@ -52,58 +52,6 @@ public interface IdentifiersNAServiceI {
   public namingauthority.IdentifierData resolveIdentifier(java.lang.String identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault ;
 
   /**
-   * Creates new keys on an existing identifier
-   *
-   * @param identifier
-   *	The identifier to be modified
-   * @param identifierData
-   *	The metadata to be added to the identifier 
-   * @throws InvalidIdentifierFault
-   *	The input identifier does not exist
-   * @throws NamingAuthorityConfigurationFault
-   *	A configuration error has been detected
-   * @throws NamingAuthoritySecurityFault
-   *	User is not authorized to perform the operation
-   * @throws InvalidIdentifierValuesFault
-   *	Invalid identifier metadata was provided
-   */
-  public void createKeys(org.apache.axis.types.URI identifier,namingauthority.IdentifierData identifierData) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault ;
-
-  /**
-   * Gets key names associated with an existing identifier
-   *
-   * @param identifier
-   *	The identifier to retrieve data from
-   * @return The list of key names associated with the identifier
-   * @throws InvalidIdentifierFault
-   *	The provided identifier does not exist
-   * @throws NamingAuthorityConfigurationFault
-   *	A configuration error has been detected
-   * @throws NamingAuthoritySecurityFault
-   *	User is not authorized to perform the operation
-   */
-  public java.lang.String[] getKeyNames(org.apache.axis.types.URI identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault ;
-
-  /**
-   * Gets data associated with the given key
-   *
-   * @param identifier
-   *	The identifier to retrieve data from
-   * @param keyName
-   *	They key name to retrieve data from
-   * @return The values associated with the provided key name
-   * @throws InvalidIdentifierFault
-   *	The provided identifier does not exist
-   * @throws NamingAuthoritySecurityFault
-   *	User is not authorized to perform the operation
-   * @throws NamingAuthorityConfigurationFault
-   *	A configuration error has been detected
-   * @throws InvalidIdentifierValuesFault
-   *	
-   */
-  public namingauthority.KeyNameData getKeyData(org.apache.axis.types.URI identifier,java.lang.String keyName) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault ;
-
-  /**
    * This operation registers a Specimen Identifier.
    *
    * @param suggestedIdentifier
