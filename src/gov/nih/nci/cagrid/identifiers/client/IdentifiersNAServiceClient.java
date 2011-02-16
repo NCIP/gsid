@@ -88,12 +88,11 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 //				GlobusCredential creds = null;
 //		        try {
 //		        	syncTrust();
-//		        	String userId="srikal";
-//		        	String password="123456G00gle12#";
+//		        	String userId="";
+//		        	String password="";
 //		        	String authenticationServiceURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
 //		        	String dorianURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
 //		        	creds=GridAuthenticationClient.authenticate(dorianURL, authenticationServiceURL, userId, password);
-////		            creds = gov.nih.nci.cagrid.common.security.ProxyUtil.loadProxy("E:/temp.proxy");
 //		           System.out.println("Using proxy with id= " + creds.getIdentity() + " and lifetime "
 //		                            + creds.getTimeLeft());
 //		        } catch (Exception e1) {
@@ -101,9 +100,9 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 //		           e1.getStackTrace();
 //		        }
 //
-//			  IdentifiersNAServiceClient client = new IdentifiersNAServiceClient("https://localhost:8443/wsrf/services/cagrid/IdentifiersNAService",creds);
+//			  IdentifiersNAServiceClient client = new IdentifiersNAServiceClient("https://lslr2-vm2.semanticbits.com:8443/wsrf/services/cagrid/IdentifiersNAService",creds);
 ////			  client.setAnonymousPrefered(true);
-//			  //client.registerSite("a", "a", "a", "a", "a", "a", "a");
+//			  client.registerSite("a", "a", "a", "a", "a", "a", "a");
 //			  System.out.println("The identifier is "+client.registerGSID(null, null));
 //
 //
