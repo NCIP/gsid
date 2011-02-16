@@ -79,18 +79,6 @@ public class IdentifiersNAServiceAuthorization implements PDP {
 		
 	}
 	   				
-	public void authorizeCreateKeys(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
-		
-	}
-	   				
-	public void authorizeGetKeyNames(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
-		
-	}
-	   				
-	public void authorizeGetKeyData(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
-		
-	}
-	   				
 	public void authorizeRegisterGSID(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
 		
 	}
@@ -143,15 +131,6 @@ public class IdentifiersNAServiceAuthorization implements PDP {
 			return true;
 		} else if(operation.getLocalPart().equals("resolveIdentifier")){
 			authorizeResolveIdentifier(peerSubject, context, operation);
-			return true;
-		} else if(operation.getLocalPart().equals("createKeys")){
-			authorizeCreateKeys(peerSubject, context, operation);
-			return true;
-		} else if(operation.getLocalPart().equals("getKeyNames")){
-			authorizeGetKeyNames(peerSubject, context, operation);
-			return true;
-		} else if(operation.getLocalPart().equals("getKeyData")){
-			authorizeGetKeyData(peerSubject, context, operation);
 			return true;
 		} else if(operation.getLocalPart().equals("registerGSID")){
 			authorizeRegisterGSID(peerSubject, context, operation);

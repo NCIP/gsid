@@ -260,47 +260,6 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
     }
   }
 
-  public void createKeys(org.apache.axis.types.URI identifier,namingauthority.IdentifierData identifierData) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
-    synchronized(portTypeMutex){
-      configureStubSecurity((Stub)portType,"createKeys");
-    gov.nih.nci.cagrid.identifiers.stubs.CreateKeysRequest params = new gov.nih.nci.cagrid.identifiers.stubs.CreateKeysRequest();
-    gov.nih.nci.cagrid.identifiers.stubs.CreateKeysRequestIdentifier identifierContainer = new gov.nih.nci.cagrid.identifiers.stubs.CreateKeysRequestIdentifier();
-    identifierContainer.setIdentifier(identifier);
-    params.setIdentifier(identifierContainer);
-    gov.nih.nci.cagrid.identifiers.stubs.CreateKeysRequestIdentifierData identifierDataContainer = new gov.nih.nci.cagrid.identifiers.stubs.CreateKeysRequestIdentifierData();
-    identifierDataContainer.setIdentifierData(identifierData);
-    params.setIdentifierData(identifierDataContainer);
-    gov.nih.nci.cagrid.identifiers.stubs.CreateKeysResponse boxedResult = portType.createKeys(params);
-    }
-  }
-
-  public java.lang.String[] getKeyNames(org.apache.axis.types.URI identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
-    synchronized(portTypeMutex){
-      configureStubSecurity((Stub)portType,"getKeyNames");
-    gov.nih.nci.cagrid.identifiers.stubs.GetKeyNamesRequest params = new gov.nih.nci.cagrid.identifiers.stubs.GetKeyNamesRequest();
-    gov.nih.nci.cagrid.identifiers.stubs.GetKeyNamesRequestIdentifier identifierContainer = new gov.nih.nci.cagrid.identifiers.stubs.GetKeyNamesRequestIdentifier();
-    identifierContainer.setIdentifier(identifier);
-    params.setIdentifier(identifierContainer);
-    gov.nih.nci.cagrid.identifiers.stubs.GetKeyNamesResponse boxedResult = portType.getKeyNames(params);
-    return boxedResult.getKeyName();
-    }
-  }
-
-  public namingauthority.KeyNameData getKeyData(org.apache.axis.types.URI identifier,java.lang.String keyName) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
-    synchronized(portTypeMutex){
-      configureStubSecurity((Stub)portType,"getKeyData");
-    gov.nih.nci.cagrid.identifiers.stubs.GetKeyDataRequest params = new gov.nih.nci.cagrid.identifiers.stubs.GetKeyDataRequest();
-    gov.nih.nci.cagrid.identifiers.stubs.GetKeyDataRequestIdentifier identifierContainer = new gov.nih.nci.cagrid.identifiers.stubs.GetKeyDataRequestIdentifier();
-    identifierContainer.setIdentifier(identifier);
-    params.setIdentifier(identifierContainer);
-    gov.nih.nci.cagrid.identifiers.stubs.GetKeyDataRequestKeyName keyNameContainer = new gov.nih.nci.cagrid.identifiers.stubs.GetKeyDataRequestKeyName();
-    keyNameContainer.setKeyName(keyName);
-    params.setKeyName(keyNameContainer);
-    gov.nih.nci.cagrid.identifiers.stubs.GetKeyDataResponse boxedResult = portType.getKeyData(params);
-    return boxedResult.getKeyNameData();
-    }
-  }
-
   public java.lang.String registerGSID(java.lang.String suggestedIdentifier,java.lang.String[] parentIdentifiers) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
     synchronized(portTypeMutex){
       configureStubSecurity((Stub)portType,"registerGSID");

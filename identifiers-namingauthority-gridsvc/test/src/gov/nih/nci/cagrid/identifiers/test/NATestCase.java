@@ -67,8 +67,7 @@ public class NATestCase extends TestCase {
 		}
 		catch(Exception e)
 		{
-			fail("test registerGSID with annonymous user");
-			
+			fail("test registerGSID with annonymous user");			
 		}
 		
 		try {

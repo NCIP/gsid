@@ -154,35 +154,6 @@ public class IdentifiersNAServiceImpl extends IdentifiersNAServiceImplBase {
 	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
 	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
 	 */
-  public void createKeys(org.apache.axis.types.URI identifier,namingauthority.IdentifierData identifierData) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
-
-		try {
-			LOG.info("createKeys: USER=========[" + SecurityManager.getManager().getCaller() + "]");
-			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
-			namingAuthority.createKeys(secInfo, URI.create(identifier.toString()),
-					IdentifiersNAUtil.map(identifierData));
-		}
-		catch (NamingAuthorityConfigurationException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (InvalidIdentifierValuesException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (InvalidIdentifierException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (NamingAuthoritySecurityException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new RemoteException(e.toString());
-		}
-	}
 
 	/*************
 	 * This method is used to get the key names of the of an identifier.
@@ -193,29 +164,6 @@ public class IdentifiersNAServiceImpl extends IdentifiersNAServiceImplBase {
 	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
 	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
 	 */
-  public java.lang.String[] getKeyNames(org.apache.axis.types.URI identifier) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault {
-		try {
-			LOG.info("getKeyNames: USER=========[" + SecurityManager.getManager().getCaller() + "]");
-			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
-			return namingAuthority.getKeyNames(secInfo, URI.create(identifier.toString()));
-		}
-		catch (NamingAuthorityConfigurationException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (InvalidIdentifierException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (NamingAuthoritySecurityException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new RemoteException(e.toString());
-		}
-	}
 
 	/**************
 	 * This method is used to get the key data associated with a key for an identifier.
@@ -228,34 +176,6 @@ public class IdentifiersNAServiceImpl extends IdentifiersNAServiceImplBase {
 	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault
 	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
 	 */
-  public namingauthority.KeyNameData getKeyData(org.apache.axis.types.URI identifier,java.lang.String keyName) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
-		try {
-			LOG.info("getKeyData: USER=========[" + SecurityManager.getManager().getCaller() + "]");
-			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
-			return IdentifiersNAUtil.map(keyName,
-					namingAuthority.getKeyData(secInfo, URI.create(identifier.toString()), keyName));
-		}
-		catch (NamingAuthorityConfigurationException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (InvalidIdentifierException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (NamingAuthoritySecurityException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (InvalidIdentifierValuesException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new RemoteException(e.toString());
-		}
-	}
 
 	/****
 	 * This method is used to register GSID in to the database of the GSID. This
