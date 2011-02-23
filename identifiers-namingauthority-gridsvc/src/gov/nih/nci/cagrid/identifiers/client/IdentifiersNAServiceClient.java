@@ -1,15 +1,9 @@
 package gov.nih.nci.cagrid.identifiers.client;
 
-import gov.nih.nci.cacoresdk.util.GridAuthenticationClient;
 import gov.nih.nci.cagrid.identifiers.common.IdentifiersNAServiceI;
 
-import java.io.FileInputStream;
 import java.rmi.RemoteException;
 import java.util.Properties;
-
-import namingauthority.IdentifierData;
-import namingauthority.KeyData;
-import namingauthority.KeyNameData;
 
 import org.apache.axis.client.Stub;
 import org.apache.axis.message.addressing.EndpointReferenceType;
@@ -29,8 +23,8 @@ import org.globus.gsi.GlobusCredential;
  */
 public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase implements IdentifiersNAServiceI {	
 	
-	private static final String CLIENT_PROPERTIES = "etc/client.properties";
-	private static final String SYNC_DESCRIPTION  = "sync.description";
+//	private static final String CLIENT_PROPERTIES = "etc/client.properties";
+//	private static final String SYNC_DESCRIPTION  = "sync.description";
 	
 	protected static Properties props = null;
 	static{
@@ -39,14 +33,14 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 	
 	private static Properties readProperties () {
 		Properties properties = new Properties();
-       	try {
-       		properties.load(new FileInputStream(CLIENT_PROPERTIES));
-       	}
-        catch (Exception e) {
-        	// TODO: Display appropriate client error 
-        	System.out.println("Exception while accessing " + CLIENT_PROPERTIES + " : " + e.getMessage());
-        	System.exit(-1);
-        }
+//       	try {
+//       		properties.load(new FileInputStream(CLIENT_PROPERTIES));
+//       	}
+//        catch (Exception e) {
+//        	// TODO: Display appropriate client error 
+//        	System.out.println("Exception while accessing " + CLIENT_PROPERTIES + " : " + e.getMessage());
+//        	//System.exit(-1);
+//        }
         
         return properties;
 	}
@@ -72,24 +66,24 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 	}
 	
 	private static void syncTrust() {
-		System.out.println("Synchronize Once...");
-		GridAuthenticationClient.synchronizeOnce(
-               props.getProperty(SYNC_DESCRIPTION));
-		System.out.println("Synchronize Complete.");
+//		System.out.println("Synchronize Once...");
+//		GridAuthenticationClient.synchronizeOnce(
+//               props.getProperty(SYNC_DESCRIPTION));
+//		System.out.println("Synchronize Complete.");
 	}
 
 	
 	public static void main(String [] args){
-	    System.out.println("Running the Grid Service Client");
-	    
+//	    System.out.println("Running the Grid Service Client");
+//	    
 //		try{
 //		if(true){//!(args.length < 2)){
 //			if(true){//args[0].equals("-url")){
 //				GlobusCredential creds = null;
 //		        try {
 //		        	syncTrust();
-//		        	String userId="";
-//		        	String password="";
+//		        	String userId="srikalyan";
+//		        	String password="123456G00gle12#";
 //		        	String authenticationServiceURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
 //		        	String dorianURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
 //		        	creds=GridAuthenticationClient.authenticate(dorianURL, authenticationServiceURL, userId, password);
@@ -101,8 +95,8 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 //		        }
 //
 //			  IdentifiersNAServiceClient client = new IdentifiersNAServiceClient("https://lslr2-vm2.semanticbits.com:8443/wsrf/services/cagrid/IdentifiersNAService",creds);
-////			  client.setAnonymousPrefered(true);
-//			  client.registerSite("a", "a", "a", "a", "a", "a", "a");
+//			  client.setAnonymousPrefered(true);
+////			  client.registerSite("a", "a", "a", "a", "a", "a", "a");
 //			  System.out.println("The identifier is "+client.registerGSID(null, null));
 //
 //
