@@ -3,7 +3,8 @@ package gov.nih.nci.cagrid.identifiers.client;
 import gov.nih.nci.cagrid.identifiers.common.IdentifiersNAServiceI;
 
 import java.rmi.RemoteException;
-import java.util.Properties;
+
+import namingauthority.Tree;
 
 import org.apache.axis.client.Stub;
 import org.apache.axis.message.addressing.EndpointReferenceType;
@@ -25,14 +26,14 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 	
 //	private static final String CLIENT_PROPERTIES = "etc/client.properties";
 //	private static final String SYNC_DESCRIPTION  = "sync.description";
-	
-	protected static Properties props = null;
-	static{
-		props=readProperties();
-	}
-	
-	private static Properties readProperties () {
-		Properties properties = new Properties();
+//	
+//	protected static Properties props = null;
+//	static{
+//		props=readProperties();
+//	}
+//	
+//	private static Properties readProperties () {
+//		Properties properties = new Properties();
 //       	try {
 //       		properties.load(new FileInputStream(CLIENT_PROPERTIES));
 //       	}
@@ -41,9 +42,9 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 //        	System.out.println("Exception while accessing " + CLIENT_PROPERTIES + " : " + e.getMessage());
 //        	//System.exit(-1);
 //        }
-        
-        return properties;
-	}
+//        
+//        return properties;
+//	}
 
 	public IdentifiersNAServiceClient(String url) throws MalformedURIException, RemoteException {
 		this(url,null);	
@@ -65,25 +66,25 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 		System.out.println(IdentifiersNAServiceClient.class.getName() + " -url <service url>");
 	}
 	
-	private static void syncTrust() {
+//	private static void syncTrust() {
 //		System.out.println("Synchronize Once...");
 //		GridAuthenticationClient.synchronizeOnce(
 //               props.getProperty(SYNC_DESCRIPTION));
 //		System.out.println("Synchronize Complete.");
-	}
+//	}
 
 	
 	public static void main(String [] args){
-//	    System.out.println("Running the Grid Service Client");
-//	    
+	    System.out.println("Running the Grid Service Client");
+	    
 //		try{
 //		if(true){//!(args.length < 2)){
 //			if(true){//args[0].equals("-url")){
 //				GlobusCredential creds = null;
 //		        try {
 //		        	syncTrust();
-//		        	String userId="srikalyan";
-//		        	String password="123456G00gle12#";
+//		        	String userId="";
+//		        	String password="";
 //		        	String authenticationServiceURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
 //		        	String dorianURL="https://dorian.training.cagrid.org:8443/wsrf/services/cagrid/Dorian";
 //		        	creds=GridAuthenticationClient.authenticate(dorianURL, authenticationServiceURL, userId, password);
@@ -97,8 +98,10 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 //			  IdentifiersNAServiceClient client = new IdentifiersNAServiceClient("https://lslr2-vm2.semanticbits.com:8443/wsrf/services/cagrid/IdentifiersNAService",creds);
 //			  client.setAnonymousPrefered(true);
 ////			  client.registerSite("a", "a", "a", "a", "a", "a", "a");
-//			  System.out.println("The identifier is "+client.registerGSID(null, null));
-//
+//			  //b71d518d-bb01-4135-8bb2-f3423a5b2d4b
+//			 Tree temp=client.getParentHierarchy("0f0fc053-e955-4f04-9fa8-6468f1e86aa3");
+//			 printTree(temp, "");
+//			 // System.out.println("The identifier is "+client.registerGSID(null, null));
 //
 //			} else {
 //				usage();
@@ -114,6 +117,20 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 //		}
 	}	
 
+	private static void printTree(Tree tree,String currentTabber)
+	{
+		if(tree!=null)
+		{
+			System.out.println(currentTabber+tree.getCurrentIdentifier());
+			if(tree.getTree()!=null)
+			{
+				for(Tree t:tree.getTree())
+				{
+					printTree(t,currentTabber+"\t");
+				}
+			}
+		}
+	}
   /******
    * This method is used to get the data associated with an identifier. This method is a non authentication oriented operation.
    * @param identifier
@@ -228,18 +245,6 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
     synchronized(portTypeMutex){
       configureStubSecurity((Stub)portType,"queryResourceProperties");
     return portType.queryResourceProperties(params);
-    }
-  }
-
-  public org.apache.axis.types.URI createIdentifier(namingauthority.IdentifierData identifierData) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
-    synchronized(portTypeMutex){
-      configureStubSecurity((Stub)portType,"createIdentifier");
-    gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierRequest params = new gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierRequest();
-    gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierRequestIdentifierData identifierDataContainer = new gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierRequestIdentifierData();
-    identifierDataContainer.setIdentifierData(identifierData);
-    params.setIdentifierData(identifierDataContainer);
-    gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierResponse boxedResult = portType.createIdentifier(params);
-    return boxedResult.getIdentifier();
     }
   }
 

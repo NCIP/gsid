@@ -71,10 +71,6 @@ public class IdentifiersNAServiceAuthorization implements PDP {
 		
 	}
 	   				
-	public void authorizeCreateIdentifier(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
-		
-	}
-	   				
 	public void authorizeResolveIdentifier(Subject peerSubject, MessageContext context, QName operation) throws AuthorizationException {
 		
 	}
@@ -125,9 +121,6 @@ public class IdentifiersNAServiceAuthorization implements PDP {
 			return true;
 		} else if(operation.getLocalPart().equals("getServiceSecurityMetadata")){
 			authorizeGetServiceSecurityMetadata(peerSubject, context, operation);
-			return true;
-		} else if(operation.getLocalPart().equals("createIdentifier")){
-			authorizeCreateIdentifier(peerSubject, context, operation);
 			return true;
 		} else if(operation.getLocalPart().equals("resolveIdentifier")){
 			authorizeResolveIdentifier(peerSubject, context, operation);
