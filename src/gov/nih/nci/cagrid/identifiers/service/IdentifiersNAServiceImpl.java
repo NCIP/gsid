@@ -78,35 +78,6 @@ public class IdentifiersNAServiceImpl extends IdentifiersNAServiceImplBase {
 	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault
 	 * @throws gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault
 	 */
-  public org.apache.axis.types.URI createIdentifier(namingauthority.IdentifierData identifierData) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
-
-		try {
-			LOG.info("createIdentifier: USER=========[" + SecurityManager.getManager().getCaller() + "]");
-			SecurityInfo secInfo = new SecurityInfoImpl(SecurityManager.getManager().getCaller());
-			java.net.URI identifier = namingAuthority.createIdentifier(secInfo, IdentifiersNAUtil.map(identifierData));
-			return new org.apache.axis.types.URI(identifier.toString());
-		}
-		catch (InvalidIdentifierValuesException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (NamingAuthorityConfigurationException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (InvalidIdentifierException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (NamingAuthoritySecurityException e) {
-			e.printStackTrace();
-			throw IdentifiersNAUtil.map(e);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new RemoteException(e.toString());
-		}
-	}
 
 	/******
 	 * This method is used to get the data associated with an identifier. This
