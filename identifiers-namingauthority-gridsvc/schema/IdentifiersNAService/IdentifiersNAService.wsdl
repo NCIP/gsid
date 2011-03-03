@@ -17,26 +17,6 @@
       <import namespace="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.security" schemaLocation="./xsd/cagrid/types/security/security.xsd" />
       <import namespace="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.common" schemaLocation="./xsd/cagrid/types/common/common.xsd" />
       <import namespace="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata" schemaLocation="./xsd/cagrid/types/caGridMetadata.xsd" />
-      <element name="CreateIdentifierRequest">
-        <complexType>
-          <sequence>
-            <element name="identifierData">
-              <complexType>
-                <sequence>
-                  <element ref="ns0:IdentifierData" minOccurs="1" maxOccurs="1" />
-                </sequence>
-              </complexType>
-            </element>
-          </sequence>
-        </complexType>
-      </element>
-      <element name="CreateIdentifierResponse">
-        <complexType>
-          <sequence>
-            <element ref="ns0:Identifier" minOccurs="1" maxOccurs="1" />
-          </sequence>
-        </complexType>
-      </element>
       <element name="ResolveIdentifierRequest">
         <complexType>
           <sequence>
@@ -164,12 +144,6 @@
     </schema>
   </types>
   <!--  place service messages here -->
-  <message name="CreateIdentifierRequest">
-    <part name="parameters" element="tns:CreateIdentifierRequest" />
-  </message>
-  <message name="CreateIdentifierResponse">
-    <part name="parameters" element="tns:CreateIdentifierResponse" />
-  </message>
   <message name="ResolveIdentifierRequest">
     <part name="parameters" element="tns:ResolveIdentifierRequest" />
   </message>
@@ -236,14 +210,6 @@
                       
   ============================================================-->
   <portType name="IdentifiersNAServicePortType" wsrp:ResourceProperties="tns:IdentifiersNAServiceResourceProperties">
-    <operation name="createIdentifier">
-      <input message="tns:CreateIdentifierRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/CreateIdentifierRequest" />
-      <output message="tns:CreateIdentifierResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/CreateIdentifierResponse" />
-      <fault name="NamingAuthorityConfigurationFault" message="tns:NamingAuthorityConfigurationFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthorityConfigurationFaultFaultMessage" />
-      <fault name="InvalidIdentifierFault" message="tns:InvalidIdentifierFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierFaultFaultMessage" />
-      <fault name="NamingAuthoritySecurityFault" message="tns:NamingAuthoritySecurityFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthoritySecurityFaultFaultMessage" />
-      <fault name="InvalidIdentifierValuesFault" message="tns:InvalidIdentifierValuesFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierValuesFaultFaultMessage" />
-    </operation>
     <operation name="resolveIdentifier">
       <input message="tns:ResolveIdentifierRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/ResolveIdentifierRequest" />
       <output message="tns:ResolveIdentifierResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/ResolveIdentifierResponse" />

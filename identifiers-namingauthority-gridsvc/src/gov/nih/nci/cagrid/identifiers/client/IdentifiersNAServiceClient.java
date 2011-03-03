@@ -29,27 +29,27 @@ import org.globus.gsi.GlobusCredential;
  */
 public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase implements IdentifiersNAServiceI {	
 	
-	private static final String CLIENT_PROPERTIES = "etc/client.properties";
-	private static final String SYNC_DESCRIPTION  = "sync.description";
-	
-	protected static Properties props = null;
-	static{
-		props=readProperties();
-	}
-	
-	private static Properties readProperties () {
-		Properties properties = new Properties();
-       	try {
-       		properties.load(new FileInputStream(CLIENT_PROPERTIES));
-       	}
-        catch (Exception e) {
-        	// TODO: Display appropriate client error 
-        	System.out.println("Exception while accessing " + CLIENT_PROPERTIES + " : " + e.getMessage());
-        	System.exit(-1);
-        }
-        
-        return properties;
-	}
+//	private static final String CLIENT_PROPERTIES = "etc/client.properties";
+//	private static final String SYNC_DESCRIPTION  = "sync.description";
+//	
+//	protected static Properties props = null;
+//	static{
+//		props=readProperties();
+//	}
+//	
+//	private static Properties readProperties () {
+//		Properties properties = new Properties();
+//       	try {
+//       		properties.load(new FileInputStream(CLIENT_PROPERTIES));
+//       	}
+//        catch (Exception e) {
+//        	// TODO: Display appropriate client error 
+//        	System.out.println("Exception while accessing " + CLIENT_PROPERTIES + " : " + e.getMessage());
+//        	System.exit(-1);
+//        }
+//        
+//        return properties;
+//	}
 
 	public IdentifiersNAServiceClient(String url) throws MalformedURIException, RemoteException {
 		this(url,null);	
@@ -71,12 +71,12 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
 		System.out.println(IdentifiersNAServiceClient.class.getName() + " -url <service url>");
 	}
 	
-	private static void syncTrust() {
-		System.out.println("Synchronize Once...");
-		GridAuthenticationClient.synchronizeOnce(
-               props.getProperty(SYNC_DESCRIPTION));
-		System.out.println("Synchronize Complete.");
-	}
+//	private static void syncTrust() {
+//		System.out.println("Synchronize Once...");
+//		GridAuthenticationClient.synchronizeOnce(
+//               props.getProperty(SYNC_DESCRIPTION));
+//		System.out.println("Synchronize Complete.");
+//	}
 
 	
 	public static void main(String [] args){
@@ -234,18 +234,6 @@ public class IdentifiersNAServiceClient extends IdentifiersNAServiceClientBase i
     synchronized(portTypeMutex){
       configureStubSecurity((Stub)portType,"queryResourceProperties");
     return portType.queryResourceProperties(params);
-    }
-  }
-
-  public org.apache.axis.types.URI createIdentifier(namingauthority.IdentifierData identifierData) throws RemoteException, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthorityConfigurationFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierFault, gov.nih.nci.cagrid.identifiers.stubs.types.NamingAuthoritySecurityFault, gov.nih.nci.cagrid.identifiers.stubs.types.InvalidIdentifierValuesFault {
-    synchronized(portTypeMutex){
-      configureStubSecurity((Stub)portType,"createIdentifier");
-    gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierRequest params = new gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierRequest();
-    gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierRequestIdentifierData identifierDataContainer = new gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierRequestIdentifierData();
-    identifierDataContainer.setIdentifierData(identifierData);
-    params.setIdentifierData(identifierDataContainer);
-    gov.nih.nci.cagrid.identifiers.stubs.CreateIdentifierResponse boxedResult = portType.createIdentifier(params);
-    return boxedResult.getIdentifier();
     }
   }
 
