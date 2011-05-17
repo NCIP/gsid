@@ -18,7 +18,7 @@
 	<property name="javadoc.dir" value="${build.dir}/javadoc" />
 	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="jar.dir" value="${build.dir}/lib" />
-	<property name="namingauthority.jarfile" value="${jar.dir}/${project.name}-namingauthority-modified-${project.version}.jar" />
+	<property name="namingauthority.jarfile" value="${jar.dir}/${project.name}-namingauthority-${project.version}.jar" />
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="ext.lib.dir" value="${basedir}/ext/dependencies/impl/jars" />
 	<property name="ext.test.lib.dir" location="${basedir}/ext/dependencies/test/jars" />
@@ -45,7 +45,7 @@
 	<property name="test.classes.dir" location="${build.dir}/test_classes" />
 	<property name="test.lib.dir" location="${test.dir}/lib" />
 	<property name="test.logs.dir" location="${test.dir}/logs" />
-	<property name="test.project.jar" location="${jar.dir}/${project.name}-namingauthority-modified-tests-${project.version}.jar" />
+	<property name="test.project.jar" location="${jar.dir}/${project.name}-namingauthority-tests-${project.version}.jar" />
 
 	<import file="test/test.xml" />
 	<import file="webapp.xml" />
