@@ -418,6 +418,8 @@
 	<property name="download.dir" location="${target.dir}/download" />
 	<property name="dist.dir" location="${basedir}/target/dist" />
 	
+	
+	
 	<!--Working tomcat folder or file name 	-->
 	<property name="working.tomcat.file" value="apache-tomcat-5.5.20"/>
 	<!--Working globus folder or file name-->
@@ -452,6 +454,7 @@
 	<target name="deploy-globus">
         <unzip src="${download.dir}/${working.tomcat.file}.zip" dest="${download.dir}" />
         <unzip src="${download.dir}/${working.globus.file}.zip" dest="${download.dir}" />
+		
         <subant target="deploySecureTomcat">
             <property name="tomcat.dir" value="${download.dir}/${working.tomcat.file}"/>
             <fileset dir="${download.dir}/${working.globus.file}" includes="share/globus_wsrf_common/tomcat/tomcat.xml"/>
@@ -477,6 +480,7 @@
 		<subant target="deployTomcat">
 			<property name="globus.webapp" value="wsrf"/>
 			<property name="tomcat.dir" value="${download.dir}/${working.tomcat.file}"/>
+			<property name="env.GLOBUS_LOCATION" location="${download.dir}/${working.globus.file}" />
 			<fileset dir="${basedir}" includes="build.xml"/>
 		</subant>
 		<delete>
