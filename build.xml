@@ -10,6 +10,7 @@
 	<property environment="env" />
 
 	<property file="introduce.properties" />
+	<property file="build.properties" />
 	<property name="introduce.ns.excludes" value="" />
 	<property name="service.name" value="${introduce.skeleton.service.name}" />
 	<property name="schema.path" value="${introduce.skeleton.service.name}" />
@@ -405,5 +406,111 @@
 			<fileset dir="${src.dir}" includes="**/*.java" />
 		</checkstyle>
 	</target>	
+	
+	
+	
+	
+	<!-- DEPLOYABLE WAR GENERATION -->
+	
+	
+	
+	<property name="target.dir" location="${basedir}/target" />
+	<property name="download.dir" location="${target.dir}/download" />
+	<property name="dist.dir" location="${basedir}/target/dist" />
+	
+	<!--Working tomcat folder or file name 	-->
+	<property name="working.tomcat.file" value="apache-tomcat-5.5.20"/>
+	<!--Working globus folder or file name-->
+	<property name="working.globus.file" value="ws-core-4.0.3"/>
+	
+	<available file="${download.dir}/${working.tomcat.file}.zip" property="tomcat.tools.exists" />
+	<available file="${download.dir}/${working.globus.file}.zip" property="globus.tools.exists" />
+	
+	<target name="init-gsid">
+	    <mkdir dir="${basedir}/target" />
+	    <mkdir dir="${basedir}/target/download" />
+	    <mkdir dir="${basedir}/target/dist" />
+	</target>
+	
+	<!-- ==============================================================
+		target: download tomcat to working directory
+	================================================================== -->	
+	<target name="download-tomcat" unless="tomcat.tools.exists"  description="Downloads TOMCAT from binary repository and verifies checksum">
+	 	<get src="${tomcat.src.url}" dest="${download.dir}/${working.tomcat.file}.zip" />
+	</target>
+	
+	<!-- ==============================================================
+		target: download globus to working directory
+	================================================================== -->	
+	<target name="download-globus" unless="globus.tools.exists"  description="Downloads GLOBUS">
+		<get src="${globus.src.url}" dest="${download.dir}/${working.globus.file}.zip" />
+	</target>
+	
+	<!-- ==============================================================
+		target: deploy the downloaded globus to working tomcat 
+	================================================================== -->	
+	<target name="deploy-globus">
+        <unzip src="${download.dir}/${working.tomcat.file}.zip" dest="${download.dir}" />
+        <unzip src="${download.dir}/${working.globus.file}.zip" dest="${download.dir}" />
+        <subant target="deploySecureTomcat">
+            <property name="tomcat.dir" value="${download.dir}/${working.tomcat.file}"/>
+            <fileset dir="${download.dir}/${working.globus.file}" includes="share/globus_wsrf_common/tomcat/tomcat.xml"/>
+        </subant>
+        
+	</target>
+
+	<!-- ==============================================================
+		target: war , make the deployed wsrf web application 
+	================================================================== -->	
+	 <target name="war:gsid-grid">
+	    <delete file="${dist.dir}/${wsrf-war}.war" />
+	 	<war destfile="${dist.dir}/${wsrf-war}.war" 
+			basedir="${download.dir}/${working.tomcat.file}/webapps/wsrf" 
+			webxml="${download.dir}/${working.tomcat.file}/webapps/wsrf/WEB-INF/web.xml"/>
+	</target>
+	
+
+		
+	
+	<target name="prepare:gsid-grid" depends="init-gsid , download-tomcat , download-globus , deploy-globus" >	
+		<property name="wsrf-root" value="${download.dir}/${working.tomcat.file}/webapps/wsrf"/>
+		<subant target="deployTomcat">
+			<property name="globus.webapp" value="wsrf"/>
+			<property name="tomcat.dir" value="${download.dir}/${working.tomcat.file}"/>
+			<fileset dir="${basedir}" includes="build.xml"/>
+		</subant>
+		<delete>
+		    <fileset dir="${wsrf-root}/WEB-INF/lib" includes="cog-jglobus-1.2.jar"/>
+			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="caGrid-core-1.2.jar"/>
+			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="caGrid-metadata*1.2.jar"/>
+			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="commons-cli-1.0.jar"/>
+			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="spring*1.2.9.jar"/>
+			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="spring*2.0.2.jar"/>
+			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="spring-modules-jcr-0.6.jar"/>
+			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="*.war"/>
+  	    </delete>		
+	</target>
+	<target name="build:gsid-grid" depends="prepare:gsid-grid , war:gsid-grid" >
+	</target>
+			
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </project>
