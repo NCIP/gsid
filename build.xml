@@ -407,19 +407,11 @@
 		</checkstyle>
 	</target>	
 	
-	
-	
-	
 	<!-- DEPLOYABLE WAR GENERATION -->
-	
-	
-	
 	<property name="target.dir" location="${basedir}/target" />
 	<property name="download.dir" location="${target.dir}/download" />
 	<property name="dist.dir" location="${basedir}/target/dist" />
-	
-	
-	
+
 	<!--Working tomcat folder or file name 	-->
 	<property name="working.tomcat.file" value="apache-tomcat-5.5.20"/>
 	<!--Working globus folder or file name-->
@@ -472,9 +464,6 @@
 			webxml="${download.dir}/${working.tomcat.file}/webapps/wsrf/WEB-INF/web.xml"/>
 	</target>
 	
-
-		
-	
 	<target name="prepare:gsid-grid" depends="init-gsid , download-tomcat , download-globus , deploy-globus" >	
 		<property name="wsrf-root" value="${download.dir}/${working.tomcat.file}/webapps/wsrf"/>
 		<subant target="deployTomcat">
@@ -496,25 +485,5 @@
 	</target>
 	<target name="build:gsid-grid" depends="prepare:gsid-grid , war:gsid-grid" >
 	</target>
-			
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 </project>
