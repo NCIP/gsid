@@ -24,6 +24,17 @@
 	<property name="schema.dir" value="schema" />
 	<property name="coverage.dir" value="${basedir}/coverage"/>
 	<property name="mappings.file" value="${basedir}/namespace2package.mappings" />
+	
+	<!-- Defaul values for na.peroperties file --> 
+	
+	<property name="mysqlHost" value="localhost" />
+	<property name="mysqlPort" value="3306" />
+	<property name="naDbName" value="nadb" />
+	<property name="naDbUser" value="root" />
+	<property name="naDbPassword" value=""/>
+	<property name="naGridGrouperUrl" value="https://grouper.training.cagrid.org:8443/wsrf/services/cagrid/GridGrouper?wsdl" />
+	<property name="naGridGouperGroupName" value="Training:Trainees" />
+
 
 	<property name="ext.lib.dir" value="${basedir}/ext/dependencies/service/jars" />
 	<property name="ext.test.lib.dir" location="${basedir}/ext/dependencies/test/jars" />
@@ -388,8 +399,18 @@
 		<echo message="|    Type 'ant -p' for a description of this service's build targets.          |" />
 		<echo message="================================================================================" />
 	</target>
-
-	<target name="createSchema" description="Generates the database schema" depends="init">
+	<target name="updateProps">
+		<propertyfile file="${basedir}/${etc.dir}/na.properties" >
+			<entry key="cagrid.na.mysql.host" value="${mysqlHost}" />
+			<entry key="cagrid.na.mysql.port" value="${mysqlPort}" />
+			<entry key="cagrid.na.db.name" value="${naDbName}" />
+			<entry key="cagrid.na.db.username" value="${naDbUser}" />
+			<entry key="cagrid.na.db.password" value="${naDbPassword}"/>
+			<entry key="cagrid.na.gridgrouper.grouperURL" value="${naGridGrouperUrl}" />
+			<entry key="cagrid.na.gridgrouper.groupName" value="${naGridGouperGroupName}" />
+		</propertyfile>
+	</target>
+	<target name="createSchema" description="Generates the database schema" depends="init,updateProps">
 		<property file="${basedir}/${etc.dir}/na.properties" />
 		<sql driver="${cagrid.na.db.driver}" url="${cagrid.na.db.url}" userid="${cagrid.na.db.username}" password="${cagrid.na.db.password}" onerror="continue">
 			<transaction src="${sql.file}" />
@@ -420,7 +441,7 @@
 	<available file="${download.dir}/${working.tomcat.file}.zip" property="tomcat.tools.exists" />
 	<available file="${download.dir}/${working.globus.file}.zip" property="globus.tools.exists" />
 	
-	<target name="init-gsid">
+	<target name="init-gsid" depends="updateProps">
 	    <mkdir dir="${basedir}/target" />
 	    <mkdir dir="${basedir}/target/download" />
 	    <mkdir dir="${basedir}/target/dist" />
