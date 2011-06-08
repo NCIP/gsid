@@ -229,6 +229,29 @@
 			</fileset>
 		</path>
 	</target>
+	
+	
+	<target name="defineClasspathsDB">
+		<path id="db.build.classpath">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${ext.lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+	</target>
+	
+	<target name="createSchema" description="Generates the database schema" depends="defineClasspathsDB,updateProps">
+		<property file="${basedir}/${etc.dir}/na.properties" />
+		<sql driver="${cagrid.na.db.driver}" url="${cagrid.na.db.url}" userid="${cagrid.na.db.username}" password="${cagrid.na.db.password}" onerror="continue">
+			<transaction src="${sql.file}" />
+			<transaction>commit;</transaction>
+			<classpath refid="db.build.classpath" />
+		</sql>
+	</target>
+	
+	
 
 	<!-- Generate bindings for our WSDL file -->
 	<!-- This is done with a GT4 tool -->
@@ -410,14 +433,7 @@
 			<entry key="cagrid.na.gridgrouper.groupName" value="${naGridGouperGroupName}" />
 		</propertyfile>
 	</target>
-	<target name="createSchema" description="Generates the database schema" depends="init,updateProps">
-		<property file="${basedir}/${etc.dir}/na.properties" />
-		<sql driver="${cagrid.na.db.driver}" url="${cagrid.na.db.url}" userid="${cagrid.na.db.username}" password="${cagrid.na.db.password}" onerror="continue">
-			<transaction src="${sql.file}" />
-			<transaction>commit;</transaction>
-			<classpath refid="service.build.classpath" />
-		</sql>
-	</target>
+
 
 	<taskdef resource="checkstyletask.properties" classpath="${lib.dir}/checkstyle-5.3-all.jar" />
 	<target name="checkstyle" description="Generates a report of code convention violations.">
