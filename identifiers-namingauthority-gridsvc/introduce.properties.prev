@@ -1,0 +1,11 @@
+#Introduce Properties
+#Thu Mar 03 09:51:30 EST 2011
+introduce.skeleton.services.list=IdentifiersNAService
+introduce.skeleton.extensions=cagrid_metadata
+introduce.skeleton.timestamp=1297880604834
+introduce.skeleton.service.name=IdentifiersNAService
+introduce.skeleton.resource.options=main,singleton,identifiable,resourcePropertyManagement
+introduce.skeleton.destination.dir=E\:\\myJava\\namingAuthorityGS4-11-11\\identifiers-namingauthority-gridsvc
+introduce.skeleton.namespace.domain=http\://identifiers.cagrid.nci.nih.gov/IdentifiersNAService
+introduce.soap.binding.excludes=\ 
+introduce.ns.excludes=\ -x gme\://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.service -x gme\://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.security -x gme\://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.common -x gme\://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata

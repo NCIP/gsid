@@ -1,0 +1,17 @@
+<project name="dependencies" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property file="project.properties" />
+
+	<!-- OVERLOADED-->
+	<property name="ivy.resolve.configurations" value="impl,test" />
+	<property name="ivy.generated.artifacts.pattern" value="${ivy.generated.artifacts.dir}/lib/[artifact]-[revision].[ext]" />
+	
+	<target name="set-ivy-1.4">
+		<ivy:info file="${basedir}/ivy-1.4.xml" />	
+		<ivy:settings file="ivysettings.xml" />				
+	</target>
+
+	<target name="resolve-dependencies-1.4" depends="set-ivy-1.4">
+		<ivy:retrieve file="${basedir}/ivy-1.4.xml" conf="impl" pattern="${ivy.resolved.artifacts.dir}/dependencies/service/[type]s/[originalname](.[ext])" sync="true" type="jar" />				
+	</target>
+
+</project>

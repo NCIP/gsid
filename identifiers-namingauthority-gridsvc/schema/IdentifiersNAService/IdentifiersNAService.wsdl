@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService" xmlns:wsrp="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/03/addressing" xmlns:wsrbfw="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-BaseFaults-1.2-draft-01.wsdl" xmlns:wsrpw="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl" xmlns:wns1="http://security.introduce.cagrid.nci.nih.gov/ServiceSecurity" xmlns:wns0="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl" xmlns:ns4="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.service" xmlns:ns1="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types" xmlns:ns0="http://na.cagrid.org/1.0/NamingAuthority" xmlns:ns2="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.security" xmlns:ns5="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.common" xmlns:ns3="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata" name="IdentifiersNAService" targetNamespace="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService">
+  <import namespace="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl" location="../wsrf/properties/WS-ResourceProperties.wsdl" />
+  <import namespace="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-BaseFaults-1.2-draft-01.wsdl" location="../wsrf/faults/WS-BaseFaults.wsdl" />
+  <import namespace="http://security.introduce.cagrid.nci.nih.gov/ServiceSecurity" location="./ServiceSecurity.wsdl" />
+  <!--============================================================
+
+                      T Y P E S
+                      
+  ============================================================-->
+  <types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsrbf="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-BaseFaults-1.2-draft-01.xsd" targetNamespace="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService" elementFormDefault="qualified" attributeFormDefault="unqualified">
+      <import namespace="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-BaseFaults-1.2-draft-01.xsd" schemaLocation="../wsrf/faults/WS-BaseFaults.xsd" />
+      <import namespace="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.service" schemaLocation="./xsd/cagrid/types/service/servicemodel.xsd" />
+      <import namespace="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/types" schemaLocation="./IdentifiersNAServiceTypes.xsd" />
+      <import namespace="http://na.cagrid.org/1.0/NamingAuthority" schemaLocation="./org.cagrid.identifiers.namingauthority.xsd" />
+      <import namespace="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.security" schemaLocation="./xsd/cagrid/types/security/security.xsd" />
+      <import namespace="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.common" schemaLocation="./xsd/cagrid/types/common/common.xsd" />
+      <import namespace="gme://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata" schemaLocation="./xsd/cagrid/types/caGridMetadata.xsd" />
+      <element name="ResolveIdentifierRequest">
+        <complexType>
+          <sequence>
+            <element name="identifier" type="xs:string" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ResolveIdentifierResponse">
+        <complexType>
+          <sequence>
+            <element ref="ns0:IdentifierData" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RegisterGSIDRequest">
+        <complexType>
+          <sequence>
+            <element name="suggestedIdentifier" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <element name="parentIdentifiers" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RegisterGSIDResponse">
+        <complexType>
+          <sequence>
+            <element name="response" type="xs:string" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="AddSiteRequest">
+        <complexType>
+          <sequence>
+            <element name="identifier" type="xs:string" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="AddSiteResponse">
+        <complexType>
+          <sequence>
+            <element ref="ns0:Identifier" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GenerateIdentifiersRequest">
+        <complexType>
+          <sequence>
+            <element name="numOfIdentifiers" type="xs:int" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GenerateIdentifiersResponse">
+        <complexType>
+          <sequence>
+            <element name="response" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetParentHierarchyRequest">
+        <complexType>
+          <sequence>
+            <element name="identifier" type="xs:string" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetParentHierarchyResponse">
+        <complexType>
+          <sequence>
+            <element ref="ns0:Tree" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetChildHierarchyRequest">
+        <complexType>
+          <sequence>
+            <element name="identifier" type="xs:string" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetChildHierarchyResponse">
+        <complexType>
+          <sequence>
+            <element ref="ns0:Tree" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RegisterSiteRequest">
+        <complexType>
+          <sequence>
+            <element name="application" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <element name="applicationURL" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <element name="applicationVersion" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <element name="contactName" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <element name="contactEmail" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <element name="contactPhone" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <element name="organization" type="xs:string" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RegisterSiteResponse">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="ValidateIdentifierRequest">
+        <complexType>
+          <sequence>
+            <element name="identifier" type="xs:string" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ValidateIdentifierResponse">
+        <complexType>
+          <sequence>
+            <element name="response" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="IdentifiersNAServiceResourceProperties">
+        <complexType>
+          <sequence>
+            <element ref="ns3:ServiceMetadata" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <!--  place service messages here -->
+  <message name="ResolveIdentifierRequest">
+    <part name="parameters" element="tns:ResolveIdentifierRequest" />
+  </message>
+  <message name="ResolveIdentifierResponse">
+    <part name="parameters" element="tns:ResolveIdentifierResponse" />
+  </message>
+  <message name="RegisterGSIDRequest">
+    <part name="parameters" element="tns:RegisterGSIDRequest" />
+  </message>
+  <message name="RegisterGSIDResponse">
+    <part name="parameters" element="tns:RegisterGSIDResponse" />
+  </message>
+  <message name="AddSiteRequest">
+    <part name="parameters" element="tns:AddSiteRequest" />
+  </message>
+  <message name="AddSiteResponse">
+    <part name="parameters" element="tns:AddSiteResponse" />
+  </message>
+  <message name="GenerateIdentifiersRequest">
+    <part name="parameters" element="tns:GenerateIdentifiersRequest" />
+  </message>
+  <message name="GenerateIdentifiersResponse">
+    <part name="parameters" element="tns:GenerateIdentifiersResponse" />
+  </message>
+  <message name="GetParentHierarchyRequest">
+    <part name="parameters" element="tns:GetParentHierarchyRequest" />
+  </message>
+  <message name="GetParentHierarchyResponse">
+    <part name="parameters" element="tns:GetParentHierarchyResponse" />
+  </message>
+  <message name="GetChildHierarchyRequest">
+    <part name="parameters" element="tns:GetChildHierarchyRequest" />
+  </message>
+  <message name="GetChildHierarchyResponse">
+    <part name="parameters" element="tns:GetChildHierarchyResponse" />
+  </message>
+  <message name="RegisterSiteRequest">
+    <part name="parameters" element="tns:RegisterSiteRequest" />
+  </message>
+  <message name="RegisterSiteResponse">
+    <part name="parameters" element="tns:RegisterSiteResponse" />
+  </message>
+  <message name="ValidateIdentifierRequest">
+    <part name="parameters" element="tns:ValidateIdentifierRequest" />
+  </message>
+  <message name="ValidateIdentifierResponse">
+    <part name="parameters" element="tns:ValidateIdentifierResponse" />
+  </message>
+  <message name="NamingAuthorityConfigurationFaultFaultMessage">
+    <part name="fault" element="ns1:NamingAuthorityConfigurationFault" />
+  </message>
+  <message name="InvalidIdentifierFaultFaultMessage">
+    <part name="fault" element="ns1:InvalidIdentifierFault" />
+  </message>
+  <message name="NamingAuthoritySecurityFaultFaultMessage">
+    <part name="fault" element="ns1:NamingAuthoritySecurityFault" />
+  </message>
+  <message name="InvalidIdentifierValuesFaultFaultMessage">
+    <part name="fault" element="ns1:InvalidIdentifierValuesFault" />
+  </message>
+  <!--============================================================
+
+                       P O R T T Y P E
+                      
+  ============================================================-->
+  <portType name="IdentifiersNAServicePortType" wsrp:ResourceProperties="tns:IdentifiersNAServiceResourceProperties">
+    <operation name="resolveIdentifier">
+      <input message="tns:ResolveIdentifierRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/ResolveIdentifierRequest" />
+      <output message="tns:ResolveIdentifierResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/ResolveIdentifierResponse" />
+      <fault name="NamingAuthorityConfigurationFault" message="tns:NamingAuthorityConfigurationFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthorityConfigurationFaultFaultMessage" />
+      <fault name="InvalidIdentifierFault" message="tns:InvalidIdentifierFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierFaultFaultMessage" />
+      <fault name="NamingAuthoritySecurityFault" message="tns:NamingAuthoritySecurityFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthoritySecurityFaultFaultMessage" />
+    </operation>
+    <operation name="registerGSID">
+      <input message="tns:RegisterGSIDRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/RegisterGSIDRequest" />
+      <output message="tns:RegisterGSIDResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/RegisterGSIDResponse" />
+      <fault name="NamingAuthorityConfigurationFault" message="tns:NamingAuthorityConfigurationFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthorityConfigurationFaultFaultMessage" />
+      <fault name="InvalidIdentifierValuesFault" message="tns:InvalidIdentifierValuesFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierValuesFaultFaultMessage" />
+      <fault name="InvalidIdentifierFault" message="tns:InvalidIdentifierFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierFaultFaultMessage" />
+      <fault name="NamingAuthoritySecurityFault" message="tns:NamingAuthoritySecurityFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthoritySecurityFaultFaultMessage" />
+    </operation>
+    <operation name="addSite">
+      <input message="tns:AddSiteRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/AddSiteRequest" />
+      <output message="tns:AddSiteResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/AddSiteResponse" />
+      <fault name="NamingAuthorityConfigurationFault" message="tns:NamingAuthorityConfigurationFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthorityConfigurationFaultFaultMessage" />
+      <fault name="InvalidIdentifierValuesFault" message="tns:InvalidIdentifierValuesFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierValuesFaultFaultMessage" />
+      <fault name="InvalidIdentifierFault" message="tns:InvalidIdentifierFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierFaultFaultMessage" />
+      <fault name="NamingAuthoritySecurityFault" message="tns:NamingAuthoritySecurityFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthoritySecurityFaultFaultMessage" />
+    </operation>
+    <operation name="generateIdentifiers">
+      <input message="tns:GenerateIdentifiersRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GenerateIdentifiersRequest" />
+      <output message="tns:GenerateIdentifiersResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GenerateIdentifiersResponse" />
+      <fault name="NamingAuthorityConfigurationFault" message="tns:NamingAuthorityConfigurationFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthorityConfigurationFaultFaultMessage" />
+      <fault name="NamingAuthoritySecurityFault" message="tns:NamingAuthoritySecurityFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthoritySecurityFaultFaultMessage" />
+    </operation>
+    <operation name="getParentHierarchy">
+      <input message="tns:GetParentHierarchyRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GetParentHierarchyRequest" />
+      <output message="tns:GetParentHierarchyResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GetParentHierarchyResponse" />
+      <fault name="NamingAuthorityConfigurationFault" message="tns:NamingAuthorityConfigurationFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthorityConfigurationFaultFaultMessage" />
+      <fault name="NamingAuthoritySecurityFault" message="tns:NamingAuthoritySecurityFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthoritySecurityFaultFaultMessage" />
+      <fault name="InvalidIdentifierValuesFault" message="tns:InvalidIdentifierValuesFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierValuesFaultFaultMessage" />
+      <fault name="InvalidIdentifierFault" message="tns:InvalidIdentifierFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierFaultFaultMessage" />
+    </operation>
+    <operation name="getChildHierarchy">
+      <input message="tns:GetChildHierarchyRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GetChildHierarchyRequest" />
+      <output message="tns:GetChildHierarchyResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/GetChildHierarchyResponse" />
+      <fault name="NamingAuthorityConfigurationFault" message="tns:NamingAuthorityConfigurationFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthorityConfigurationFaultFaultMessage" />
+      <fault name="InvalidIdentifierFault" message="tns:InvalidIdentifierFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierFaultFaultMessage" />
+      <fault name="InvalidIdentifierValuesFault" message="tns:InvalidIdentifierValuesFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierValuesFaultFaultMessage" />
+      <fault name="NamingAuthoritySecurityFault" message="tns:NamingAuthoritySecurityFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthoritySecurityFaultFaultMessage" />
+    </operation>
+    <operation name="registerSite">
+      <input message="tns:RegisterSiteRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/RegisterSiteRequest" />
+      <output message="tns:RegisterSiteResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/RegisterSiteResponse" />
+      <fault name="InvalidIdentifierFault" message="tns:InvalidIdentifierFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierFaultFaultMessage" />
+      <fault name="InvalidIdentifierValuesFault" message="tns:InvalidIdentifierValuesFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierValuesFaultFaultMessage" />
+      <fault name="NamingAuthorityConfigurationFault" message="tns:NamingAuthorityConfigurationFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthorityConfigurationFaultFaultMessage" />
+      <fault name="NamingAuthoritySecurityFault" message="tns:NamingAuthoritySecurityFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthoritySecurityFaultFaultMessage" />
+    </operation>
+    <operation name="validateIdentifier">
+      <input message="tns:ValidateIdentifierRequest" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/ValidateIdentifierRequest" />
+      <output message="tns:ValidateIdentifierResponse" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/ValidateIdentifierResponse" />
+      <fault name="InvalidIdentifierFault" message="tns:InvalidIdentifierFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierFaultFaultMessage" />
+      <fault name="InvalidIdentifierValuesFault" message="tns:InvalidIdentifierValuesFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/InvalidIdentifierValuesFaultFaultMessage" />
+      <fault name="NamingAuthorityConfigurationFault" message="tns:NamingAuthorityConfigurationFaultFaultMessage" wsa:Action="http://identifiers.cagrid.nci.nih.gov/IdentifiersNAService/NamingAuthorityConfigurationFaultFaultMessage" />
+    </operation>
+    <wsdl:operation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="GetMultipleResourceProperties">
+      <wsdl:input name="GetMultipleResourcePropertiesRequest" message="wsrpw:GetMultipleResourcePropertiesRequest" wsa:Action="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/GetMultipleResourceProperties" />
+      <wsdl:output name="GetMultipleResourcePropertiesResponse" message="wsrpw:GetMultipleResourcePropertiesResponse" wsa:Action="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/GetMultipleResourcePropertiesResponse" />
+      <wsdl:fault name="ResourceUnknownFault" message="wsrpw:ResourceUnknownFault" />
+      <wsdl:fault name="InvalidResourcePropertyQNameFault" message="wsrpw:InvalidResourcePropertyQNameFault" />
+    </wsdl:operation>
+    <wsdl:operation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="GetResourceProperty">
+      <wsdl:input name="GetResourcePropertyRequest" message="wsrpw:GetResourcePropertyRequest" wsa:Action="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/GetResourceProperty" />
+      <wsdl:output name="GetResourcePropertyResponse" message="wsrpw:GetResourcePropertyResponse" wsa:Action="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/GetResourcePropertyResponse" />
+      <wsdl:fault name="ResourceUnknownFault" message="wsrpw:ResourceUnknownFault" />
+      <wsdl:fault name="InvalidResourcePropertyQNameFault" message="wsrpw:InvalidResourcePropertyQNameFault" />
+    </wsdl:operation>
+    <wsdl:operation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="QueryResourceProperties">
+      <wsdl:input name="QueryResourcePropertiesRequest" message="wsrpw:QueryResourcePropertiesRequest" wsa:Action="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/QueryResourceProperties" />
+      <wsdl:output name="QueryResourcePropertiesResponse" message="wsrpw:QueryResourcePropertiesResponse" wsa:Action="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/QueryResourcePropertiesResponse" />
+      <wsdl:fault name="ResourceUnknownFault" message="wsrpw:ResourceUnknownFault" />
+      <wsdl:fault name="InvalidResourcePropertyQNameFault" message="wsrpw:InvalidResourcePropertyQNameFault" />
+      <wsdl:fault name="UnknownQueryExpressionDialectFault" message="wsrpw:UnknownQueryExpressionDialectFault" />
+      <wsdl:fault name="InvalidQueryExpressionFault" message="wsrpw:InvalidQueryExpressionFault" />
+      <wsdl:fault name="QueryEvaluationErrorFault" message="wsrpw:QueryEvaluationErrorFault" />
+    </wsdl:operation>
+    <operation name="getServiceSecurityMetadata">
+      <input message="wns1:GetServiceSecurityMetadataRequest" wsa:Action="http://security.introduce.cagrid.nci.nih.gov/ServiceSecurity/GetServiceSecurityMetadataRequest" />
+      <output message="wns1:GetServiceSecurityMetadataResponse" wsa:Action="http://security.introduce.cagrid.nci.nih.gov/ServiceSecurity/GetServiceSecurityMetadataResponse" />
+    </operation>
+  </portType>
+</definitions>
+
