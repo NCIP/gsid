@@ -34,6 +34,9 @@
 	<property name="naDbPassword" value=""/>
 	<property name="naGridGrouperUrl" value="https://grouper.training.cagrid.org:8443/wsrf/services/cagrid/GridGrouper?wsdl" />
 	<property name="naGridGouperGroupName" value="Training:Trainees" />
+	<property name="gtsServiceURI" value="https://cagrid-gts-slave-stage.nci.nih.gov:8443/wsrf/services/cagrid/GTS" />
+	<property name="GTSIdentity" value="/O=caBIG/OU=caGrid/OU=Stage Trust Fabric/CN=host/cagrid-gts-slave-stage.nci.nih.gov" />
+	<property name="CASubject" value="O=caBIG,OU=caGrid,OU=Stage Trust Fabric,CN=caGrid Stage Trust Fabric Certificate Authority" />
 
 
 	<property name="ext.lib.dir" value="${basedir}/ext/dependencies/service/jars" />
@@ -382,7 +385,8 @@
 	<!-- Clean up all the intermediate files -->
 	<target name="clean" description="Removes all generated build artifacts." depends="checkContribTasksDefined, defineContribTasks">
 		<runtarget target="preClean" />
-		<delete dir="tmp" />
+		<delete dir="tmp" />		
+		<delete dir="target" />
 		<delete dir="${build.dir}" />
 		<delete file="${gar.name}" />
 		<runtarget target="postClean" />
@@ -503,12 +507,17 @@
 	
 	<target name="prepare:gsid-grid" depends="init-gsid , download-tomcat , download-globus , deploy-globus" >	
 		<property name="wsrf-root" value="${download.dir}/${working.tomcat.file}/webapps/wsrf"/>
+		<!-- <delete dir="${wsrf-root}" failonerror="false"/> -->
 		<subant target="deployTomcat">
 			<property name="globus.webapp" value="wsrf"/>
 			<property name="tomcat.dir" value="${download.dir}/${working.tomcat.file}"/>
 			<property name="env.GLOBUS_LOCATION" location="${download.dir}/${working.globus.file}" />
 			<fileset dir="${basedir}" includes="build.xml"/>
 		</subant>
+		<echo>Integrating SyncGTS into the GSID Service WAR file...</echo>
+		<copy todir="${wsrf-root}" overwrite="true">
+		    <fileset dir="${basedir}/syncgts"/>
+		</copy>
 		<delete>
 		    <fileset dir="${wsrf-root}/WEB-INF/lib" includes="cog-jglobus-1.2.jar"/>
 			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="caGrid-core-1.2.jar"/>
@@ -517,8 +526,21 @@
 			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="spring*1.2.9.jar"/>
 			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="spring*2.0.2.jar"/>
 			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="spring-modules-jcr-0.6.jar"/>
+			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="jce-jdk13*.jar"/>
 			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="*.war"/>
-  	    </delete>		
+  	    </delete>
+		
+		<echo>Preparing sync-description.xml to point to the right grid:</echo>
+		<echo>gtsServiceURI=${gtsServiceURI}</echo>
+		<echo>GTSIdentity=${GTSIdentity}</echo>
+		<echo>CASubject=${CASubject}</echo>
+			
+		<replace dir="${wsrf-root}" summary="true" includes="**/*.xml">
+			<replacefilter token="@gtsServiceURI@" value="${gtsServiceURI}"/>			
+			<replacefilter token="@GTSIdentity@" value="${GTSIdentity}"/>
+			<replacefilter token="@CASubject@" value="${CASubject}"/>
+		</replace>			
+		
 	</target>
 	<target name="build:gsid-grid" depends="prepare:gsid-grid , war:gsid-grid" >
 	</target>
