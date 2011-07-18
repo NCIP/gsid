@@ -32,8 +32,8 @@
 	<property name="naDbName" value="nadb" />
 	<property name="naDbUser" value="root" />
 	<property name="naDbPassword" value=""/>
-	<property name="naGridGrouperUrl" value="https://grouper.training.cagrid.org:8443/wsrf/services/cagrid/GridGrouper?wsdl" />
-	<property name="naGridGouperGroupName" value="Training:Trainees" />
+	<property name="naGridGrouperUrl" value="https://cagrid-gridgrouper-stage.nci.nih.gov:8443/wsrf/services/cagrid/GridGrouper" />
+	<property name="naGridGouperGroupName" value="Organization:CBIIT::GSID:GSID-QA" />
 	<property name="gtsServiceURI" value="https://cagrid-gts-slave-stage.nci.nih.gov:8443/wsrf/services/cagrid/GTS" />
 	<property name="GTSIdentity" value="/O=caBIG/OU=caGrid/OU=Stage Trust Fabric/CN=host/cagrid-gts-slave-stage.nci.nih.gov" />
 	<property name="CASubject" value="O=caBIG,OU=caGrid,OU=Stage Trust Fabric,CN=caGrid Stage Trust Fabric Certificate Authority" />
