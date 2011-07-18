@@ -1,4 +1,4 @@
-Introduce Generated Service Skeleton:
+Introduce Generated Service Skeleton: 
 ======================================
 This is an Introduce generated service.  
 
