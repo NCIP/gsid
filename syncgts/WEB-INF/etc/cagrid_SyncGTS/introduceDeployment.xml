@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:Deployment xmlns:ns1="gme://gov.nih.nci.cagrid.introduce/1/Deployment" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns1:Deployment" serviceName="SyncGTS" deploymentPrefix="cagrid" serviceDeploymentDirName="cagrid_SyncGTS" deployDateTime="1311018937357">
+  <Jars xsi:type="ns1:Jars">
+    <Jar xsi:type="ns1:Jar" name="caGrid-advertisement-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-core-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-gaards-core-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-gts-client-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-gts-common-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-gts-service-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-gts-stubs-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-Introduce-serviceTools-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-metadata-common-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-metadata-security-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-opensaml-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-ServiceSecurityProvider-client-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-ServiceSecurityProvider-common-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-ServiceSecurityProvider-service-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-ServiceSecurityProvider-stubs-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-syncgts-client-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-syncgts-common-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-syncgts-service-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-syncgts-stubs-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="caGrid-syncgts-tests-1.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="castor-1.0.2.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="commons-codec-1.3.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="commons-io-1.3.2.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="concurrent-1.3.4.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="globus_wsrf_mds_aggregator.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="globus_wsrf_mds_aggregator_stubs.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="globus_wsrf_servicegroup.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="globus_wsrf_servicegroup_stubs.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="ivy-1.4.xml" location="." />
+    <Jar xsi:type="ns1:Jar" name="jdom-1.0.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="jprov.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="mobius_common_client-1.1.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="mobius_tools-1.1.jar" location="." />
+    <Jar xsi:type="ns1:Jar" name="mysql-connector-java-3.0.16-ga-bin.jar" location="." />
+  </Jars>
+</ns1:Deployment>
+
