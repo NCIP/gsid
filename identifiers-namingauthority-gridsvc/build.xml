@@ -27,10 +27,10 @@
 	
 	<!-- Defaul values for na.peroperties file --> 
 	
-	<property name="mysqlHost" value="localhost" />
-	<property name="mysqlPort" value="3306" />
-	<property name="naDbName" value="nadb" />
-	<property name="naDbUser" value="root" />
+	<property name="mysqlHost" value="cbdb-q2001.nci.nih.gov" />
+	<property name="mysqlPort" value="3668" />
+	<property name="naDbName" value="gsid" />
+	<property name="naDbUser" value="gsid" />
 	<property name="naDbPassword" value=""/>
 	<property name="naGridGrouperUrl" value="https://cagrid-gridgrouper-stage.nci.nih.gov:8443/wsrf/services/cagrid/GridGrouper" />
 	<property name="naGridGouperGroupName" value="Organization:CBIIT::GSID:GSID-QA" />
