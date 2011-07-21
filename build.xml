@@ -33,7 +33,7 @@
 	<property name="naDbUser" value="gsid" />
 	<property name="naDbPassword" value=""/>
 	<property name="naGridGrouperUrl" value="https://cagrid-gridgrouper-stage.nci.nih.gov:8443/wsrf/services/cagrid/GridGrouper" />
-	<property name="naGridGouperGroupName" value="Organization:CBIIT::GSID:GSID-QA" />
+	<property name="naGridGouperGroupName" value="Organization:CBIIT:GSID:GSID-QA" />
 	<property name="gtsServiceURI" value="https://cagrid-gts-slave-stage.nci.nih.gov:8443/wsrf/services/cagrid/GTS" />
 	<property name="GTSIdentity" value="/O=caBIG/OU=caGrid/OU=Stage Trust Fabric/CN=host/cagrid-gts-slave-stage.nci.nih.gov" />
 	<property name="CASubject" value="O=caBIG,OU=caGrid,OU=Stage Trust Fabric,CN=caGrid Stage Trust Fabric Certificate Authority" />
@@ -527,6 +527,7 @@
 			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="spring*2.0.2.jar"/>
 			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="spring-modules-jcr-0.6.jar"/>
 			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="jce-jdk13*.jar"/>
+			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="commons-collections-3.0.jar"/>
 			<fileset dir="${wsrf-root}/WEB-INF/lib" includes="*.war"/>
   	    </delete>
 		
