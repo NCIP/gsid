@@ -2,7 +2,7 @@
 How to Contribute
 =================
 
-We welcome community contributions to the caBIO project.
+We welcome community contributions to the GSID project.
 Your contributions back to this repository will allow the broader
 research community to benefit from your work and will allow your
 enhancements to be integrated with those of others.  There are a few
@@ -19,10 +19,10 @@ Getting Started
 
 .. If a project uses a tracker, then:
 
-* Submit a ticket for your issue at https://tracker.nci.nih.gov/browse/CABIO,
+* Submit a ticket for your issue at https://bugzilla.wustl.edu/bugzilla/,
   assuming one does not already exist.
 
-  - Click on https://tracker.nci.nih.gov/secure/CreateIssue.jspa?pid=10002&issuetype=8 to get a jira account.
+  - Click on https://bugzilla.wustl.edu/bugzilla/createaccount.cgi to get a Bugzilla account.
   - Clearly describe the issue including steps to reproduce when it is a bug.
   - Make sure you fill in the earliest version that you know has the issue.
 
@@ -70,7 +70,7 @@ Submitting Changes
 
 .. If a project uses a tracker, then:
 
-* Update your https://tracker.nci.nih.gov/browse/CABIO ticket to mark that you have submitted
+* Update your https://bugzilla.wustl.edu/bugzilla/ ticket to mark that you have submitted
   code and are ready for it to be reviewed.
 
   - Include a link to the pull request in the ticket
