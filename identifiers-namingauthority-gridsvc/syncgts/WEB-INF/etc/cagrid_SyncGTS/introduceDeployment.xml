@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--L
+   Copyright Washington University in St. Louis
+   Copyright SemanticBits
+   Copyright Persistent Systems
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/gsid/LICENSE.txt for details.
+L-->
+
 <ns1:Deployment xmlns:ns1="gme://gov.nih.nci.cagrid.introduce/1/Deployment" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns1:Deployment" serviceName="SyncGTS" deploymentPrefix="cagrid" serviceDeploymentDirName="cagrid_SyncGTS" deployDateTime="1311018937357">
   <Jars xsi:type="ns1:Jars">
     <Jar xsi:type="ns1:Jar" name="caGrid-advertisement-1.4.jar" location="." />

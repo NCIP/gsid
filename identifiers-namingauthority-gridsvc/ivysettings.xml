@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--L
+   Copyright Washington University in St. Louis
+   Copyright SemanticBits
+   Copyright Persistent Systems
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/gsid/LICENSE.txt for details.
+L-->
+
 <ivysettings>
 	<settings defaultResolver="gsid-ivy-resolver" validate="false" />
 	<!-- TODO: I had to set checkUpToDate="false" so target grids would resolve 

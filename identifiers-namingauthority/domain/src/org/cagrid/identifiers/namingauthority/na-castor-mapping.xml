@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--L
+   Copyright Washington University in St. Louis
+   Copyright SemanticBits
+   Copyright Persistent Systems
+
+   Distributed under the OSI-approved BSD 3-Clause License.
+   See http://ncip.github.com/gsid/LICENSE.txt for details.
+L-->
+
 <!DOCTYPE mapping PUBLIC "-//EXOLAB/Castor Mapping DTD Version 1.0//EN" "http://castor.org/mapping.dtd">
 <mapping>
 	<class name="org.cagrid.identifiers.namingauthority.domain.IdentifierData">
