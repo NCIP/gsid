@@ -4,7 +4,7 @@ Welcome to the Global Specimen Identifier (GSID) Project!
 Applications in clinical and life-science research need to manage information associated with a specimen within an institution as well as across many organizations.  For specimen life-cycle tracking, NCI Center for Bioinformatics and Information Technology (CBIIT) has worked with the biorepository and cancer research community to develop a Global Specimen Identifier Service (GSID). GSID can be incorporated by biorepositories involved in multi-site efforts supported by caTissue Suite open source, home-grown, and commercial biospecimen management systems.  The Cancer Genome Atlas (TCGA) program has evaluated and provided input into this GSID for their use to associate a unique identifier to each specimen and each derivative.
 
 GSID will enable biorepositories to:
-* Support the individual researcher by providing a framework for cross referencing a specimen to the specimen�s history and other findings on that specimen
+* Support the individual researcher by providing a framework for cross referencing a specimen to the specimen's history and other findings on that specimen
 * Provide a source of certified globally unique identifier
 * Certify externally generated IDs are globally unique
 * Maintain relations between GSIDs, such as source to aliquot, or children to multiple parents.
