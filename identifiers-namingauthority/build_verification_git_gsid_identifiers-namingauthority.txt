@@ -1,0 +1,18 @@
+Buildfile: build.xml
+
+setGlobus:
+
+checkGlobus:
+     [echo] Globus: c:\DEV\software\ws-core-4.0.8
+
+defineClasspaths:
+
+prepare:
+
+compileDomain:
+    [javac] Compiling 5 source files to C:\DEV\GIT-WORK\catissue\gsid\identifiers-namingauthority\build\classes
+
+C:\DEV\GIT-WORK\SVN\gsid\identifiers-namingauthority\build.xml:152: C:\DEV\GIT-WORK\SVN\gsid\identifiers-namingauthority\ext\dependencies\impl\ja
+rs not found.
+
+Total time: 0 seconds

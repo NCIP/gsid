@@ -1,0 +1,21 @@
+Buildfile: build.xml
+
+setGlobus:
+
+checkGlobus:
+     [echo] Globus: c:\DEV\software\ws-core-4.0.8
+
+defineClasspaths:
+
+prepare:
+
+compileDomain:
+
+compile:
+    [javac] Compiling 27 source files to C:\DEV\GIT-WORK\SVN\gsid\identifiers-namingauthority\build\classes
+
+BUILD FAILED
+C:\DEV\GIT-WORK\catissue\gsid\identifiers-namingauthority\build.xml:150: C:\DEV\GIT-WORK\catissue\gsid\identifiers-namingauthority\ext\dependenci
+es\impl\jars not found.
+
+Total time: 0 seconds

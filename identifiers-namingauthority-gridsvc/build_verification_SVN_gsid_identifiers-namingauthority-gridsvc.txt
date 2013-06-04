@@ -1,0 +1,95 @@
+Buildfile: build.xml
+
+checkContribTasksDefined:
+
+defineContribTasks:
+
+setGlobus:
+
+checkGlobus:
+     [echo] Globus: c:\DEV\software\ws-core-4.0.8
+
+defineClasspaths:
+
+defineExtendedClasspaths:
+
+init:
+
+preInit:
+
+configure:
+     [copy] Copying 1 file to C:\DEV\GIT-WORK\SVN\gsid\identifiers-namingauthority-gridsvc
+
+postInit:
+
+stubs:
+
+preStubs:
+     [echo] Generating stubs for IdentifiersNAService.
+
+checkContribTasksDefined:
+
+defineContribTasks:
+
+setGlobus:
+
+checkGlobus:
+     [echo] Globus: c:\DEV\software\ws-core-4.0.8
+
+defineClasspaths:
+
+defineExtendedClasspaths:
+
+init:
+
+preInit:
+
+configure:
+     [copy] Copying 1 file to C:\DEV\GIT-WORK\SVN\gsid\identifiers-namingauthority-gridsvc
+
+postInit:
+
+serviceGenerateBindings:
+
+bindingUptodate:
+
+generateBinding:
+
+merge:
+
+mergePackageMapping:
+     [echo] Merging C:\DEV\GIT-WORK\SVN\gsid\identifiers-namingauthority-gridsvc\namespace2package.mappings
+
+serviceStubs:
+
+generateStubs:
+     [echo]  Generating stubs from IdentifiersNAService_service.wsdl
+     [java] {http://schemas.xmlsoap.org/ws/2004/03/addressing}Action already exists
+
+stubGenerationPostProcessor:
+Warning: Reference tasks.run.classpath has not been set at runtime, but was found during
+build file parsing, attempting to resolve. Future versions of Ant may support
+ referencing ids defined in non-executed targets.
+Warning: Reference tasks.run.extended.classpath has not been set at runtime, but was found during
+build file parsing, attempting to resolve. Future versions of Ant may support
+ referencing ids defined in non-executed targets.
+
+postStubs:
+
+compileStubs:
+
+preCompileStubs:
+    [javac] Compiling 39 source files to C:\DEV\GIT-WORK\SVN\gsid\identifiers-namingauthority-gridsvc\build\stubs-IdentifiersNAService\classes
+    [javac] Note: Some input files use unchecked or unsafe operations.
+    [javac] Note: Recompile with -Xlint:unchecked for details.
+
+postCompileStubs:
+
+compile:
+
+preCompile:
+
+postCompile:
+
+BUILD SUCCESSFUL
+Total time: 7 seconds
