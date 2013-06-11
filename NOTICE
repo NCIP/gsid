@@ -5,13 +5,6 @@ Copyright (c) 2010, Washington University in St. Louis, SemanticBits, Persistent
 This project is distributed under the BSD 3-Clause License.
 Please see LICENSE file for details.
 
-
-This project was developed as part of the NCI caBIG initiative.
-
-Applications in clinical and life-science research need to manage information associated with a specimen within an institution as well as across many organizations.  For specimen life-cycle tracking, NCI Center for Bioinformatics and Information Technology (CBIIT) has worked with the biorepository and cancer research community to develop a Global Specimen Identifier Service (GSID). GSID can be incorporated by biorepositories involved in multi-site efforts supported by caTissue Suite open source, home-grown, and commercial biospecimen management systems.  The Cancer Genome Atlas (TCGA) program has evaluated and provided input into this GSID for their use to associate a unique identifier to each specimen and each derivative.
-
-The Global Specimen Identifier (GSID) Service is a NCI Enterprise Service. Global Specimen Identifer (GSID) is defined as the entity that contains a Globally Unique Idenitifer (UUID) and associated attributes that consists of a name value pair. A UUID is defined as a 16 byte identifier that is intended to be globally unique.   There are 3 x 10^38  unique identifiers that can be obtained through the service
-
 The project was initially developed by Washington University in St. Louis, SemanticBits and Persistent Systems under funding from the CBIIT office of the National Cancer Institute.
 
 In 2013, as part of the National Cancer Informatics Program (NCIP) Open Development Initiative, 
