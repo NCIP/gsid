@@ -21,4 +21,7 @@ You will find more details about the GSID in the following links:
 
 Please join us in further developing and improving Global Specimen Identifier (GSID).
 
+## Required Software
+ * Java 1.6.x
+ * Apache Ant 1.7.x
  
